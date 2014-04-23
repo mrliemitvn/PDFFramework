@@ -1,0 +1,8 @@
+#Eclipse setting folder.
+.setting/
+
+#Android bin folder.
+bin/
+
+#Android gen folder.
+gen/
