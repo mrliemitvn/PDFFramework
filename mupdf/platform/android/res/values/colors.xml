@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MUPDF color -->
+    <color name="mupdf_page_indicator">#C0202020</color>
+    <color name="mupdf_busy_indicator">#C0202020</color>
+    <color name="mupdf_toolbar">#C0000000</color>
+    <color name="mupdf_button_normal">#00000000</color>
+	<color name="mupdf_button_pressed">#FF2572AC</color>
+	<color name="mupdf_text_normal">#FFFFFF</color>
+	<color name="mupdf_text_pressed">#FFFFFF</color>
+	<color name="mupdf_text_border_normal">#000000</color>
+	<color name="mupdf_text_border_pressed">#2572AC</color>
+	<color name="mupdf_text_border_focused">#000000</color>
+	<color name="mupdf_seek_thumb">#2572AC</color>
+	<color name="mupdf_seek_progress">#FFFFFF</color>
+
+</resources>

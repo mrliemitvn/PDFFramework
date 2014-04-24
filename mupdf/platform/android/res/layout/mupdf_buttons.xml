@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ViewAnimator
+        android:id="@+id/mupdf_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar0Main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <TextView
+                android:id="@+id/mupdf_docNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_linkButton"
+                android:paddingLeft="16dp"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/mupdf_linkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_reflowButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_toggle_links"
+                android:src="@drawable/ic_mupdf_link" />
+
+            <ImageButton
+                android:id="@+id/mupdf_reflowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_outlineButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_toggle_reflow_mode"
+                android:src="@drawable/ic_mupdf_reflow" />
+
+            <ImageButton
+                android:id="@+id/mupdf_outlineButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_searchButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_outline_title"
+                android:src="@drawable/ic_mupdf_list" />
+
+            <ImageButton
+                android:id="@+id/mupdf_searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_moreButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_search_document"
+                android:src="@drawable/ic_mupdf_magnifying_glass" />
+
+            <ImageButton
+                android:id="@+id/mupdf_moreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/more"
+                android:onClick="OnMoreButtonClick"
+                android:src="@drawable/ic_mupdf_more" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar1Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <ImageButton
+                android:id="@+id/mupdf_cancelSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/cancel"
+                android:onClick="OnCancelSearchButtonClick"
+                android:src="@drawable/ic_mupdf_cancel" />
+
+            <EditText
+                android:id="@+id/mupdf_searchText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_searchBack"
+                android:layout_toRightOf="@+id/mupdf_cancelSearch"
+                android:background="@drawable/mupdf_search"
+                android:hint="@string/search"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <ImageButton
+                android:id="@+id/mupdf_searchBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_searchForward"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_search_backwards"
+                android:src="@drawable/ic_mupdf_arrow_left" />
+
+            <ImageButton
+                android:id="@+id/mupdf_searchForward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_search_forwards"
+                android:src="@drawable/ic_mupdf_arrow_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar2Annot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <ImageButton
+                android:id="@+id/mupdf_cancelAnnotButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/cancel"
+                android:onClick="OnCancelAnnotButtonClick"
+                android:src="@drawable/ic_mupdf_cancel" />
+
+            <ImageButton
+                android:id="@+id/mupdf_highlightButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_underlineButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_highlight"
+                android:onClick="OnHighlightButtonClick"
+                android:src="@drawable/ic_mupdf_highlight" />
+
+            <ImageButton
+                android:id="@+id/mupdf_underlineButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_strikeOutButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_underline"
+                android:onClick="OnUnderlineButtonClick"
+                android:src="@drawable/ic_mupdf_underline" />
+
+            <ImageButton
+                android:id="@+id/mupdf_strikeOutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_inkButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_strike_out"
+                android:onClick="OnStrikeOutButtonClick"
+                android:src="@drawable/ic_mupdf_strike" />
+
+            <ImageButton
+                android:id="@+id/mupdf_inkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_ink"
+                android:onClick="OnInkButtonClick"
+                android:src="@drawable/ic_mupdf_pen" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar3Delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <ImageButton
+                android:id="@+id/mupdf_cancelDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/cancel"
+                android:onClick="OnCancelDeleteButtonClick"
+                android:src="@drawable/ic_mupdf_cancel" />
+
+            <TextView
+                android:id="@+id/mupdf_deleteLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_deleteButton"
+                android:layout_toRightOf="@+id/mupdf_cancelDeleteButton"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/delete"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/mupdf_deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/delete"
+                android:onClick="OnDeleteButtonClick"
+                android:src="@drawable/ic_mupdf_trash" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar4More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <ImageButton
+                android:id="@+id/mupdf_cancelMoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/cancel"
+                android:onClick="OnCancelMoreButtonClick"
+                android:src="@drawable/ic_mupdf_cancel" />
+
+            <ImageButton
+                android:id="@+id/mupdf_printButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_copyTextButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/print"
+                android:onClick="OnPrintButtonClick"
+                android:src="@drawable/ic_mupdf_print" />
+
+            <ImageButton
+                android:id="@+id/mupdf_copyTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_editAnnotButton"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_copy_text_to_the_clipboard"
+                android:onClick="OnCopyTextButtonClick"
+                android:src="@drawable/ic_mupdf_clipboard" />
+
+            <ImageButton
+                android:id="@+id/mupdf_editAnnotButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/mupdf_edit_annotations"
+                android:onClick="OnEditAnnotButtonClick"
+                android:src="@drawable/ic_mupdf_annotation" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mupdf_topBar5Accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mupdf_toolbar" >
+
+            <ImageButton
+                android:id="@+id/mupdf_cancelAcceptButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/cancel"
+                android:onClick="OnCancelAcceptButtonClick"
+                android:src="@drawable/ic_mupdf_cancel" />
+
+            <TextView
+                android:id="@+id/mupdf_annotType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/mupdf_acceptButton"
+                android:layout_toRightOf="@+id/mupdf_cancelAcceptButton"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/mupdf_acceptButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mupdf_button"
+                android:contentDescription="@string/accept"
+                android:onClick="OnAcceptButtonClick"
+                android:src="@drawable/ic_mupdf_check" />
+        </RelativeLayout>
+    </ViewAnimator>
+
+    <RelativeLayout
+        android:id="@+id/mupdf_lowerButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+
+        <SeekBar
+            android:id="@+id/mupdf_mupdf_pageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="0dp"
+            android:background="@color/mupdf_toolbar"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="12dp"
+            android:progressDrawable="@drawable/mupdf_seek_progress"
+            android:thumb="@drawable/mupdf_seek_thumb" />
+
+        <TextView
+            android:id="@+id/mupdf_pageNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mupdf_pageSlider"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/mupdf_page_num"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/mupdf_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mupdf_pageSlider"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/mupdf_page_num"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
