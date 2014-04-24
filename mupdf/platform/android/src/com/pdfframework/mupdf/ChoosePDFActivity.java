@@ -22,45 +22,43 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.pdfframework.R;
+import com.pdfframework.utils.Consts;
 
 enum Purpose {
-	PickPDF,
-	PickKeyFile
+	PickPDF, PickKeyFile
 }
 
 public class ChoosePDFActivity extends ListActivity {
-	static private File  mDirectory;
+	static private File mDirectory;
 	static private Map<String, Integer> mPositions = new HashMap<String, Integer>();
-	private File         mParent;
-	private File []      mDirs;
-	private File []      mFiles;
-	private Handler	     mHandler;
-	private Runnable     mUpdateFiles;
+	private File mParent;
+	private File[] mDirs;
+	private File[] mFiles;
+	private Handler mHandler;
+	private Runnable mUpdateFiles;
 	private ChoosePDFAdapter adapter;
-	private Purpose      mPurpose;
+	private Purpose mPurpose;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mPurpose = Intent.ACTION_MAIN.equals(getIntent().getAction()) ? Purpose.PickPDF : Purpose.PickKeyFile;
-
+		mPurpose = getIntent().getExtras().getBoolean(Consts.KEY_CHOOSE_PDF, false) ? Purpose.PickPDF
+				: Purpose.PickKeyFile;
 
 		String storageState = Environment.getExternalStorageState();
 
 		if (!Environment.MEDIA_MOUNTED.equals(storageState)
-				&& !Environment.MEDIA_MOUNTED_READ_ONLY.equals(storageState))
-		{
+				&& !Environment.MEDIA_MOUNTED_READ_ONLY.equals(storageState)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.mupdf_no_media_warning);
 			builder.setMessage(R.string.mupdf_no_media_hint);
 			AlertDialog alert = builder.create();
-			alert.setButton(AlertDialog.BUTTON_POSITIVE,getString(R.string.dismiss),
-					new OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							finish();
-						}
-					});
+			alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dismiss), new OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
 			alert.show();
 			return;
 		}
@@ -90,51 +88,36 @@ public class ChoosePDFActivity extends ListActivity {
 						return file.isDirectory();
 					}
 				});
-				if (mDirs == null)
-					mDirs = new File[0];
+				if (mDirs == null) mDirs = new File[0];
 
 				mFiles = mDirectory.listFiles(new FileFilter() {
 
 					public boolean accept(File file) {
-						if (file.isDirectory())
-							return false;
+						if (file.isDirectory()) return false;
 						String fname = file.getName().toLowerCase();
 						switch (mPurpose) {
 						case PickPDF:
-							if (fname.endsWith(".pdf"))
-								return true;
-							if (fname.endsWith(".xps"))
-								return true;
-							if (fname.endsWith(".cbz"))
-								return true;
-							if (fname.endsWith(".png"))
-								return true;
-							if (fname.endsWith(".jpe"))
-								return true;
-							if (fname.endsWith(".jpeg"))
-								return true;
-							if (fname.endsWith(".jpg"))
-								return true;
-							if (fname.endsWith(".jfif"))
-								return true;
-							if (fname.endsWith(".jfif-tbnl"))
-								return true;
-							if (fname.endsWith(".tif"))
-								return true;
-							if (fname.endsWith(".tiff"))
-								return true;
+							if (fname.endsWith(".pdf")) return true;
+							if (fname.endsWith(".xps")) return true;
+							if (fname.endsWith(".cbz")) return true;
+							if (fname.endsWith(".png")) return true;
+							if (fname.endsWith(".jpe")) return true;
+							if (fname.endsWith(".jpeg")) return true;
+							if (fname.endsWith(".jpg")) return true;
+							if (fname.endsWith(".jfif")) return true;
+							if (fname.endsWith(".jfif-tbnl")) return true;
+							if (fname.endsWith(".tif")) return true;
+							if (fname.endsWith(".tiff")) return true;
 							return false;
 						case PickKeyFile:
-							if (fname.endsWith(".pfx"))
-								return true;
+							if (fname.endsWith(".pfx")) return true;
 							return false;
 						default:
 							return false;
 						}
 					}
 				});
-				if (mFiles == null)
-					mFiles = new File[0];
+				if (mFiles == null) mFiles = new File[0];
 
 				Arrays.sort(mFiles, new Comparator<File>() {
 					public int compare(File arg0, File arg1) {
@@ -174,8 +157,7 @@ public class ChoosePDFActivity extends ListActivity {
 
 	private void lastPosition() {
 		String p = mDirectory.getAbsolutePath();
-		if (mPositions.containsKey(p))
-			getListView().setSelection(mPositions.get(p));
+		if (mPositions.containsKey(p)) getListView().setSelection(mPositions.get(p));
 	}
 
 	@Override
@@ -201,7 +183,7 @@ public class ChoosePDFActivity extends ListActivity {
 		position -= mDirs.length;
 
 		Uri uri = Uri.parse(mFiles[position].getAbsolutePath());
-		Intent intent = new Intent(this,MuPDFActivity.class);
+		Intent intent = new Intent(this, MuPDFActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.setData(uri);
 		switch (mPurpose) {

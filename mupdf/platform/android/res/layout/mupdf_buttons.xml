@@ -339,7 +339,7 @@
         android:layout_centerHorizontal="true" >
 
         <SeekBar
-            android:id="@+id/mupdf_mupdf_pageSlider"
+            android:id="@+id/mupdf_pageSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
