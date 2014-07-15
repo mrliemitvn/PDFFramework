@@ -15,12 +15,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings.SettingNotFoundException;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
@@ -40,46 +42,53 @@ class ThreadPerTaskExecutor implements Executor {
 	}
 }
 
-public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupport
-{
+public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupport {
 	/* The core rendering instance */
-	enum TopBarMode {Main, Search, Annot, Delete, More, Accept};
-	enum AcceptMode {Highlight, Underline, StrikeOut, Ink, CopyText};
+	enum TopBarMode {
+		Main, Search, Annot, Delete, More, Accept
+	};
 
-	private final int    OUTLINE_REQUEST=0;
-	private final int    PRINT_REQUEST=1;
-	private final int    FILEPICK_REQUEST=2;
-	private MuPDFCore    core;
-	private String       mFileName;
+	enum AcceptMode {
+		Highlight, Underline, StrikeOut, Ink, CopyText
+	};
+
+	private final int OUTLINE_REQUEST = 0;
+	private final int PRINT_REQUEST = 1;
+	private final int FILEPICK_REQUEST = 2;
+	private MuPDFCore core;
+	private String mFileName;
 	private MuPDFReaderView mDocView;
-	private View         mButtonsView;
-	private boolean      mButtonsVisible;
-	private EditText     mPasswordView;
-	private TextView     mFilenameView;
-	private SeekBar      mPageSlider;
-	private int          mPageSliderRes;
-	private TextView     mPageNumberView;
-	private TextView     mInfoView;
-	private ImageButton  mSearchButton;
-	private ImageButton  mReflowButton;
-	private ImageButton  mOutlineButton;
-	private ImageButton	mMoreButton;
-	private TextView     mAnnotTypeText;
+	private View mButtonsView;
+	private boolean mButtonsVisible;
+	private EditText mPasswordView;
+	private TextView mFilenameView;
+	private SeekBar mPageSlider;
+	private int mPageSliderRes;
+	private TextView mPageNumberView;
+	private TextView mInfoView;
+	private ImageButton mSearchButton;
+	private ImageButton mReflowButton;
+	private ImageButton mOutlineButton;
+	private ImageButton mMoreButton;
+	private TextView mAnnotTypeText;
 	private ImageButton mAnnotButton;
 	private ViewAnimator mTopBarSwitcher;
-	private ImageButton  mLinkButton;
-	private TopBarMode   mTopBarMode = TopBarMode.Main;
-	private AcceptMode   mAcceptMode;
-	private ImageButton  mSearchBack;
-	private ImageButton  mSearchFwd;
-	private EditText     mSearchText;
-	private SearchTask   mSearchTask;
+	private ImageButton mLinkButton;
+	private TopBarMode mTopBarMode = TopBarMode.Main;
+	private AcceptMode mAcceptMode;
+	private ImageButton mSearchBack;
+	private ImageButton mSearchFwd;
+	private EditText mSearchText;
+	private ImageButton mBrightnessButton;
+	private SeekBar mBrightnessSlide;
+	private ImageButton mEmailButton;
+	private SearchTask mSearchTask;
 	private AlertDialog.Builder mAlertBuilder;
-	private boolean    mLinkHighlight = false;
+	private boolean mLinkHighlight = false;
 	private final Handler mHandler = new Handler();
-	private boolean mAlertsActive= false;
+	private boolean mAlertsActive = false;
 	private boolean mReflow = false;
-	private AsyncTask<Void,Void,MuPDFAlert> mAlertTask;
+	private AsyncTask<Void, Void, MuPDFAlert> mAlertTask;
 	private AlertDialog mAlertDialog;
 	private FilePicker mFilePicker;
 
@@ -101,12 +110,11 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mAlertDialog.cancel();
 			mAlertDialog = null;
 		}
-		mAlertTask = new AsyncTask<Void,Void,MuPDFAlert>() {
+		mAlertTask = new AsyncTask<Void, Void, MuPDFAlert>() {
 
 			@Override
 			protected MuPDFAlert doInBackground(Void... arg0) {
-				if (!mAlertsActive)
-					return null;
+				if (!mAlertsActive) return null;
 
 				return core.waitForAlert();
 			}
@@ -114,10 +122,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			@Override
 			protected void onPostExecute(final MuPDFAlert result) {
 				// core.waitForAlert may return null when shutting down
-				if (result == null)
-					return;
+				if (result == null) return;
 				final MuPDFAlert.ButtonPressed pressed[] = new MuPDFAlert.ButtonPressed[3];
-				for(int i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 					pressed[i] = MuPDFAlert.ButtonPressed.None;
 				DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -125,9 +132,15 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 						if (mAlertsActive) {
 							int index = 0;
 							switch (which) {
-							case AlertDialog.BUTTON1: index=0; break;
-							case AlertDialog.BUTTON2: index=1; break;
-							case AlertDialog.BUTTON3: index=2; break;
+							case AlertDialog.BUTTON1:
+								index = 0;
+								break;
+							case AlertDialog.BUTTON2:
+								index = 1;
+								break;
+							case AlertDialog.BUTTON3:
+								index = 2;
+								break;
 							}
 							result.buttonPressed = pressed[index];
 							// Send the user's response to the core, so that it can
@@ -141,8 +154,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				mAlertDialog = mAlertBuilder.create();
 				mAlertDialog.setTitle(result.title);
 				mAlertDialog.setMessage(result.message);
-				switch (result.iconType)
-				{
+				switch (result.iconType) {
 				case Error:
 					break;
 				case Warning:
@@ -152,8 +164,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				case Status:
 					break;
 				}
-				switch (result.buttonGroupType)
-				{
+				switch (result.buttonGroupType) {
 				case OkCancel:
 					mAlertDialog.setButton(AlertDialog.BUTTON2, getString(R.string.cancel), listener);
 					pressed[1] = MuPDFAlert.ButtonPressed.Cancel;
@@ -201,38 +212,28 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		}
 	}
 
-	private MuPDFCore openFile(String path)
-	{
+	private MuPDFCore openFile(String path) {
 		int lastSlashPos = path.lastIndexOf('/');
-		mFileName = new String(lastSlashPos == -1
-					? path
-					: path.substring(lastSlashPos+1));
-		System.out.println("Trying to open "+path);
-		try
-		{
+		mFileName = new String(lastSlashPos == -1 ? path : path.substring(lastSlashPos + 1));
+		System.out.println("Trying to open " + path);
+		try {
 			core = new MuPDFCore(this, path);
 			// New file: drop the old outline data
 			OutlineActivityData.set(null);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println(e);
 			return null;
 		}
 		return core;
 	}
 
-	private MuPDFCore openBuffer(byte buffer[])
-	{
+	private MuPDFCore openBuffer(byte buffer[]) {
 		System.out.println("Trying to open byte buffer");
-		try
-		{
+		try {
 			core = new MuPDFCore(this, buffer);
 			// New file: drop the old outline data
 			OutlineActivityData.set(null);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println(e);
 			return null;
 		}
@@ -241,14 +242,13 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		mAlertBuilder = new AlertDialog.Builder(this);
 
 		if (core == null) {
-			core = (MuPDFCore)getLastNonConfigurationInstance();
+			core = (MuPDFCore) getLastNonConfigurationInstance();
 
 			if (savedInstanceState != null && savedInstanceState.containsKey("FileName")) {
 				mFileName = savedInstanceState.getString("FileName");
@@ -263,7 +263,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					// Handle view requests from the Transformer Prime's file manager
 					// Hopefully other file managers will use this same scheme, if not
 					// using explicit paths.
-					Cursor cursor = getContentResolver().query(uri, new String[]{"_data"}, null, null, null);
+					Cursor cursor = getContentResolver().query(uri, new String[] { "_data" }, null, null, null);
 					if (cursor.moveToFirst()) {
 						String str = cursor.getString(0);
 						String reason = null;
@@ -274,21 +274,18 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 								buffer = new byte[len];
 								is.read(buffer, 0, len);
 								is.close();
-							}
-							catch (java.lang.OutOfMemoryError e)
-							{
+							} catch (java.lang.OutOfMemoryError e) {
 								System.out.println("Out of memory during buffer reading");
 								reason = e.toString();
-							}
-							catch (Exception e) {
+							} catch (Exception e) {
 								reason = e.toString();
 							}
-							if (reason != null)
-							{
+							if (reason != null) {
 								buffer = null;
 								Resources res = getResources();
 								AlertDialog alert = mAlertBuilder.create();
-								setTitle(String.format(res.getString(R.string.mupdf_cannot_open_document_Reason), reason));
+								setTitle(String.format(res.getString(R.string.mupdf_cannot_open_document_Reason),
+										reason));
 								alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dismiss),
 										new DialogInterface.OnClickListener() {
 											public void onClick(DialogInterface dialog, int which) {
@@ -314,13 +311,11 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				requestPassword(savedInstanceState);
 				return;
 			}
-			if (core != null && core.countPages() == 0)
-			{
+			if (core != null && core.countPages() == 0) {
 				core = null;
 			}
 		}
-		if (core == null)
-		{
+		if (core == null) {
 			AlertDialog alert = mAlertBuilder.create();
 			alert.setTitle(R.string.mupdf_cannot_open_document);
 			alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dismiss),
@@ -344,8 +339,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		AlertDialog alert = mAlertBuilder.create();
 		alert.setTitle(R.string.mupdf_enter_password);
 		alert.setView(mPasswordView);
-		alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.okay),
-				new DialogInterface.OnClickListener() {
+		alert.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.okay), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (core.authenticatePassword(mPasswordView.getText().toString())) {
 					createUI(savedInstanceState);
@@ -354,8 +348,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				}
 			}
 		});
-		alert.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
-				new DialogInterface.OnClickListener() {
+		alert.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
@@ -365,18 +358,15 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	}
 
 	public void createUI(Bundle savedInstanceState) {
-		if (core == null)
-			return;
+		if (core == null) return;
 
 		// Now create the UI.
 		// First create the document view
 		mDocView = new MuPDFReaderView(this) {
 			@Override
 			protected void onMoveToChild(int i) {
-				if (core == null)
-					return;
-				mPageNumberView.setText(String.format("%d / %d", i + 1,
-						core.countPages()));
+				if (core == null) return;
+				mPageNumberView.setText(String.format("%d / %d", i + 1, core.countPages()));
 				mPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
 				mPageSlider.setProgress(i * mPageSliderRes);
 				super.onMoveToChild(i);
@@ -387,8 +377,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				if (!mButtonsVisible) {
 					showButtons();
 				} else {
-					if (mTopBarMode == TopBarMode.Main)
-						hideButtons();
+					if (mTopBarMode == TopBarMode.Main) hideButtons();
 				}
 			}
 
@@ -410,14 +399,13 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				case Delete:
 					mTopBarMode = TopBarMode.Annot;
 					mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
-				// fall through
+					// fall through
 				default:
 					// Not in annotation editing mode, but the pageview will
 					// still select and highlight hit annotations, so
 					// deselect just in case.
 					MuPDFView pageView = (MuPDFView) mDocView.getDisplayedView();
-					if (pageView != null)
-						pageView.deselectAnnotation();
+					if (pageView != null) pageView.deselectAnnotation();
 					break;
 				}
 			}
@@ -441,8 +429,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		makeButtonsView();
 
 		// Set up the page slider
-		int smax = Math.max(core.countPages()-1,1);
-		mPageSliderRes = ((10 + smax - 1)/smax) * 2;
+		int smax = Math.max(core.countPages() - 1, 1);
+		mPageSliderRes = ((10 + smax - 1) / smax) * 2;
 
 		// Set the file-name text
 		mFilenameView.setText(mFileName);
@@ -450,14 +438,14 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		// Activate the seekbar
 		mPageSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				mDocView.setDisplayedViewIndex((seekBar.getProgress()+mPageSliderRes/2)/mPageSliderRes);
+				mDocView.setDisplayedViewIndex((seekBar.getProgress() + mPageSliderRes / 2) / mPageSliderRes);
 			}
 
-			public void onStartTrackingTouch(SeekBar seekBar) {}
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
 
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
-				updatePageNumView((progress+mPageSliderRes/2)/mPageSliderRes);
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				updatePageNumView((progress + mPageSliderRes / 2) / mPageSliderRes);
 			}
 		});
 
@@ -475,17 +463,14 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 		});
 
-		if (core.fileFormat().startsWith("PDF"))
-		{
+		if (core.fileFormat().startsWith("PDF")) {
 			mAnnotButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					mTopBarMode = TopBarMode.Annot;
 					mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
 				}
 			});
-		}
-		else
-		{
+		} else {
 			mAnnotButton.setVisibility(View.GONE);
 		}
 
@@ -504,30 +489,31 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				setButtonEnabled(mSearchFwd, haveText);
 
 				// Remove any previous search results
-				if (SearchTaskResult.get() != null && !mSearchText.getText().toString().equals(SearchTaskResult.get().txt)) {
+				if (SearchTaskResult.get() != null
+						&& !mSearchText.getText().toString().equals(SearchTaskResult.get().txt)) {
 					SearchTaskResult.set(null);
 					mDocView.resetupChildren();
 				}
 			}
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {}
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {}
+
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
 		});
 
-		//React to Done button on keyboard
+		// React to Done button on keyboard
 		mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_DONE)
-					search(1);
+				if (actionId == EditorInfo.IME_ACTION_DONE) search(1);
 				return false;
 			}
 		});
 
 		mSearchText.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER)
-					search(1);
+				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) search(1);
 				return false;
 			}
 		});
@@ -565,18 +551,71 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mOutlineButton.setVisibility(View.GONE);
 		}
 
+		// Brightness button.
+		mBrightnessButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mBrightnessButton.setSelected(!mBrightnessButton.isSelected());
+				if (mBrightnessButton.isSelected()) {
+					try {
+						float curBrightnessValue = android.provider.Settings.System.getInt(getContentResolver(),
+								android.provider.Settings.System.SCREEN_BRIGHTNESS);
+						int curBrightnessPercent = (int) (curBrightnessValue / 255 * 100);
+						mBrightnessSlide.setProgress(curBrightnessPercent);
+					} catch (SettingNotFoundException e) {
+						e.printStackTrace();
+					}
+					mBrightnessSlide.setVisibility(View.VISIBLE);
+				} else {
+					mBrightnessSlide.setVisibility(View.GONE);
+				}
+			}
+		});
+
+		// Brightness Slide
+		mBrightnessSlide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if (progress <= 0) return;
+				float brightnessValue = (float) progress / 100;
+				WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+				layoutParams.screenBrightness = brightnessValue;
+				getWindow().setAttributes(layoutParams);
+			}
+		});
+		
+		// Email button.
+		mEmailButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Uri uri = getIntent().getData();
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"email@example.com"});
+				intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+				intent.putExtra(Intent.EXTRA_TEXT, "body text");
+				intent.putExtra(Intent.EXTRA_STREAM, uri);
+				startActivity(Intent.createChooser(intent, "Send email..."));
+			}
+		});
+
 		// Reenstate last state if it was recorded
 		SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-		mDocView.setDisplayedViewIndex(prefs.getInt("page"+mFileName, 0));
+		mDocView.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
-		if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false))
-			showButtons();
+		if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)) showButtons();
 
-		if(savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false))
-			searchModeOn();
+		if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)) searchModeOn();
 
-		if(savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false))
-			reflowModeSet(true);
+		if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false)) reflowModeSet(true);
 
 		// Stick the document view and the buttons overlay into a parent view
 		RelativeLayout layout = new RelativeLayout(this);
@@ -589,29 +628,24 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case OUTLINE_REQUEST:
-			if (resultCode >= 0)
-				mDocView.setDisplayedViewIndex(resultCode);
+			if (resultCode >= 0) mDocView.setDisplayedViewIndex(resultCode);
 			break;
 		case PRINT_REQUEST:
-			if (resultCode == RESULT_CANCELED)
-				showInfo(getString(R.string.mupdf_print_failed));
+			if (resultCode == RESULT_CANCELED) showInfo(getString(R.string.mupdf_print_failed));
 			break;
 		case FILEPICK_REQUEST:
-			if (mFilePicker != null && resultCode == RESULT_OK)
-				mFilePicker.onPick(data.getData());
+			if (mFilePicker != null && resultCode == RESULT_OK) mFilePicker.onPick(data.getData());
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	public Object onRetainNonConfigurationInstance()
-	{
+	public Object onRetainNonConfigurationInstance() {
 		MuPDFCore mycore = core;
 		core = null;
 		return mycore;
 	}
 
-	private void reflowModeSet(boolean reflow)
-	{
+	private void reflowModeSet(boolean reflow) {
 		mReflow = reflow;
 		mDocView.setAdapter(mReflow ? new MuPDFReflowAdapter(this, core) : new MuPDFPageAdapter(this, this, core));
 		mReflowButton.setColorFilter(mReflow ? Color.argb(0xFF, 172, 114, 37) : Color.argb(0xFF, 255, 255, 255));
@@ -625,7 +659,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	private void toggleReflow() {
 		reflowModeSet(!mReflow);
-		showInfo(mReflow ? getString(R.string.mupdf_entering_reflow_mode) : getString(R.string.mupdf_leaving_reflow_mode));
+		showInfo(mReflow ? getString(R.string.mupdf_entering_reflow_mode)
+				: getString(R.string.mupdf_leaving_reflow_mode));
 	}
 
 	@Override
@@ -641,46 +676,40 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			// so it can go in the bundle
 			SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
 			SharedPreferences.Editor edit = prefs.edit();
-			edit.putInt("page"+mFileName, mDocView.getDisplayedViewIndex());
+			edit.putInt("page" + mFileName, mDocView.getDisplayedViewIndex());
 			edit.commit();
 		}
 
-		if (!mButtonsVisible)
-			outState.putBoolean("ButtonsHidden", true);
+		if (!mButtonsVisible) outState.putBoolean("ButtonsHidden", true);
 
-		if (mTopBarMode == TopBarMode.Search)
-			outState.putBoolean("SearchMode", true);
+		if (mTopBarMode == TopBarMode.Search) outState.putBoolean("SearchMode", true);
 
-		if (mReflow)
-			outState.putBoolean("ReflowMode", true);
+		if (mReflow) outState.putBoolean("ReflowMode", true);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 
-		if (mSearchTask != null)
-			mSearchTask.stop();
+		if (mSearchTask != null) mSearchTask.stop();
 
 		if (mFileName != null && mDocView != null) {
 			SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
 			SharedPreferences.Editor edit = prefs.edit();
-			edit.putInt("page"+mFileName, mDocView.getDisplayedViewIndex());
+			edit.putInt("page" + mFileName, mDocView.getDisplayedViewIndex());
 			edit.commit();
 		}
 	}
 
-	public void onDestroy()
-	{
+	public void onDestroy() {
 		if (mDocView != null) {
 			mDocView.applyToChildren(new ReaderView.ViewMapper() {
 				void applyToView(View view) {
-					((MuPDFView)view).releaseBitmaps();
+					((MuPDFView) view).releaseBitmaps();
 				}
 			});
 		}
-		if (core != null)
-			core.onDestroy();
+		if (core != null) core.onDestroy();
 		if (mAlertTask != null) {
 			mAlertTask.cancel(true);
 			mAlertTask = null;
@@ -691,7 +720,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	private void setButtonEnabled(ImageButton button, boolean enabled) {
 		button.setEnabled(enabled);
-		button.setColorFilter(enabled ? Color.argb(255, 255, 255, 255):Color.argb(255, 128, 128, 128));
+		button.setColorFilter(enabled ? Color.argb(255, 255, 255, 255) : Color.argb(255, 128, 128, 128));
 	}
 
 	private void setLinkHighlight(boolean highlight) {
@@ -703,15 +732,14 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	}
 
 	private void showButtons() {
-		if (core == null)
-			return;
+		if (core == null) return;
 		if (!mButtonsVisible) {
 			mButtonsVisible = true;
 			// Update page number text and slider
 			int index = mDocView.getDisplayedViewIndex();
 			updatePageNumView(index);
-			mPageSlider.setMax((core.countPages()-1)*mPageSliderRes);
-			mPageSlider.setProgress(index*mPageSliderRes);
+			mPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
+			mPageSlider.setProgress(index * mPageSliderRes);
 			if (mTopBarMode == TopBarMode.Search) {
 				mSearchText.requestFocus();
 				showKeyboard();
@@ -723,8 +751,12 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				public void onAnimationStart(Animation animation) {
 					mTopBarSwitcher.setVisibility(View.VISIBLE);
 				}
-				public void onAnimationRepeat(Animation animation) {}
-				public void onAnimationEnd(Animation animation) {}
+
+				public void onAnimationRepeat(Animation animation) {
+				}
+
+				public void onAnimationEnd(Animation animation) {
+				}
 			});
 			mTopBarSwitcher.startAnimation(anim);
 
@@ -734,7 +766,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				public void onAnimationStart(Animation animation) {
 					mPageSlider.setVisibility(View.VISIBLE);
 				}
-				public void onAnimationRepeat(Animation animation) {}
+
+				public void onAnimationRepeat(Animation animation) {
+				}
+
 				public void onAnimationEnd(Animation animation) {
 					mPageNumberView.setVisibility(View.VISIBLE);
 				}
@@ -751,8 +786,12 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			Animation anim = new TranslateAnimation(0, 0, 0, -mTopBarSwitcher.getHeight());
 			anim.setDuration(200);
 			anim.setAnimationListener(new Animation.AnimationListener() {
-				public void onAnimationStart(Animation animation) {}
-				public void onAnimationRepeat(Animation animation) {}
+				public void onAnimationStart(Animation animation) {
+				}
+
+				public void onAnimationRepeat(Animation animation) {
+				}
+
 				public void onAnimationEnd(Animation animation) {
 					mTopBarSwitcher.setVisibility(View.INVISIBLE);
 				}
@@ -765,7 +804,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				public void onAnimationStart(Animation animation) {
 					mPageNumberView.setVisibility(View.INVISIBLE);
 				}
-				public void onAnimationRepeat(Animation animation) {}
+
+				public void onAnimationRepeat(Animation animation) {
+				}
+
 				public void onAnimationEnd(Animation animation) {
 					mPageSlider.setVisibility(View.INVISIBLE);
 				}
@@ -777,7 +819,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private void searchModeOn() {
 		if (mTopBarMode != TopBarMode.Search) {
 			mTopBarMode = TopBarMode.Search;
-			//Focus on EditTextWidget
+			// Focus on EditTextWidget
 			mSearchText.requestFocus();
 			showKeyboard();
 			mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
@@ -797,9 +839,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	}
 
 	private void updatePageNumView(int index) {
-		if (core == null)
-			return;
-		mPageNumberView.setText(String.format("%d / %d", index+1, core.countPages()));
+		if (core == null) return;
+		mPageNumberView.setText(String.format("%d / %d", index + 1, core.countPages()));
 	}
 
 	private void printDoc() {
@@ -815,8 +856,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			showInfo(getString(R.string.mupdf_print_failed));
 		}
 
-		if (docUri.getScheme() == null)
-			docUri = Uri.parse("file://"+docUri.toString());
+		if (docUri.getScheme() == null) docUri = Uri.parse("file://" + docUri.toString());
 
 		Intent printIntent = new Intent(this, PrintDialogActivity.class);
 		printIntent.setDataAndType(docUri, "aplication/pdf");
@@ -829,7 +869,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		int currentApiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-			SafeAnimatorInflater safe = new SafeAnimatorInflater((Activity)this, R.anim.mupdf_info, (View)mInfoView);
+			SafeAnimatorInflater safe = new SafeAnimatorInflater((Activity) this, R.anim.mupdf_info, (View) mInfoView);
 		} else {
 			mInfoView.setVisibility(View.VISIBLE);
 			mHandler.postDelayed(new Runnable() {
@@ -841,22 +881,27 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	}
 
 	private void makeButtonsView() {
-		mButtonsView = getLayoutInflater().inflate(R.layout.mupdf_buttons,null);
-		mFilenameView = (TextView)mButtonsView.findViewById(R.id.mupdf_docNameText);
-		mPageSlider = (SeekBar)mButtonsView.findViewById(R.id.mupdf_pageSlider);
-		mPageNumberView = (TextView)mButtonsView.findViewById(R.id.mupdf_pageNumber);
-		mInfoView = (TextView)mButtonsView.findViewById(R.id.mupdf_info);
-		mSearchButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_searchButton);
-		mReflowButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_reflowButton);
-		mOutlineButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_outlineButton);
-		mAnnotButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_editAnnotButton);
-		mAnnotTypeText = (TextView)mButtonsView.findViewById(R.id.mupdf_annotType);
-		mTopBarSwitcher = (ViewAnimator)mButtonsView.findViewById(R.id.mupdf_switcher);
-		mSearchBack = (ImageButton)mButtonsView.findViewById(R.id.mupdf_searchBack);
-		mSearchFwd = (ImageButton)mButtonsView.findViewById(R.id.mupdf_searchForward);
-		mSearchText = (EditText)mButtonsView.findViewById(R.id.mupdf_searchText);
-		mLinkButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_linkButton);
-		mMoreButton = (ImageButton)mButtonsView.findViewById(R.id.mupdf_moreButton);
+		mButtonsView = getLayoutInflater().inflate(R.layout.mupdf_buttons, null);
+		mFilenameView = (TextView) mButtonsView.findViewById(R.id.mupdf_docNameText);
+		mPageSlider = (SeekBar) mButtonsView.findViewById(R.id.mupdf_pageSlider);
+		mPageNumberView = (TextView) mButtonsView.findViewById(R.id.mupdf_pageNumber);
+		mInfoView = (TextView) mButtonsView.findViewById(R.id.mupdf_info);
+		mSearchButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_searchButton);
+		mReflowButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_reflowButton);
+		mOutlineButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_outlineButton);
+		mAnnotButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_editAnnotButton);
+		mAnnotTypeText = (TextView) mButtonsView.findViewById(R.id.mupdf_annotType);
+		mTopBarSwitcher = (ViewAnimator) mButtonsView.findViewById(R.id.mupdf_switcher);
+		mSearchBack = (ImageButton) mButtonsView.findViewById(R.id.mupdf_searchBack);
+		mSearchFwd = (ImageButton) mButtonsView.findViewById(R.id.mupdf_searchForward);
+		mSearchText = (EditText) mButtonsView.findViewById(R.id.mupdf_searchText);
+		mLinkButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_linkButton);
+		mMoreButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_moreButton);
+		mBrightnessButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_brightnessButton);
+		mBrightnessSlide = (SeekBar) mButtonsView.findViewById(R.id.mupdf_brightnessSlider);
+		mEmailButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_emailButton);
+		mBrightnessButton.setSelected(false);
+		mBrightnessSlide.setVisibility(View.GONE);
 		mTopBarSwitcher.setVisibility(View.INVISIBLE);
 		mPageNumberView.setVisibility(View.INVISIBLE);
 		mInfoView.setVisibility(View.INVISIBLE);
@@ -955,42 +1000,34 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		boolean success = false;
 		switch (mAcceptMode) {
 		case CopyText:
-			if (pageView != null)
-				success = pageView.copySelection();
+			if (pageView != null) success = pageView.copySelection();
 			mTopBarMode = TopBarMode.More;
-			showInfo(success?getString(R.string.mupdf_copied_to_clipboard):getString(R.string.mupdf_no_text_selected));
+			showInfo(success ? getString(R.string.mupdf_copied_to_clipboard)
+					: getString(R.string.mupdf_no_text_selected));
 			break;
 
 		case Highlight:
-			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.HIGHLIGHT);
+			if (pageView != null) success = pageView.markupSelection(Annotation.Type.HIGHLIGHT);
 			mTopBarMode = TopBarMode.Annot;
-			if (!success)
-				showInfo(getString(R.string.mupdf_no_text_selected));
+			if (!success) showInfo(getString(R.string.mupdf_no_text_selected));
 			break;
 
 		case Underline:
-			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.UNDERLINE);
+			if (pageView != null) success = pageView.markupSelection(Annotation.Type.UNDERLINE);
 			mTopBarMode = TopBarMode.Annot;
-			if (!success)
-				showInfo(getString(R.string.mupdf_no_text_selected));
+			if (!success) showInfo(getString(R.string.mupdf_no_text_selected));
 			break;
 
 		case StrikeOut:
-			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.STRIKEOUT);
+			if (pageView != null) success = pageView.markupSelection(Annotation.Type.STRIKEOUT);
 			mTopBarMode = TopBarMode.Annot;
-			if (!success)
-				showInfo(getString(R.string.mupdf_no_text_selected));
+			if (!success) showInfo(getString(R.string.mupdf_no_text_selected));
 			break;
 
 		case Ink:
-			if (pageView != null)
-				success = pageView.saveDraw();
+			if (pageView != null) success = pageView.saveDraw();
 			mTopBarMode = TopBarMode.Annot;
-			if (!success)
-				showInfo(getString(R.string.mupdf_nothing_to_save));
+			if (!success) showInfo(getString(R.string.mupdf_nothing_to_save));
 			break;
 		}
 		mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
@@ -1003,30 +1040,26 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	public void OnDeleteButtonClick(View v) {
 		MuPDFView pageView = (MuPDFView) mDocView.getDisplayedView();
-		if (pageView != null)
-			pageView.deleteSelectedAnnotation();
+		if (pageView != null) pageView.deleteSelectedAnnotation();
 		mTopBarMode = TopBarMode.Annot;
 		mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
 	}
 
 	public void OnCancelDeleteButtonClick(View v) {
 		MuPDFView pageView = (MuPDFView) mDocView.getDisplayedView();
-		if (pageView != null)
-			pageView.deselectAnnotation();
+		if (pageView != null) pageView.deselectAnnotation();
 		mTopBarMode = TopBarMode.Annot;
 		mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
 	}
 
 	private void showKeyboard() {
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (imm != null)
-			imm.showSoftInput(mSearchText, 0);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm != null) imm.showSoftInput(mSearchText, 0);
 	}
 
 	private void hideKeyboard() {
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (imm != null)
-			imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm != null) imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
 	}
 
 	private void search(int direction) {
@@ -1061,8 +1094,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	@Override
 	protected void onStart() {
-		if (core != null)
-		{
+		if (core != null) {
 			core.startAlerts();
 			createAlertWaiter();
 		}
@@ -1072,8 +1104,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 	@Override
 	protected void onStop() {
-		if (core != null)
-		{
+		if (core != null) {
 			destroyAlertWaiter();
 			core.stopAlerts();
 		}
@@ -1086,8 +1117,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		if (core.hasChanges()) {
 			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					if (which == AlertDialog.BUTTON_POSITIVE)
-						core.save();
+					if (which == AlertDialog.BUTTON_POSITIVE) core.save();
 
 					finish();
 				}

@@ -1,0 +1,62 @@
+screen1 la giao dien chung
+may icon tren toolbar lan luot de thuc hien cac chuc nang sau
+icon mau xanh duong la de mo 1 file technical di kem voi trang hien tai
+tuc la em se biet truoc moi trang se co 1 link de mo 1 file pdf khac
+icon thu 2 la thay doi do sang man hinh
+thu 3 la search keyword
+thu 4 la hien thi table of content
+thu 5 la gui tai lieu qua email
+cai thu 6 ko can de y
+cai pagebar o duoi ay, e cung ko can lam
+cai ma hien thi so trang roi thumbnail ay
+
+========================
+
+Table & content:
+	nếu file chưa tạo thì bấm vào nút show table & content thì sẽ tạo và show lên
+	khi nguoi dung nhan vao 1 dong nao do, pdf se di chuyen den trang tuong ung
+
+trong file menu1 la man hinh chinh
+luc mo app len la se hien ra
+nhan vao "DOC" thi se mo tai lieu hien gio len
+file 'toc' chinh la table of content hien gio ben ios cua anh
+
+pitch se hien ra 1 cua so nho, voi 2 file pdf de lua chon
+an vo moi dong thi se mo file pdf tuong ung
+'new' cung hien ra cua so nho, nhung lan nay la 1 file video va 1 file pdf 
+an vo video thi se chay 1 file video co san, chay fullscreen luon
+con file pdf thi mo pdf tuong ung
+'1-800' thi se goi dien thoai, chuc nang nay chi can chay tren phone thoi
+goi chuc nang call la oki
+sau cung la nut setting o goc tren ben phai
+trong day chi la chuyen doi tieng anh/tieng phap
+
+
+2 file plist
+day la 2 file xml ma anh xu ly tren ios
+no co thong tin moi trang co cac file dinh kem nao
+vi du trang 4,5,6,7 thi hien file CTA...
+trang 8 thi hien file CTR...
+(xem anh tech.png)
+
+
+day la file cho 'Doc' ban tieng anh
+https://www.dropbox.com/s/t90b9wjub1vhexr/CENDREX%20Access%20Doors%20Catalog%202014%20HR.pdf
+va ban tieng phap
+https://www.dropbox.com/s/x41tjs0q9crxlc6/CENDREX%20Porte%20Acc%C3%A8s%20Catalogue%202014%20HR.pdf
+'Pitch' ban tieng anh thi hien thi 2 file sau day
+https://www.dropbox.com/s/blkbnmy7v0f3p5v/CENDREX%20Advantage%202013%204.pdf
+https://www.dropbox.com/s/gjnjmyhcb8ql39k/CENDREX%20CTA%20flyer%20Eng10.pdf
+'Pitch' tieng phap
+https://www.dropbox.com/s/5s17yycqq9r202k/CENDREX%20Avantage%202013%205.pdf
+https://www.dropbox.com/s/b6z7og2nj3fbv7z/CENDREX%20CTA%20flyer%20FR%206.pdf
+'New' tieng anh
+link video: https://www.dropbox.com/s/w8dzvioualnctpz/Cendrex-CTA-Adjustable-Access-Door.mp4
+link pdf: https://www.dropbox.com/s/c58ccq36eencptx/New%20Products.pdf
+'New' tieng phap
+link video: y het o tren
+link pdf: https://www.dropbox.com/s/9wunh436wxqemtk/Nouveaux%20Produits.pdf
+
+
+
+
