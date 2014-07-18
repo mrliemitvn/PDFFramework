@@ -15,9 +15,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Intent intent = new Intent(this, ChoosePDFActivity.class);
-		intent.putExtra(Consts.KEY_CHOOSE_PDF, true);
-		startActivity(intent);
-		finish();
+//		Intent intent = new Intent(this, ChoosePDFActivity.class);
+//		intent.putExtra(Consts.KEY_CHOOSE_PDF, true);
+//		startActivity(intent);
+//		finish();
 	}
 }
