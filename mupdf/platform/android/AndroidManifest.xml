@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pdfframework"
+    package="com.cendrex"
     android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -13,13 +13,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.cendrex.CendrexApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.pdfframework.activity.MainActivity"
+            android:name="com.cendrex.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pdfframework.mupdf.ChoosePDFActivity"
+            android:name="com.pcom.cendrex.mupdf.ChoosePDFActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light" >
         </activity>
         <activity
-            android:name="com.pdfframework.mupdf.MuPDFActivity"
+            android:name="com.pcom.cendrex.mupdf.MuPDFActivity"
             android:label="@string/app_name"
             android:theme="@style/AppBaseTheme" >
             <intent-filter>
@@ -92,12 +93,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pdfframework.mupdf.OutlineActivity"
+            android:name="com.pcom.cendrex.mupdf.OutlineActivity"
             android:label="@string/mupdf_outline_title"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.pdfframework.mupdf.PrintDialogActivity"
+            android:name="com.pcom.cendrex.mupdf.PrintDialogActivity"
             android:label="@string/print"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>

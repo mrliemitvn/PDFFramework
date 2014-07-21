@@ -55,11 +55,14 @@
     <string name="accept">Accept</string>
 
     <!-- PDFFramework string -->
-    <string name="app_name">PDFFramework</string>
+    <string name="app_name">Cendrex</string>
     <string name="version">1.0</string>
     <string name="pitch_menu">PITCH</string>
     <string name="docs_menu">DOCS</string>
     <string name="new_menu">NEW</string>
     <string name="call_1_800_menu">1&#45;800</string>
+    <string name="title_choose_file_language">Choose language of files</string>
+    <string name="setting_language_en">English</string>
+    <string name="setting_language_fr">French</string>
 
 </resources>

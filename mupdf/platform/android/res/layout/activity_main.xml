@@ -30,6 +30,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.1"
                 android:text="@string/pitch_menu"
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
@@ -41,6 +45,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.1"
                 android:text="@string/docs_menu"
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
@@ -60,6 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.1"
                 android:text="@string/new_menu"
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
@@ -71,11 +83,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.1"
                 android:text="@string/call_1_800_menu"
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/first_screen_setting_state" />
 
 </RelativeLayout>
