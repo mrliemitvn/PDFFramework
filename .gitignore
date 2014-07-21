@@ -6,3 +6,6 @@ bin/
 
 #Android gen folder.
 gen/
+
+#DS_STORE
+.DS_Store
