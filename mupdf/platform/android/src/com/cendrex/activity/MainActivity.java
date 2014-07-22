@@ -1,15 +1,22 @@
 package com.cendrex.activity;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -17,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cendrex.R;
-import com.cendrex.mupdf.ChoosePDFActivity;
 import com.cendrex.mupdf.MuPDFActivity;
 import com.cendrex.utils.Consts;
 import com.cendrex.utils.SharePrefs;
@@ -25,7 +31,10 @@ import com.cendrex.utils.SharePrefs;
 public class MainActivity extends Activity implements OnClickListener {
 
 	private static final int PITCH_TYPE = 0;
-	private static final int NEW_TYPE = 1;
+	private static final int DOC_TYPE = 1;
+	private static final int NEW_TYPE = 2;
+	private static final int FIRST = 1;
+	private static final int SECOND = 2;
 
 	/* View elements. */
 	private ImageView mImgSetting;
@@ -84,6 +93,51 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Open file.
+	 * 
+	 * @param type
+	 */
+	private void openFile(int type, int order) {
+		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
+		Uri uri = null;
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
+					+ "CENDREX_Access_Doors_Catalog_2014_HR_Doc_en.pdf").getAbsolutePath()));
+		}
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
+					+ "CENDREX_Porte_Acces_Catalogue_2014_HR_Doc_fr.pdf").getAbsolutePath()));
+		}
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && FIRST == order) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Advantage_2013_Pitch_en_1.pdf")
+					.getAbsolutePath()));
+		}
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && SECOND == order) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_en_2.pdf")
+					.getAbsolutePath()));
+		}
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && FIRST == order) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Avantage_2013_Pitch_fr_1.pdf")
+					.getAbsolutePath()));
+		}
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && SECOND == order) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_fr_2.pdf")
+					.getAbsolutePath()));
+		}
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && type == NEW_TYPE) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "New_Products_en.pdf").getAbsolutePath()));
+		}
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && type == NEW_TYPE) {
+			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "Nouveaux_Produits_fr.pdf")
+					.getAbsolutePath()));
+		}
+		Intent intentOpenDocFile = new Intent(this, MuPDFActivity.class);
+		intentOpenDocFile.setAction(Intent.ACTION_VIEW);
+		intentOpenDocFile.setData(uri);
+		startActivity(intentOpenDocFile);
+	}
+
+	/**
 	 * Show file name to open.
 	 * 
 	 * @param type
@@ -113,14 +167,16 @@ public class MainActivity extends Activity implements OnClickListener {
 			rlFile1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Open PITCH file 1 in English or French.
+					// Open PITCH file 1 in English or French.
+					openFile(PITCH_TYPE, FIRST);
 					dialog.dismiss();
 				}
 			});
 			rlFile2.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Open PITCH file 2 in English or French.
+					// Open PITCH file 2 in English or French.
+					openFile(PITCH_TYPE, SECOND);
 					dialog.dismiss();
 				}
 			});
@@ -143,7 +199,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			rlFile2.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Open NEW file in English or French.
+					// Open NEW file in English or French.
+					openFile(NEW_TYPE, 0);
 					dialog.dismiss();
 				}
 			});
@@ -153,6 +210,47 @@ public class MainActivity extends Activity implements OnClickListener {
 		dialog.show();
 	}
 
+	private void copyAssets() {
+		AssetManager assetManager = getAssets();
+		String[] files = null;
+		try {
+			files = assetManager.list("");
+		} catch (IOException e) {
+			Log.e("tag", "Failed to get asset file list.", e);
+		}
+		ProgressDialog dialog = ProgressDialog
+				.show(this, null, getResources().getString(R.string.loading), true, false);
+		for (String filename : files) {
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				in = assetManager.open(filename);
+				File outFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+						+ "cendrex" + File.separator, filename);
+				if (!outFile.exists()) {
+					out = new FileOutputStream(outFile);
+					copyFile(in, out);
+					out.flush();
+					out.close();
+					out = null;
+				}
+				in.close();
+				in = null;
+			} catch (IOException e) {
+				Log.e("tag", "Failed to copy asset file: " + filename, e);
+			}
+		}
+		dialog.dismiss();
+	}
+
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[1024];
+		int read;
+		while ((read = in.read(buffer)) != -1) {
+			out.write(buffer, 0, read);
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -160,11 +258,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// Initialize view.
 		init();
-		// TODO Class find pdf files.
-//		 Intent intent = new Intent(this, ChoosePDFActivity.class);
-//		 intent.putExtra(Consts.KEY_CHOOSE_PDF, true);
-//		 startActivity(intent);
-//		 finish();
+
+		// Copy assets to internal storage.
+		copyAssets();
 	}
 
 	@Override
@@ -189,15 +285,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			showFilesToOpen(PITCH_TYPE);
 			break;
 		case R.id.tvDocs:
-			// TODO: Open Doc file.
-			Uri uri = Uri
-					.parse((new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-							+ "cendrex" + File.separator + "DOC_EN_CENDREX_Access_Doors_Catalog_2014_HR.pdf")
-							.getAbsolutePath()));
-			Intent intentOpenDocFile = new Intent(this, MuPDFActivity.class);
-			intentOpenDocFile.setAction(Intent.ACTION_VIEW);
-			intentOpenDocFile.setData(uri);
-			startActivity(intentOpenDocFile);
+			// Open Doc file.
+			openFile(DOC_TYPE, 0);
 			break;
 		case R.id.tvNew:
 			showFilesToOpen(NEW_TYPE);
