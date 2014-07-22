@@ -54,7 +54,7 @@
     <string name="print">Print</string>
     <string name="accept">Accept</string>
 
-    <!-- PDFFramework string -->
+    <!-- Project string -->
     <string name="app_name">Cendrex</string>
     <string name="version">1.0</string>
     <string name="pitch_menu">PITCH</string>
@@ -62,7 +62,19 @@
     <string name="new_menu">NEW</string>
     <string name="call_1_800_menu">1&#45;800</string>
     <string name="title_choose_file_language">Choose language of files</string>
+    <string name="title_choose_file_to_open">Choose file to open</string>
     <string name="setting_language_en">English</string>
     <string name="setting_language_fr">French</string>
+
+    <!-- Files name -->
+    <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>
+    <string name="first_screen_pitch_file_2_en">CENDREX CTA flyer</string>
+    <string name="first_screen_pitch_file_1_fr">CENDREX Avantage 2013</string>
+    <string name="first_screen_pitch_file_2_fr">CENDREX CTA flyer</string>
+    <string name="first_screen_doc_file_en">CENDREX Access Doors Catalog 2014 HR</string>
+    <string name="first_screen_doc_file_fr">CENDREX Porte Accès Catalogue 2014 HR</string>
+    <string name="first_screen_new_file_en">New Products</string>
+    <string name="first_screen_new_file_fr">Nouveaux Produits</string>
+    <string name="first_screen_new_video_file">CENDREX CTA Adjustable Access Door</string>
 
 </resources>

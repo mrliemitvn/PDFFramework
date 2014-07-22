@@ -15,8 +15,8 @@
 #include "mupdf/fitz.h"
 #include "mupdf/pdf.h"
 
-#define JNI_FN(A) Java_com_pdfframework_mupdf_ ## A
-#define PACKAGENAME "com/pdfframework/mupdf"
+#define JNI_FN(A) Java_com_cendrex_mupdf_ ## A
+#define PACKAGENAME "com/cendrex/mupdf"
 
 #define LOG_TAG "libmupdf"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)

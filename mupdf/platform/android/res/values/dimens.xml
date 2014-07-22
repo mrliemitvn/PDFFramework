@@ -3,5 +3,6 @@
     <!-- Project dimen -->
     <dimen name="first_screen_menu">40dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
 
 </resources>
