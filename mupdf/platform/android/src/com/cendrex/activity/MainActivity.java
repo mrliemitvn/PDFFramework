@@ -10,10 +10,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -210,39 +212,20 @@ public class MainActivity extends Activity implements OnClickListener {
 		dialog.show();
 	}
 
+	/**
+	 * Copy all assets files to storage.
+	 */
 	private void copyAssets() {
-		AssetManager assetManager = getAssets();
-		String[] files = null;
-		try {
-			files = assetManager.list("");
-		} catch (IOException e) {
-			Log.e("tag", "Failed to get asset file list.", e);
-		}
-		ProgressDialog dialog = ProgressDialog
-				.show(this, null, getResources().getString(R.string.loading), true, false);
-		for (String filename : files) {
-			InputStream in = null;
-			OutputStream out = null;
-			try {
-				in = assetManager.open(filename);
-				File outFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-						+ "cendrex" + File.separator, filename);
-				if (!outFile.exists()) {
-					out = new FileOutputStream(outFile);
-					copyFile(in, out);
-					out.flush();
-					out.close();
-					out = null;
-				}
-				in.close();
-				in = null;
-			} catch (IOException e) {
-				Log.e("tag", "Failed to copy asset file: " + filename, e);
-			}
-		}
-		dialog.dismiss();
+		new CopyAssetsAsyn(this).execute();
 	}
 
+	/**
+	 * Copy file.
+	 * 
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	private void copyFile(InputStream in, OutputStream out) throws IOException {
 		byte[] buffer = new byte[1024];
 		int read;
@@ -297,6 +280,63 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		default:
 			break;
+		}
+	}
+
+	/**
+	 * Class copy all assets files.
+	 */
+	private class CopyAssetsAsyn extends AsyncTask<Void, Void, Void> {
+
+		private Context context;
+		private ProgressDialog dialog;
+
+		private CopyAssetsAsyn(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(context, null, getResources().getString(R.string.loading), true, false);
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			AssetManager assetManager = getAssets();
+			String[] files = null;
+			try {
+				files = assetManager.list("");
+			} catch (IOException e) {
+				Log.e("tag", "Failed to get asset file list.", e);
+			}
+			for (String filename : files) {
+				InputStream in = null;
+				OutputStream out = null;
+				try {
+					in = assetManager.open(filename);
+					File outFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+							+ File.separator + "cendrex" + File.separator, filename);
+					if (!outFile.exists()) {
+						out = new FileOutputStream(outFile);
+						copyFile(in, out);
+						out.flush();
+						out.close();
+						out = null;
+					}
+					in.close();
+					in = null;
+				} catch (IOException e) {
+					Log.e("tag", "Failed to copy asset file: " + filename, e);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			dialog.dismiss();
 		}
 	}
 }
