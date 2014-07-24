@@ -194,7 +194,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			rlFile1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Open Video file.
+					// Open Video file.
+					Intent intent = new Intent(MainActivity.this, PlayVideoActivity.class);
+					startActivity(intent);
 					dialog.dismiss();
 				}
 			});

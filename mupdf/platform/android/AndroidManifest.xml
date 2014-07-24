@@ -102,6 +102,8 @@
             android:label="@string/print"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
+        <activity android:name="com.cendrex.activity.PlayVideoActivity" >
+        </activity>
     </application>
 
 </manifest>
