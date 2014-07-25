@@ -4,6 +4,7 @@
     <!-- Common color -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 
     <!-- MUPDF color -->
     <color name="mupdf_page_indicator">#C0202020</color>

@@ -83,7 +83,7 @@
                     android:background="@drawable/mupdf_button"
                     android:contentDescription="@string/mupdf_search_document"
                     android:src="@drawable/ic_mupdf_magnifying_glass" />
-                
+
                 <ImageButton
                     android:id="@+id/mupdf_emailButton"
                     android:layout_width="wrap_content"
@@ -412,6 +412,17 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lvTableContents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/mupdf_lowerButtons"
+        android:layout_below="@id/mupdf_switcher"
+        android:background="#ff0000"
+        android:dividerHeight="@dimen/divider_height"
+        android:listSelector="@color/transparent" >
+    </ListView>
 
     <TextView
         android:id="@+id/mupdf_info"
