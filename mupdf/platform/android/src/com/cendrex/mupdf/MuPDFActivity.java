@@ -1,7 +1,10 @@
 package com.cendrex.mupdf;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -29,12 +33,15 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.cendrex.R;
+import com.cendrex.adapter.TableContentsAdapter;
+import com.cendrex.resource.TableOfContents;
 
 class ThreadPerTaskExecutor implements Executor {
 	public void execute(Runnable r) {
@@ -91,6 +98,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private AsyncTask<Void, Void, MuPDFAlert> mAlertTask;
 	private AlertDialog mAlertDialog;
 	private FilePicker mFilePicker;
+
+	private ListView mLvTableContents;
+	private TableContentsAdapter tableContentsAdapter;
+	private ArrayList<TableOfContents> listTableOfContents;
 
 	public void createAlertWaiter() {
 		mAlertsActive = true;
@@ -428,6 +439,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		// controls in variables
 		makeButtonsView();
 
+		// Setup table of contents list view.
+		setUpTableContentsListView();
+
 		// Set up the page slider
 		int smax = Math.max(core.countPages() - 1, 1);
 		mPageSliderRes = ((10 + smax - 1) / smax) * 2;
@@ -536,20 +550,27 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 		});
 
-		if (core.hasOutline()) {
-			mOutlineButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					OutlineItem outline[] = core.getOutline();
-					if (outline != null) {
-						OutlineActivityData.get().items = outline;
-						Intent intent = new Intent(MuPDFActivity.this, OutlineActivity.class);
-						startActivityForResult(intent, OUTLINE_REQUEST);
-					}
-				}
-			});
-		} else {
-			mOutlineButton.setVisibility(View.GONE);
-		}
+		// TODO: Old outline from library.
+		// if (core.hasOutline()) {
+		// mOutlineButton.setOnClickListener(new View.OnClickListener() {
+		// public void onClick(View v) {
+		// OutlineItem outline[] = core.getOutline();
+		// if (outline != null) {
+		// OutlineActivityData.get().items = outline;
+		// Intent intent = new Intent(MuPDFActivity.this, OutlineActivity.class);
+		// startActivityForResult(intent, OUTLINE_REQUEST);
+		// }
+		// }
+		// });
+		// } else {
+		// mOutlineButton.setVisibility(View.GONE);
+		// }
+		mOutlineButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
 
 		// Brightness button.
 		mBrightnessButton.setOnClickListener(new View.OnClickListener() {
@@ -591,7 +612,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				getWindow().setAttributes(layoutParams);
 			}
 		});
-		
+
 		// Email button.
 		mEmailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -599,7 +620,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				Uri uri = getIntent().getData();
 				Intent intent = new Intent(Intent.ACTION_SEND);
 				intent.setType("text/plain");
-				intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"email@example.com"});
+				intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "email@example.com" });
 				intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
 				intent.putExtra(Intent.EXTRA_TEXT, "body text");
 				intent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -900,12 +921,41 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mBrightnessButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_brightnessButton);
 		mBrightnessSlide = (SeekBar) mButtonsView.findViewById(R.id.mupdf_brightnessSlider);
 		mEmailButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_emailButton);
+
+		mLvTableContents = (ListView) mButtonsView.findViewById(R.id.lvTableContents);
+
 		mBrightnessButton.setSelected(false);
 		mBrightnessSlide.setVisibility(View.GONE);
 		mTopBarSwitcher.setVisibility(View.INVISIBLE);
 		mPageNumberView.setVisibility(View.INVISIBLE);
 		mInfoView.setVisibility(View.INVISIBLE);
 		mPageSlider.setVisibility(View.INVISIBLE);
+	}
+
+	private void setUpTableContentsListView() {
+		listTableOfContents = new ArrayList<TableOfContents>();
+		XmlResourceParser xmlParser = getResources().getXml(R.xml.table_contents_data_en);
+		try {
+			int eventType = xmlParser.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				// instead of the following if/else if lines
+				// you should custom parse your xml
+				if (eventType == XmlPullParser.START_DOCUMENT) {
+					System.out.println("Start document");
+				} else if (eventType == XmlPullParser.START_TAG) {
+					System.out.println("Start tag " + xmlParser.getName());
+				} else if (eventType == XmlPullParser.END_TAG) {
+					System.out.println("End tag " + xmlParser.getName());
+				} else if (eventType == XmlPullParser.TEXT) {
+					System.out.println("Text " + xmlParser.getText());
+				}
+				eventType = xmlParser.next();
+			}
+			// indicate app done reading the resource.
+			xmlParser.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void OnMoreButtonClick(View v) {
