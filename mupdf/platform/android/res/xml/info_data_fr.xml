@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<info>
+
+    <data page="4" >
+        <item>CTA_CENDREX_fiche_technique</item>
+    </data>
+    <data page="5" >
+        <item>CTA_CENDREX_fiche_technique</item>
+    </data>
+    <data page="6" >
+        <item>CTA_CENDREX_fiche_technique</item>
+    </data>
+    <data page="7" >
+        <item>CTA_CENDREX_fiche_technique</item>
+    </data>
+    <data page="8" >
+        <item>CTR_CENDREX_fiche_technique</item>
+        <item>CTR_Neoprene_CENDREX_fiche_technique</item>
+    </data>
+    <data page="9" >
+        <item>AHD_CENDREX_fiche_technique</item>
+        <item>AHD_GYP_CENDREX_fiche_technique</item>
+        <item>AHD_Neoprene_CENDREX_fiche_technique</item>
+    </data>
+    <data page="10" >
+        <item>PFI_CENDREX_fiche_technique</item>
+        <item>PFI_GYP_CENDREX_fiche_technique</item>
+        <item>PFI_PLY_CENDREX_fiche_technique</item>
+    </data>
+    <data page="11" >
+        <item>PFI_CENDREX_fiche_technique</item>
+        <item>PFI_GYP_CENDREX_fiche_technique</item>
+        <item>PFI_PLY_CENDREX_fiche_technique</item>
+    </data>
+    <data page="12" >
+        <item>PFU_CENDREX_fiche_technique</item>
+    </data>
+    <data page="13" >
+        <item>PFN_CENDREX_fiche_technique</item>
+        <item>PFN_GYP_CENDREX_fiche_technique</item>
+        <item>PFN_PLY_CENDREX_fiche_technique</item>
+    </data>
+    <data page="14" >
+        <item>AHA_CENDREX_fiche_technique</item>
+        <item>AHA_GYP_CENDREX_fiche_technique</item>
+        <item>AHA_PLY_CENDREX_fiche_technique</item>
+    </data>
+    <data page="15" >
+        <item>LHD_CENDREX_fiche_technique</item>
+        <item>LHD_180_CENDREX_fiche_technique</item>
+    </data>
+    <data page="16" >
+        <item>PAL_CENDREX_fiche_technique</item>
+    </data>
+    <data page="17" >
+        <item>DRD_CENDREX_fiche_technique</item>
+    </data>
+    <data page="18" >
+        <item>SFM_CENDREX_fiche_technique</item>
+        <item>RPL_CENDREX_fiche_technique</item>
+    </data>
+    <data page="19" >
+        <item>BTA_BTV_CENDREX_fiche_technique</item>
+    </data>
+    <data page="20" >
+        <item>MDS_CENDREX_fiche_technique</item>
+    </data>
+    <data page="21" >
+        <item>PHS_CENDREX_fiche_technique</item>
+    </data>
+    <data page="22" >
+        <item>PPA_CENDREX_fiche_technique</item>
+        <item>PPA_RE_CENDREX_fiche_technique</item>
+    </data>
+    <data page="23" >
+        <item>TRH_CENDREX_fiche_technique</item>
+    </data>
+
+</info>

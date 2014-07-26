@@ -49,11 +49,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/mupdf_brightnessButton"
+                    android:layout_toLeftOf="@+id/mupdf_infoButton"
                     android:background="@drawable/mupdf_button"
                     android:contentDescription="@string/mupdf_toggle_reflow_mode"
                     android:src="@drawable/ic_mupdf_reflow"
                     android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/mupdf_infoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/mupdf_brightnessButton"
+                    android:background="@drawable/mupdf_button"
+                    android:contentDescription="@string/empty"
+                    android:src="@drawable/ic_mupdf_info" />
 
                 <ImageButton
                     android:id="@+id/mupdf_brightnessButton"
@@ -62,6 +72,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/mupdf_outlineButton"
                     android:background="@drawable/mupdf_button"
+                    android:contentDescription="@string/empty"
                     android:src="@drawable/ic_mupdf_brightness" />
 
                 <ImageButton
@@ -413,13 +424,40 @@
             android:textColor="#FFFFFF" />
     </RelativeLayout>
 
+    <SeekBar
+        android:id="@+id/pageSliderHide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="0dp"
+        android:background="@color/mupdf_toolbar"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:progressDrawable="@drawable/mupdf_seek_progress"
+        android:thumb="@drawable/mupdf_seek_thumb"
+        android:visibility="invisible" />
+
+    <ListView
+        android:id="@+id/lvInfoFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pageSliderHide"
+        android:layout_below="@id/mupdf_switcher"
+        android:background="@color/white"
+        android:dividerHeight="@dimen/divider_height"
+        android:listSelector="@color/transparent" >
+    </ListView>
+
     <ListView
         android:id="@+id/lvTableContents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/mupdf_lowerButtons"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pageSliderHide"
         android:layout_below="@id/mupdf_switcher"
-        android:background="#ff0000"
+        android:background="@color/white"
         android:dividerHeight="@dimen/divider_height"
         android:listSelector="@color/transparent" >
     </ListView>

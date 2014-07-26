@@ -1,5 +1,6 @@
 package com.cendrex.mupdf;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -21,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
@@ -31,6 +33,8 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -40,8 +44,12 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.cendrex.R;
+import com.cendrex.adapter.InfoFilesAdapter;
 import com.cendrex.adapter.TableContentsAdapter;
+import com.cendrex.resource.InfoResource;
 import com.cendrex.resource.TableOfContents;
+import com.cendrex.utils.Consts;
+import com.cendrex.utils.SharePrefs;
 
 class ThreadPerTaskExecutor implements Executor {
 	public void execute(Runnable r) {
@@ -89,6 +97,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private ImageButton mBrightnessButton;
 	private SeekBar mBrightnessSlide;
 	private ImageButton mEmailButton;
+	private ImageButton mInfoButton;
 	private SearchTask mSearchTask;
 	private AlertDialog.Builder mAlertBuilder;
 	private boolean mLinkHighlight = false;
@@ -102,6 +111,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private ListView mLvTableContents;
 	private TableContentsAdapter tableContentsAdapter;
 	private ArrayList<TableOfContents> listTableOfContents;
+
+	private ListView mLvInfoFiles;
+	private InfoFilesAdapter infoFilesAdapter;
+	private ArrayList<InfoResource> listInfoResources;
 
 	public void createAlertWaiter() {
 		mAlertsActive = true;
@@ -439,9 +452,6 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		// controls in variables
 		makeButtonsView();
 
-		// Setup table of contents list view.
-		setUpTableContentsListView();
-
 		// Set up the page slider
 		int smax = Math.max(core.countPages() - 1, 1);
 		mPageSliderRes = ((10 + smax - 1) / smax) * 2;
@@ -568,7 +578,45 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mOutlineButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				mOutlineButton.setSelected(!mOutlineButton.isSelected());
+				if (mOutlineButton.isSelected()) {
+					mBrightnessButton.setSelected(false);
+					mInfoButton.setSelected(false);
+					mBrightnessSlide.setVisibility(View.GONE);
+					mLvInfoFiles.setVisibility(View.GONE);
+					mLvTableContents.setVisibility(View.VISIBLE);
+				} else {
+					mLvTableContents.setVisibility(View.GONE);
+				}
+			}
+		});
 
+		mInfoButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (listInfoResources == null || listInfoResources.size() <= 0) return;
+				if (!mInfoButton.isSelected()) {
+					InfoResource infoResourceCurrentPage = null;
+					for (InfoResource infoResource : listInfoResources) {
+						int pageHasInfoFiles = Integer.parseInt(infoResource.page) - 1;
+						int currentPage = mDocView.getDisplayedViewIndex();
+						if (pageHasInfoFiles == currentPage) {
+							infoResourceCurrentPage = infoResource;
+							break;
+						}
+					}
+					if (infoResourceCurrentPage == null) return;
+					infoFilesAdapter = new InfoFilesAdapter(MuPDFActivity.this, infoResourceCurrentPage.listFileName);
+					mBrightnessButton.setSelected(false);
+					mOutlineButton.setSelected(false);
+					mBrightnessSlide.setVisibility(View.GONE);
+					mLvTableContents.setVisibility(View.GONE);
+					mLvInfoFiles.setAdapter(infoFilesAdapter);
+					mLvInfoFiles.setVisibility(View.VISIBLE);
+				} else {
+					mLvInfoFiles.setVisibility(View.GONE);
+				}
+				mInfoButton.setSelected(!mInfoButton.isSelected());
 			}
 		});
 
@@ -578,6 +626,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			public void onClick(View v) {
 				mBrightnessButton.setSelected(!mBrightnessButton.isSelected());
 				if (mBrightnessButton.isSelected()) {
+					mOutlineButton.setSelected(false);
+					mInfoButton.setSelected(false);
+					mLvTableContents.setVisibility(View.GONE);
+					mLvInfoFiles.setVisibility(View.GONE);
 					try {
 						float curBrightnessValue = android.provider.Settings.System.getInt(getContentResolver(),
 								android.provider.Settings.System.SCREEN_BRIGHTNESS);
@@ -625,6 +677,39 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				intent.putExtra(Intent.EXTRA_TEXT, "body text");
 				intent.putExtra(Intent.EXTRA_STREAM, uri);
 				startActivity(Intent.createChooser(intent, "Send email..."));
+			}
+		});
+
+		// List table of contents.
+		mLvTableContents.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				TableOfContents tableOfContents = (TableOfContents) parent.getItemAtPosition(position);
+				if (tableOfContents != null) {
+					mOutlineButton.setSelected(false);
+					mLvTableContents.setVisibility(View.GONE);
+					int page = Integer.parseInt(tableOfContents.page);
+					if (page > 1) mDocView.setDisplayedViewIndex(page - 1);
+				}
+			}
+
+		});
+
+		// List info files.
+		mLvInfoFiles.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				String fileName = (String) parent.getItemAtPosition(position);
+				if (!TextUtils.isEmpty(fileName)) {
+					mInfoButton.setSelected(false);
+					mLvInfoFiles.setVisibility(View.GONE);
+					Uri uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + fileName + ".pdf")
+							.getAbsolutePath()));
+					Intent intentOpenFile = new Intent(MuPDFActivity.this, MuPDFActivity.class);
+					intentOpenFile.setAction(Intent.ACTION_VIEW);
+					intentOpenFile.setData(uri);
+					startActivity(intentOpenFile);
+				}
 			}
 		});
 
@@ -921,33 +1006,92 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mBrightnessButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_brightnessButton);
 		mBrightnessSlide = (SeekBar) mButtonsView.findViewById(R.id.mupdf_brightnessSlider);
 		mEmailButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_emailButton);
+		mInfoButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_infoButton);
 
 		mLvTableContents = (ListView) mButtonsView.findViewById(R.id.lvTableContents);
+		int paddingMedium = getResources().getDimensionPixelSize(R.dimen.margin_medium);
+		TextView tvTableContents = new TextView(this);
+		tvTableContents.setText(R.string.title_table_of_contents);
+		tvTableContents.setTextColor(getResources().getColor(R.color.black));
+		tvTableContents.setTextSize(getResources().getDimensionPixelSize(R.dimen.text_size_medium));
+		tvTableContents.setPadding(paddingMedium, paddingMedium, paddingMedium, paddingMedium);
+		mLvTableContents.addHeaderView(tvTableContents);
 
+		mLvInfoFiles = (ListView) mButtonsView.findViewById(R.id.lvInfoFiles);
+
+		mOutlineButton.setSelected(false);
 		mBrightnessButton.setSelected(false);
 		mBrightnessSlide.setVisibility(View.GONE);
 		mTopBarSwitcher.setVisibility(View.INVISIBLE);
 		mPageNumberView.setVisibility(View.INVISIBLE);
 		mInfoView.setVisibility(View.INVISIBLE);
 		mPageSlider.setVisibility(View.INVISIBLE);
+		mLvTableContents.setVisibility(View.GONE);
+		mLvInfoFiles.setVisibility(View.GONE);
+
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null && bundle.containsKey(Consts.OPEN_DOC_FILE)
+				&& bundle.getBoolean(Consts.OPEN_DOC_FILE, false)) {
+			mOutlineButton.setVisibility(View.VISIBLE);
+			mInfoButton.setVisibility(View.VISIBLE);
+			// Setup table of contents list view.
+			setUpTableContentsListView();
+			// Setup list info files.
+			setUpInfoFileListView();
+		} else {
+			mOutlineButton.setVisibility(View.GONE);
+			mInfoButton.setVisibility(View.GONE);
+		}
 	}
 
 	private void setUpTableContentsListView() {
+		if (tableContentsAdapter != null && tableContentsAdapter.getCount() > 0) return;
 		listTableOfContents = new ArrayList<TableOfContents>();
-		XmlResourceParser xmlParser = getResources().getXml(R.xml.table_contents_data_en);
+		XmlResourceParser xmlParser = null;
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			xmlParser = getResources().getXml(R.xml.table_contents_data_en);
+		} else {
+			xmlParser = getResources().getXml(R.xml.table_contents_data_fr);
+		}
 		try {
 			int eventType = xmlParser.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
-				// instead of the following if/else if lines
-				// you should custom parse your xml
-				if (eventType == XmlPullParser.START_DOCUMENT) {
-					System.out.println("Start document");
-				} else if (eventType == XmlPullParser.START_TAG) {
-					System.out.println("Start tag " + xmlParser.getName());
-				} else if (eventType == XmlPullParser.END_TAG) {
-					System.out.println("End tag " + xmlParser.getName());
+				if (eventType == XmlPullParser.START_TAG && "item".equals(xmlParser.getName())) {
+					TableOfContents tableOfContents = new TableOfContents();
+					tableOfContents.page = xmlParser.getAttributeValue(0);
+					tableOfContents.title = xmlParser.getAttributeValue(1);
+					listTableOfContents.add(tableOfContents);
+				}
+				eventType = xmlParser.next();
+			}
+			// indicate app done reading the resource.
+			xmlParser.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		tableContentsAdapter = new TableContentsAdapter(this, listTableOfContents);
+		mLvTableContents.setAdapter(tableContentsAdapter);
+	}
+
+	private void setUpInfoFileListView() {
+		if (listInfoResources != null && listInfoResources.size() > 0) return;
+		listInfoResources = new ArrayList<InfoResource>();
+		XmlResourceParser xmlParser = null;
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			xmlParser = getResources().getXml(R.xml.info_data_en);
+		} else {
+			xmlParser = getResources().getXml(R.xml.info_data_fr);
+		}
+		try {
+			int eventType = xmlParser.getEventType();
+			InfoResource infoResource = null;
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				if (eventType == XmlPullParser.START_TAG && "data".equals(xmlParser.getName())) {
+					infoResource = new InfoResource();
+					infoResource.page = xmlParser.getAttributeValue(0);
+					listInfoResources.add(infoResource);
 				} else if (eventType == XmlPullParser.TEXT) {
-					System.out.println("Text " + xmlParser.getText());
+					if (infoResource != null) infoResource.listFileName.add(xmlParser.getText());
 				}
 				eventType = xmlParser.next();
 			}

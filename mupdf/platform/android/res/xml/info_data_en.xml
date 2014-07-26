@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<info>
+
+    <data page="4" >
+        <item>CTA_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="5" >
+        <item>CTA_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="6" >
+        <item>CTA_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="7" >
+        <item>CTA_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="8" >
+        <item>CTR_60_CENDREX_Technical_Data_Sheet</item>
+        <item>CTA_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="9" >
+        <item>AHD_60_CENDREX_Technical_Data_Sheet</item>
+        <item>AHD_CENDREX_Technical_Data_Sheet</item>
+        <item>AHD_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>AHD_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="10" >
+        <item>PFI_CENDREX_Technical_Data_Sheet</item>
+        <item>PFI_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>PFI_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="11" >
+        <item>PFI_CENDREX_Technical_Data_Sheet</item>
+        <item>PFI_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>PFI_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="12" >
+        <item>PFU_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="13" >
+        <item>PFN_CENDREX_Technical_Data_Sheet</item>
+        <item>PFN_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>PFN_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="14" >
+        <item>AHA_CENDREX_Technical_Data_Sheet</item>
+        <item>AHA_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>AHA_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="15" >
+        <item>LHD_180_CENDREX_Technical_Data</item>
+        <item>LHD_CENDREX_Technical_Data_Sheet</item>
+        <item>LHD_GYP_CENDREX_Technical_Data_Sheet</item>
+        <item>LHD_PLY_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="16" >
+        <item>PAL_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="17" >
+        <item>DRD_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="18" >
+        <item>SFM_CENDREX_Technical_Data_Sheet</item>
+        <item>RPL_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="19" >
+        <item>BTA_BTV_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="20" >
+        <item>MDS_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="21" >
+        <item>PHS_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="22" >
+        <item>PPA_CENDREX_Technical_Data_Sheet</item>
+        <item>PPA_RE_CENDREX_Technical_Data_Sheet</item>
+    </data>
+    <data page="23" >
+        <item>TRH_CENDREX_Technical_Data_Sheet</item>
+    </data>
+
+</info>

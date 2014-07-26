@@ -66,6 +66,7 @@
     <string name="setting_language_en">English</string>
     <string name="setting_language_fr">French</string>
     <string name="loading">Loading &#8230;</string>
+    <string name="title_table_of_contents">TABLE OF CONTENTS</string>
 
     <!-- Files name -->
     <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>

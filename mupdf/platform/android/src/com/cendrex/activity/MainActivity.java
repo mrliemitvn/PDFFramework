@@ -101,14 +101,17 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void openFile(int type, int order) {
 		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
+		Intent intentOpenFile = new Intent(this, MuPDFActivity.class);
 		Uri uri = null;
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
 					+ "CENDREX_Access_Doors_Catalog_2014_HR_Doc_en.pdf").getAbsolutePath()));
+			intentOpenFile.putExtra(Consts.OPEN_DOC_FILE, true);
 		}
 		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
 					+ "CENDREX_Porte_Acces_Catalogue_2014_HR_Doc_fr.pdf").getAbsolutePath()));
+			intentOpenFile.putExtra(Consts.OPEN_DOC_FILE, true);
 		}
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && FIRST == order) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Advantage_2013_Pitch_en_1.pdf")
@@ -133,10 +136,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "Nouveaux_Produits_fr.pdf")
 					.getAbsolutePath()));
 		}
-		Intent intentOpenDocFile = new Intent(this, MuPDFActivity.class);
-		intentOpenDocFile.setAction(Intent.ACTION_VIEW);
-		intentOpenDocFile.setData(uri);
-		startActivity(intentOpenDocFile);
+		
+		intentOpenFile.setAction(Intent.ACTION_VIEW);
+		intentOpenFile.setData(uri);
+		startActivity(intentOpenFile);
 	}
 
 	/**

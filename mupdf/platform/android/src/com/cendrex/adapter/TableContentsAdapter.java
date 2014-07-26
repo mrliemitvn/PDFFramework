@@ -19,7 +19,7 @@ public class TableContentsAdapter extends ArrayAdapter<TableOfContents> {
 	private ArrayList<TableOfContents> listTableOfContents;
 
 	public TableContentsAdapter(Context context, ArrayList<TableOfContents> listTableOfContents) {
-		super(context, 0);
+		super(context, 0, listTableOfContents);
 		this.context = context;
 		this.listTableOfContents = listTableOfContents;
 		this.layoutInflater = LayoutInflater.from(context);
@@ -42,6 +42,11 @@ public class TableContentsAdapter extends ArrayAdapter<TableOfContents> {
 		viewHolder.tvTitle.setText(tableOfContents.title);
 
 		return convertView;
+	}
+	
+	@Override
+	public int getCount() {
+		return listTableOfContents.size();
 	}
 
 	class ViewHolder {
