@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.database.Cursor;
@@ -25,6 +26,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -1042,6 +1044,18 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mOutlineButton.setVisibility(View.GONE);
 			mInfoButton.setVisibility(View.GONE);
 		}
+
+		if (isTablet(this)) {
+			DisplayMetrics displaymetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+			int height = displaymetrics.heightPixels;
+			int width = displaymetrics.widthPixels;
+			mLvInfoFiles.getLayoutParams().width = width / 2;
+			mLvInfoFiles.getLayoutParams().height = height / 2;
+			((RelativeLayout.LayoutParams) mLvInfoFiles.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			mLvTableContents.getLayoutParams().width = width / 2;
+			((RelativeLayout.LayoutParams) mLvTableContents.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		}
 	}
 
 	private void setUpTableContentsListView() {
@@ -1332,5 +1346,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mFilePicker = picker;
 		Intent intent = new Intent(this, ChoosePDFActivity.class);
 		startActivityForResult(intent, FILEPICK_REQUEST);
+	}
+
+	public static boolean isTablet(Context context) {
+		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 }

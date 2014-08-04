@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -63,6 +64,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvDocs.setOnClickListener(this);
 		mTvNew.setOnClickListener(this);
 		mTvCall.setOnClickListener(this);
+		
+		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
+		mTvPitch.setTypeface(orbitron);
+		mTvDocs.setTypeface(orbitron);
+		mTvNew.setTypeface(orbitron);
+		mTvCall.setTypeface(orbitron);
 	}
 
 	/**

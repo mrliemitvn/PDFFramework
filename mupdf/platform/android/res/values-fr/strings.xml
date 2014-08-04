@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MUPDF string -->
+    <string name="mupdf_no_media_warning">Storage media not present</string>
+    <string name="mupdf_no_media_hint">Sharing the storage media with a PC can make it inaccessible</string>
+    <string name="mupdf_parent_directory">[Up one level]</string>
+    <string name="mupdf_picker_title_App_Ver_Dir">%1$s %2$s: %3$s</string>
+    <string name="mupdf_cannot_open_document_Reason">Cannot open document: %1$s</string>
+    <string name="mupdf_cannot_open_file_Path">Cannot open file: %1$s</string>
+    <string name="mupdf_cannot_open_document">Cannot open document</string>
+    <string name="mupdf_cannot_open_buffer">Cannot open buffer</string>
+    <string name="mupdf_enter_password">Enter password</string>
+    <string name="mupdf_print_failed">Print failed</string>
+    <string name="mupdf_entering_reflow_mode">Entering reflow mode</string>
+    <string name="mupdf_format_currently_not_supported">Format currently not supported</string>
+    <string name="mupdf_copy_text">copy text</string>
+    <string name="mupdf_select_text">Select text</string>
+    <string name="mupdf_highlight">Highlight</string>
+    <string name="mupdf_underline">Underline</string>
+    <string name="mupdf_strike_out">Strike-out</string>
+    <string name="mupdf_ink">Ink</string>
+    <string name="mupdf_draw_annotation">Draw annotation</string>
+    <string name="mupdf_copied_to_clipboard">Copied to clipboard</string>
+    <string name="mupdf_copy_text_to_the_clipboard">Copy text to the clipboard</string>
+    <string name="mupdf_no_text_selected">No text selected</string>
+    <string name="mupdf_nothing_to_save">Nothing to save</string>
+    <string name="mupdf_document_has_changes_save_them_">Document has changes. Save them?</string>
+    <string name="mupdf_fill_out_text_field">Fill out text field</string>
+    <string name="mupdf_choose_value">Choose value</string>
+    <string name="mupdf_not_supported">Not supported</string>
+    <string name="mupdf_searching_">Searching&#8230;</string>
+    <string name="mupdf_no_further_occurrences_found">No further occurrences found</string>
+    <string name="mupdf_text_not_found">Text not found</string>
+    <string name="mupdf_leaving_reflow_mode">Leaving reflow mode</string>
+    <string name="mupdf_toggle_links">Highlight and enable links</string>
+    <string name="mupdf_toggle_reflow_mode">Toggle reflow mode</string>
+    <string name="mupdf_outline_title">Table of Contents</string>
+    <string name="mupdf_search_document">Search document</string>
+    <string name="mupdf_search_backwards">Search backwards</string>
+    <string name="mupdf_search_forwards">Search forwards</string>
+    <string name="mupdf_edit_annotations">Edit annotations</string>
+
+    <!-- Common string -->
+    <string name="empty"></string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">Okay</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="more">More</string>
+    <string name="search">Search</string>
+    <string name="delete">Delete</string>
+    <string name="print">Print</string>
+    <string name="accept">Accept</string>
+
+    <!-- Project string -->
+    <string name="app_name">Cendrex</string>
+    <string name="version">1.0</string>
+    <string name="pitch_menu">PITCH</string>
+    <string name="docs_menu">DOCS</string>
+    <string name="new_menu">NOUVEAU</string>
+    <string name="call_1_800_menu">1&#45;800</string>
+    <string name="title_choose_file_language">Choose language of files</string>
+    <string name="title_choose_file_to_open">Choose file to open</string>
+    <string name="setting_language_en">English</string>
+    <string name="setting_language_fr">French</string>
+    <string name="loading">Loading &#8230;</string>
+    <string name="title_table_of_contents">TABLE OF CONTENTS</string>
+
+    <!-- Files name -->
+    <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>
+    <string name="first_screen_pitch_file_2_en">CENDREX CTA flyer</string>
+    <string name="first_screen_pitch_file_1_fr">CENDREX Avantage 2013</string>
+    <string name="first_screen_pitch_file_2_fr">CENDREX CTA flyer</string>
+    <string name="first_screen_doc_file_en">CENDREX Access Doors Catalog 2014 HR</string>
+    <string name="first_screen_doc_file_fr">CENDREX Porte Accès Catalogue 2014 HR</string>
+    <string name="first_screen_new_file_en">New Products</string>
+    <string name="first_screen_new_file_fr">Nouveaux Produits</string>
+    <string name="first_screen_new_video_file">CENDREX CTA Adjustable Access Door</string>
+
+</resources>
