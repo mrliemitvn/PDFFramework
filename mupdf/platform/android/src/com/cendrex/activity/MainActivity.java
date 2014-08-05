@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,11 +15,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,9 +91,11 @@ public class MainActivity extends Activity implements OnClickListener {
 				switch (item) {
 				case 0:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
+					changeLanguage("en");
 					break;
 				case 1:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
+					changeLanguage("fr");
 					break;
 
 				}
@@ -244,6 +249,17 @@ public class MainActivity extends Activity implements OnClickListener {
 		while ((read = in.read(buffer)) != -1) {
 			out.write(buffer, 0, read);
 		}
+	}
+	
+	private void changeLanguage(String lang) {
+		Resources res = getResources();
+	    // Change locale settings in the app.
+	    DisplayMetrics dm = res.getDisplayMetrics();
+	    android.content.res.Configuration conf = res.getConfiguration();
+	    conf.locale = new Locale(lang);
+	    res.updateConfiguration(conf, dm);
+	    
+	    mTvNew.setText(R.string.new_menu);
 	}
 
 	@Override

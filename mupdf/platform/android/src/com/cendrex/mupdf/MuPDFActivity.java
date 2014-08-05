@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
@@ -890,6 +891,14 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		if (mButtonsVisible) {
 			mButtonsVisible = false;
 			hideKeyboard();
+			
+			// TODO
+			mBrightnessButton.setSelected(false);
+			mInfoButton.setSelected(false);
+			mOutlineButton.setSelected(false);
+			mBrightnessSlide.setVisibility(View.GONE);
+			mLvInfoFiles.setVisibility(View.GONE);
+			mLvTableContents.setVisibility(View.GONE);
 
 			Animation anim = new TranslateAnimation(0, 0, 0, -mTopBarSwitcher.getHeight());
 			anim.setDuration(200);
@@ -1017,6 +1026,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		tvTableContents.setTextColor(getResources().getColor(R.color.black));
 		tvTableContents.setTextSize(getResources().getDimensionPixelSize(R.dimen.text_size_medium));
 		tvTableContents.setPadding(paddingMedium, paddingMedium, paddingMedium, paddingMedium);
+		tvTableContents.setBackgroundResource(R.color.white);
 		mLvTableContents.addHeaderView(tvTableContents);
 
 		mLvInfoFiles = (ListView) mButtonsView.findViewById(R.id.lvInfoFiles);
@@ -1050,11 +1060,15 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 			int height = displaymetrics.heightPixels;
 			int width = displaymetrics.widthPixels;
-			mLvInfoFiles.getLayoutParams().width = width / 2;
-			mLvInfoFiles.getLayoutParams().height = height / 2;
-			((RelativeLayout.LayoutParams) mLvInfoFiles.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-			mLvTableContents.getLayoutParams().width = width / 2;
-			((RelativeLayout.LayoutParams) mLvTableContents.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			RelativeLayout.LayoutParams layoutParamInfo = (LayoutParams) mLvInfoFiles.getLayoutParams();
+			RelativeLayout.LayoutParams layoutParamContents = (LayoutParams) mLvTableContents.getLayoutParams(); 
+			layoutParamInfo.width = width / 2;
+			layoutParamInfo.height = height / 2;
+			layoutParamInfo.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			layoutParamContents.width = width / 2;
+			layoutParamContents.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			mLvInfoFiles.setLayoutParams(layoutParamInfo);
+			mLvTableContents.setLayoutParams(layoutParamContents);
 		}
 	}
 

@@ -22,5 +22,6 @@
 
     <!-- Project color -->
     <color name="first_screen_menu_selected">#dddddd</color>
+    <color name="bg_list_info_and_contents">#4C000000</color>
 
 </resources>

@@ -43,16 +43,16 @@
 
     <!-- Common string -->
     <string name="empty"></string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Annuler</string>
     <string name="okay">Okay</string>
-    <string name="dismiss">Dismiss</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="more">More</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
-    <string name="print">Print</string>
-    <string name="accept">Accept</string>
+    <string name="dismiss">Rejeter</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="more">Plus</string>
+    <string name="search">Chercher</string>
+    <string name="delete">Effacer</string>
+    <string name="print">Imprimer</string>
+    <string name="accept">Accepter</string>
 
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
@@ -61,12 +61,12 @@
     <string name="docs_menu">DOCS</string>
     <string name="new_menu">NOUVEAU</string>
     <string name="call_1_800_menu">1&#45;800</string>
-    <string name="title_choose_file_language">Choose language of files</string>
-    <string name="title_choose_file_to_open">Choose file to open</string>
+    <string name="title_choose_file_language">Choisissez la langue de fichiers</string>
+    <string name="title_choose_file_to_open">Choisissez le fichier à ouvrir</string>
     <string name="setting_language_en">English</string>
     <string name="setting_language_fr">French</string>
-    <string name="loading">Loading &#8230;</string>
-    <string name="title_table_of_contents">TABLE OF CONTENTS</string>
+    <string name="loading">Chargement &#8230;</string>
+    <string name="title_table_of_contents">TABLE DES MATIÈRES</string>
 
     <!-- Files name -->
     <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>
