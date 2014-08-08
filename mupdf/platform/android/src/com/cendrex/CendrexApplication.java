@@ -6,6 +6,7 @@ import android.app.Application;
 
 import com.cendrex.utils.Consts;
 import com.cendrex.utils.SharePrefs;
+import com.cendrex.utils.Utils;
 
 public class CendrexApplication extends Application {
 
@@ -19,5 +20,11 @@ public class CendrexApplication extends Application {
 		if (!appFolder.exists()) {
 			appFolder.mkdir();
 		}
+		
+		String language = "en";
+		if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			language = "fr";
+		}
+		Utils.changeLanguage(this, language);
 	}
 }
