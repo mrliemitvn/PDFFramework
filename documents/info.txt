@@ -57,6 +57,43 @@ link pdf: https://www.dropbox.com/s/c58ccq36eencptx/New%20Products.pdf
 link video: y het o tren
 link pdf: https://www.dropbox.com/s/9wunh436wxqemtk/Nouveaux%20Produits.pdf
 
+=======================
+version 2
+dau tien khi chay app, doan video 'intro_video_EN' se duoc chay
+luc mo app se chay theo language mac dinh
+khi doi language cung chay video tuong ung
+khi thoat app bang cach nhan Home, roi vao lai app cung se chay video
+vay la minh se co 3 cases tat ca
+link tablet: https://www.dropbox.com/s/h6fylvm2cud0brp/intro_video_EN.m4v?dl=0
+day la video cho phone: https://www.dropbox.com/s/mourha8ls8ynudc/intro_iphone_EN_640x1136.m4v?dl=0
+
+em khong hien control gi het khi chay video nay
+lam nguoi ta co cam giac khong phai la minh chay video, ma la dang animation
+e chay thu doan video 'img_intro_video_FR' se thay 1 button nam o goc duoi cua man hinh
+tuc la minh phai detect duoc khu vuc do cua video va tat video khi nguoi dung nhan vao
+khi chay het thi e load file background tuong ung len, chinh la file 'img_intro_video_EN.png'
+
+nut 'Share' la de gui email
+tuc la khi an vao, em mo cua so de soan thao email
+day la link icon nut 'Share': https://www.dropbox.com/s/io8k6xscg6gibbm/img_btn_share.png?dl=0
+
+ah dung roi, nut 'Contact me'
+khi an vao thi se thay doi 1 chut
+tren phone thi e se hien 2 option: mail & tel
+nhan mail thi se hien gui email, voi nguoi nhan la 2 email sau day
+"adaveluy@cendrex.com", @"bdesjardins@cendrex.com"
+neu nhan tel thi se goi phone nhu truoc
+con tren tablet thi don gian la hien gui mail nhu o tren
 
 
+2 thay doi nay chi xuat hien khi minh mo file 'Library' thoi
+tuc la mo file catalogue, con cac file pdf khac thi nhu cu em a
+thu 1 la minh show luon cai table of content
+khi vua mo file pdf xong
+thu 2 la button 'Tech Data Sheet' o duoi goc phai man hinh
+no thay the cho button 'i' tren toolbar luc truoc
+em hinh dung duoc khong ?
+o phien ban cu minh co 1 nut i tren toolbar de hien cac file dinh kem voi tung trang
+bay gio ho muon thay nut i do = cai Tech Data Sheet
+tinh nang thi tuong tu, em cung hien list cac file dinh kem, nhan cai nao thi mo file do len
 
