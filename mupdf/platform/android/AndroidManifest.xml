@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cendrex.activity.MainActivity"
+            android:name="com.cendrex.activity.IntroActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,6 +103,8 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
         <activity android:name="com.cendrex.activity.PlayVideoActivity" >
+        </activity>
+        <activity android:name="com.cendrex.activity.MainActivity" >
         </activity>
     </application>
 
