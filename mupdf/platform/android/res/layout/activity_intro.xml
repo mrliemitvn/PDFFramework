@@ -12,10 +12,10 @@
 
     <View
         android:id="@+id/ignoreView"
-        android:layout_width="40dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/intro_btn_height"
         android:layout_alignBottom="@id/vvPlayVideo"
         android:layout_marginTop="@dimen/intro_btn_margin"
-        android:background="#ff0000" />
+        android:background="@color/transparent" />
 
 </RelativeLayout>

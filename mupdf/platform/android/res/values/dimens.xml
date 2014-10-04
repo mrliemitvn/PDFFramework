@@ -1,10 +1,11 @@
 <resources>
 
     <!-- Project dimen -->
-    <dimen name="intro_btn_height">40dp</dimen>
-    <dimen name="intro_btn_margin">-40dp</dimen>
+    <dimen name="intro_btn_height">50dp</dimen>
+    <dimen name="intro_btn_margin">-50dp</dimen>
     <dimen name="first_screen_menu">40dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_tiny">3dp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="divider_height">0.5dp</dimen>
 

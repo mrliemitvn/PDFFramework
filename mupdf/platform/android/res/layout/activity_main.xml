@@ -5,16 +5,43 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
+    <RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_title" />
+
+        <ImageView
+            android:id="@+id/imgShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:padding="@dimen/margin_tiny"
+            android:src="@drawable/first_screen_share_state" />
+    </RelativeLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/rlTitle"
         android:contentDescription="@string/empty"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_first_screen" />
+        android:src="@drawable/bg_phone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/rlTitle"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -99,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/rlTitle"
         android:layout_marginRight="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:contentDescription="@string/empty"

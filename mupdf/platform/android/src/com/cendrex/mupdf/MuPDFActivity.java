@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.database.Cursor;
@@ -53,6 +52,7 @@ import com.cendrex.resource.InfoResource;
 import com.cendrex.resource.TableOfContents;
 import com.cendrex.utils.Consts;
 import com.cendrex.utils.SharePrefs;
+import com.cendrex.utils.Utils;
 
 class ThreadPerTaskExecutor implements Executor {
 	public void execute(Runnable r) {
@@ -1055,7 +1055,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mInfoButton.setVisibility(View.GONE);
 		}
 
-		if (isTablet(this)) {
+		if (Utils.isTablet(this)) {
 			DisplayMetrics displaymetrics = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 			int height = displaymetrics.heightPixels;
@@ -1360,9 +1360,5 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mFilePicker = picker;
 		Intent intent = new Intent(this, ChoosePDFActivity.class);
 		startActivityForResult(intent, FILEPICK_REQUEST);
-	}
-
-	public static boolean isTablet(Context context) {
-		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 }
