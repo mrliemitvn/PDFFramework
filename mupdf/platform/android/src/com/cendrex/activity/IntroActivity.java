@@ -19,7 +19,7 @@ public class IntroActivity extends Activity implements OnClickListener {
 	/* View element. */
 	private VideoView mVvPlayVideo;
 	private View mIgnoreView;
-	
+
 	/**
 	 * Go to MainActivty and finish this activity.
 	 */
@@ -37,22 +37,22 @@ public class IntroActivity extends Activity implements OnClickListener {
 
 		Uri uriVideo = null;
 		if (Utils.isTablet(this)) {
-			if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				// TODO choose tablet English file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				// Choose tablet English file.
+				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_en);
 			} else {
-				// TODO choose tablet French file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
+				// Choose tablet French file.
+				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_fr);
 			}
 		} else {
-			if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
 				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
 			} else {
-				// TODO choose French file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
+				// Choose French file.
+				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_fr);
 			}
 		}
-		
+
 		mVvPlayVideo = (VideoView) findViewById(R.id.vvPlayVideo);
 		mVvPlayVideo.setMediaController(null);
 		mVvPlayVideo.setVideoURI(uriVideo);
@@ -72,14 +72,14 @@ public class IntroActivity extends Activity implements OnClickListener {
 		// Initialize view.
 		init();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		mVvPlayVideo.requestFocus();
 		mVvPlayVideo.start();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();

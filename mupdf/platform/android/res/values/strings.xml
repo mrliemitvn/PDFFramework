@@ -57,10 +57,11 @@
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
     <string name="version">1.0</string>
-    <string name="pitch_menu">PITCH</string>
-    <string name="docs_menu">DOCS</string>
-    <string name="new_menu">NEW</string>
-    <string name="call_1_800_menu">1&#45;800</string>
+    <string name="access_doors">ACCESS DOORS</string>
+    <string name="advantages_menu">WINNING ADVANTAGES</string>
+    <string name="library_menu">LIBRARY</string>
+    <string name="new_menu">NEW PRODUCT</string>
+    <string name="contact_us_menu">CONTACT US</string>
     <string name="title_choose_file_language">Choose language of files</string>
     <string name="title_choose_file_to_open">Choose file to open</string>
     <string name="setting_language_en">English</string>

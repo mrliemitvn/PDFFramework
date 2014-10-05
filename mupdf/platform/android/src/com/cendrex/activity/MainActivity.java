@@ -34,43 +34,47 @@ import com.cendrex.utils.Utils;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	private static final int PITCH_TYPE = 0;
-	private static final int DOC_TYPE = 1;
+	private static final int ADVANTAGES_TYPE = 0;
+	private static final int LIBRARY_TYPE = 1;
 	private static final int NEW_TYPE = 2;
 	private static final int FIRST = 1;
 	private static final int SECOND = 2;
 
 	/* View elements. */
+	private ImageView mImgShare;
 	private ImageView mImgSetting;
-	private TextView mTvPitch;
-	private TextView mTvDocs;
+	private TextView mTvAdvantages;
+	private TextView mTvLibrary;
 	private TextView mTvNew;
-	private TextView mTvCall;
+	private TextView mTvContact;
 
 	/* Variables will be used. */
 	private CharSequence[] mItemsFilesLanguage;
+	CharSequence[] mItemsContact = { "Phone call", "Send email" };
 
 	/**
 	 * Initialize view.
 	 */
 	private void init() {
+		mImgShare = (ImageView) findViewById(R.id.imgShare);
 		mImgSetting = (ImageView) findViewById(R.id.imgSetting);
-		mTvPitch = (TextView) findViewById(R.id.tvPitch);
-		mTvDocs = (TextView) findViewById(R.id.tvDocs);
+		mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
+		mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
 		mTvNew = (TextView) findViewById(R.id.tvNew);
-		mTvCall = (TextView) findViewById(R.id.tvCall);
+		mTvContact = (TextView) findViewById(R.id.tvContact);
 
+		mImgShare.setOnClickListener(this);
 		mImgSetting.setOnClickListener(this);
-		mTvPitch.setOnClickListener(this);
-		mTvDocs.setOnClickListener(this);
+		mTvAdvantages.setOnClickListener(this);
+		mTvLibrary.setOnClickListener(this);
 		mTvNew.setOnClickListener(this);
-		mTvCall.setOnClickListener(this);
+		mTvContact.setOnClickListener(this);
 
 		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
-		mTvPitch.setTypeface(orbitron);
-		mTvDocs.setTypeface(orbitron);
+		mTvAdvantages.setTypeface(orbitron);
+		mTvLibrary.setTypeface(orbitron);
 		mTvNew.setTypeface(orbitron);
-		mTvCall.setTypeface(orbitron);
+		mTvContact.setTypeface(orbitron);
 	}
 
 	/**
@@ -90,12 +94,18 @@ public class MainActivity extends Activity implements OnClickListener {
 				case 0:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
 					Utils.changeLanguage(MainActivity.this, "en");
+					mTvAdvantages.setText(R.string.advantages_menu);
+					mTvLibrary.setText(R.string.library_menu);
 					mTvNew.setText(R.string.new_menu);
+					mTvContact.setText(R.string.contact_us_menu);
 					break;
 				case 1:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
 					Utils.changeLanguage(MainActivity.this, "fr");
+					mTvAdvantages.setText(R.string.advantages_menu);
+					mTvLibrary.setText(R.string.library_menu);
 					mTvNew.setText(R.string.new_menu);
+					mTvContact.setText(R.string.contact_us_menu);
 					break;
 
 				}
@@ -107,6 +117,43 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Send email.
+	 */
+	private void sendEmail(String[] emails) {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_EMAIL, emails);
+		intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+		intent.putExtra(Intent.EXTRA_TEXT, "body text");
+		startActivity(Intent.createChooser(intent, "Send email..."));
+	}
+
+	/**
+	 * Handle event when click on Contact Us menu.
+	 */
+	private void handlerContact() {
+		final Intent intentCall = new Intent(Intent.ACTION_DIAL);
+		final String[] emailsContact = new String[] { "adaveluy@cendrex.com", "bdesjardins@cendrex.com" };
+		if (Utils.isTablet(this)) {
+			sendEmail(emailsContact);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Make your selection");
+			builder.setItems(mItemsContact, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					if (item == 0) {
+						startActivity(intentCall);
+					} else {
+						sendEmail(emailsContact);
+					}
+				}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
+	}
+
+	/**
 	 * Open file.
 	 * 
 	 * @param type
@@ -115,29 +162,29 @@ public class MainActivity extends Activity implements OnClickListener {
 		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
 		Intent intentOpenFile = new Intent(this, MuPDFActivity.class);
 		Uri uri = null;
-		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && LIBRARY_TYPE == type) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
 					+ "CENDREX_Access_Doors_Catalog_2014_HR_Doc_en.pdf").getAbsolutePath()));
-			intentOpenFile.putExtra(Consts.OPEN_DOC_FILE, true);
+			intentOpenFile.putExtra(Consts.OPEN_LIBRARY_FILE, true);
 		}
-		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && DOC_TYPE == type) {
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && LIBRARY_TYPE == type) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
 					+ "CENDREX_Porte_Acces_Catalogue_2014_HR_Doc_fr.pdf").getAbsolutePath()));
-			intentOpenFile.putExtra(Consts.OPEN_DOC_FILE, true);
+			intentOpenFile.putExtra(Consts.OPEN_LIBRARY_FILE, true);
 		}
-		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && FIRST == order) {
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && FIRST == order) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Advantage_2013_Pitch_en_1.pdf")
 					.getAbsolutePath()));
 		}
-		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && SECOND == order) {
+		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && SECOND == order) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_en_2.pdf")
 					.getAbsolutePath()));
 		}
-		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && FIRST == order) {
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && FIRST == order) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Avantage_2013_Pitch_fr_1.pdf")
 					.getAbsolutePath()));
 		}
-		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && PITCH_TYPE == type && SECOND == order) {
+		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && SECOND == order) {
 			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_fr_2.pdf")
 					.getAbsolutePath()));
 		}
@@ -173,7 +220,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
 		switch (type) {
-		case PITCH_TYPE:
+		case ADVANTAGES_TYPE:
 			if (SharePrefs.EN_LANGUAGE.equals(languageFile)) {
 				tvFileName1.setText(R.string.first_screen_pitch_file_1_en);
 				tvFileName2.setText(R.string.first_screen_pitch_file_2_en);
@@ -185,7 +232,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					// Open PITCH file 1 in English or French.
-					openFile(PITCH_TYPE, FIRST);
+					openFile(ADVANTAGES_TYPE, FIRST);
 					dialog.dismiss();
 				}
 			});
@@ -193,7 +240,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					// Open PITCH file 2 in English or French.
-					openFile(PITCH_TYPE, SECOND);
+					openFile(ADVANTAGES_TYPE, SECOND);
 					dialog.dismiss();
 				}
 			});
@@ -278,22 +325,24 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.imgShare:
+			sendEmail(new String[] { "email@example.com" });
+			break;
 		case R.id.imgSetting:
 			showFilesLanguageSetting();
 			break;
-		case R.id.tvPitch:
-			showFilesToOpen(PITCH_TYPE);
+		case R.id.tvAdvantages:
+			showFilesToOpen(ADVANTAGES_TYPE);
 			break;
-		case R.id.tvDocs:
+		case R.id.tvLibrary:
 			// Open Doc file.
-			openFile(DOC_TYPE, 0);
+			openFile(LIBRARY_TYPE, 0);
 			break;
 		case R.id.tvNew:
 			showFilesToOpen(NEW_TYPE);
 			break;
-		case R.id.tvCall:
-			Intent intent = new Intent(Intent.ACTION_DIAL);
-			startActivity(intent);
+		case R.id.tvContact:
+			handlerContact();
 			break;
 		default:
 			break;

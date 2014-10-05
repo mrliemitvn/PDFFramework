@@ -34,6 +34,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -881,6 +882,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 				public void onAnimationEnd(Animation animation) {
 					mPageNumberView.setVisibility(View.VISIBLE);
+					mInfoButton.setVisibility(View.VISIBLE);
 				}
 			});
 			mPageSlider.startAnimation(anim);
@@ -920,6 +922,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			anim.setAnimationListener(new Animation.AnimationListener() {
 				public void onAnimationStart(Animation animation) {
 					mPageNumberView.setVisibility(View.INVISIBLE);
+					mInfoButton.setVisibility(View.INVISIBLE);
 				}
 
 				public void onAnimationRepeat(Animation animation) {
@@ -1040,11 +1043,17 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mPageSlider.setVisibility(View.INVISIBLE);
 		mLvTableContents.setVisibility(View.GONE);
 		mLvInfoFiles.setVisibility(View.GONE);
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			mInfoButton.setImageResource(R.drawable.btn_techdata_en_state);
+		} else {
+			mInfoButton.setImageResource(R.drawable.btn_techdata_fr_state);
+		}
 
 		Bundle bundle = getIntent().getExtras();
-		if (bundle != null && bundle.containsKey(Consts.OPEN_DOC_FILE)
-				&& bundle.getBoolean(Consts.OPEN_DOC_FILE, false)) {
+		if (bundle != null && bundle.containsKey(Consts.OPEN_LIBRARY_FILE)
+				&& bundle.getBoolean(Consts.OPEN_LIBRARY_FILE, false)) {
 			mOutlineButton.setVisibility(View.VISIBLE);
+			mOutlineButton.setSelected(true);
 			mInfoButton.setVisibility(View.VISIBLE);
 			// Setup table of contents list view.
 			setUpTableContentsListView();
@@ -1099,6 +1108,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		}
 		tableContentsAdapter = new TableContentsAdapter(this, listTableOfContents);
 		mLvTableContents.setAdapter(tableContentsAdapter);
+		mLvTableContents.setVisibility(View.VISIBLE);
 	}
 
 	private void setUpInfoFileListView() {
