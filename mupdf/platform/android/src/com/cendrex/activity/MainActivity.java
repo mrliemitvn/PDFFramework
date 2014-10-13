@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final int SECOND = 2;
 
 	/* View elements. */
+	private ImageView mImgBackground;
 	private ImageView mImgShare;
 	private ImageView mImgSetting;
 	private TextView mTvAdvantages;
@@ -56,6 +57,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * Initialize view.
 	 */
 	private void init() {
+		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
 		mImgShare = (ImageView) findViewById(R.id.imgShare);
 		mImgSetting = (ImageView) findViewById(R.id.imgSetting);
 		mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
@@ -70,11 +72,29 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvNew.setOnClickListener(this);
 		mTvContact.setOnClickListener(this);
 
+		if (Utils.isTablet(this)) {
+			mImgBackground.setImageResource(R.drawable.bg_tablet);
+		} else {
+			mImgBackground.setImageResource(R.drawable.bg_phone);
+		}
+
 		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
 		mTvAdvantages.setTypeface(orbitron);
 		mTvLibrary.setTypeface(orbitron);
 		mTvNew.setTypeface(orbitron);
 		mTvContact.setTypeface(orbitron);
+	}
+
+	/**
+	 * Handler event after change language.
+	 */
+	private void handlerAfterChangeLanguage() {
+		mTvAdvantages.setText(R.string.advantages_menu);
+		mTvLibrary.setText(R.string.library_menu);
+		mTvNew.setText(R.string.new_menu);
+		mTvContact.setText(R.string.contact_us_menu);
+		startActivity(new Intent(this, IntroActivity.class));
+		finish();
 	}
 
 	/**
@@ -94,18 +114,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				case 0:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
 					Utils.changeLanguage(MainActivity.this, "en");
-					mTvAdvantages.setText(R.string.advantages_menu);
-					mTvLibrary.setText(R.string.library_menu);
-					mTvNew.setText(R.string.new_menu);
-					mTvContact.setText(R.string.contact_us_menu);
+					handlerAfterChangeLanguage();
 					break;
 				case 1:
 					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
 					Utils.changeLanguage(MainActivity.this, "fr");
-					mTvAdvantages.setText(R.string.advantages_menu);
-					mTvLibrary.setText(R.string.library_menu);
-					mTvNew.setText(R.string.new_menu);
-					mTvContact.setText(R.string.contact_us_menu);
+					handlerAfterChangeLanguage();
 					break;
 
 				}

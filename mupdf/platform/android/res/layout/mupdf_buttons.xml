@@ -449,59 +449,73 @@
         android:progressDrawable="@drawable/mupdf_seek_progress"
         android:thumb="@drawable/mupdf_seek_thumb"
         android:visibility="invisible" />
-    
+
     <RelativeLayout
-            android:id="@+id/rlPageNumberHide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/pageSliderHide"
-            android:layout_marginBottom="10dp"
-            android:visibility="invisible" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/mupdf_page_num"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@null"
-                android:contentDescription="@string/empty"
-                android:padding="0dp"
-                android:src="@drawable/btn_techdata_en_state" />
-        </RelativeLayout>
-
-    <ListView
-        android:id="@+id/lvInfoFiles"
+        android:id="@+id/rlPageNumberHide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/pageSliderHide"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/mupdf_page_num"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:contentDescription="@string/empty"
+            android:padding="0dp"
+            android:src="@drawable/btn_techdata_en_state"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlInfoFiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@id/rlPageNumberHide"
         android:layout_below="@id/mupdf_switcher"
-        android:background="@color/bg_list_info_and_contents"
-        android:dividerHeight="@dimen/divider_height"
-        android:listSelector="@color/transparent" >
-    </ListView>
+        android:background="@color/bg_list_info_and_contents" >
 
-    <ListView
-        android:id="@+id/lvTableContents"
+        <ListView
+            android:id="@+id/lvInfoFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="@dimen/divider_height"
+            android:listSelector="@color/transparent" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlTableContents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/pageSliderHide"
         android:layout_below="@id/mupdf_switcher"
-        android:background="@color/bg_list_info_and_contents"
-        android:dividerHeight="@dimen/divider_height"
-        android:listSelector="@color/transparent" >
-    </ListView>
+        android:background="@color/bg_list_info_and_contents" >
+
+        <ListView
+            android:id="@+id/lvTableContents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="@dimen/divider_height"
+            android:listSelector="@color/transparent" >
+        </ListView>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/mupdf_info"

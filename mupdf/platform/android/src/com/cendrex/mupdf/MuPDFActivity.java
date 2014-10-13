@@ -112,10 +112,12 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private AlertDialog mAlertDialog;
 	private FilePicker mFilePicker;
 
+	private RelativeLayout mRlTableContents;
 	private ListView mLvTableContents;
 	private TableContentsAdapter tableContentsAdapter;
 	private ArrayList<TableOfContents> listTableOfContents;
 
+	private RelativeLayout mRlInfoFiles;
 	private ListView mLvInfoFiles;
 	private InfoFilesAdapter infoFilesAdapter;
 	private ArrayList<InfoResource> listInfoResources;
@@ -589,8 +591,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					mBrightnessSlide.setVisibility(View.GONE);
 					mLvInfoFiles.setVisibility(View.GONE);
 					mLvTableContents.setVisibility(View.VISIBLE);
+					mRlTableContents.setVisibility(View.VISIBLE);
 				} else {
 					mLvTableContents.setVisibility(View.GONE);
+					mRlTableContents.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -615,10 +619,13 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					mOutlineButton.setSelected(false);
 					mBrightnessSlide.setVisibility(View.GONE);
 					mLvTableContents.setVisibility(View.GONE);
+					mRlTableContents.setVisibility(View.GONE);
 					mLvInfoFiles.setAdapter(infoFilesAdapter);
 					mLvInfoFiles.setVisibility(View.VISIBLE);
+					mRlInfoFiles.setVisibility(View.VISIBLE);
 				} else {
 					mLvInfoFiles.setVisibility(View.GONE);
+					mRlInfoFiles.setVisibility(View.GONE);
 				}
 				mInfoButton.setSelected(!mInfoButton.isSelected());
 			}
@@ -634,6 +641,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					mInfoButton.setSelected(false);
 					mLvTableContents.setVisibility(View.GONE);
 					mLvInfoFiles.setVisibility(View.GONE);
+					mRlTableContents.setVisibility(View.GONE);
+					mRlInfoFiles.setVisibility(View.GONE);
 					try {
 						float curBrightnessValue = android.provider.Settings.System.getInt(getContentResolver(),
 								android.provider.Settings.System.SCREEN_BRIGHTNESS);
@@ -692,6 +701,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				if (tableOfContents != null) {
 					mOutlineButton.setSelected(false);
 					mLvTableContents.setVisibility(View.GONE);
+					mRlTableContents.setVisibility(View.GONE);
 					int page = Integer.parseInt(tableOfContents.page);
 					if (page > 1) mDocView.setDisplayedViewIndex(page - 1);
 				}
@@ -707,6 +717,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				if (!TextUtils.isEmpty(fileName)) {
 					mInfoButton.setSelected(false);
 					mLvInfoFiles.setVisibility(View.GONE);
+					mRlInfoFiles.setVisibility(View.GONE);
 					Uri uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + fileName + ".pdf")
 							.getAbsolutePath()));
 					Intent intentOpenFile = new Intent(MuPDFActivity.this, MuPDFActivity.class);
@@ -882,7 +893,11 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 				public void onAnimationEnd(Animation animation) {
 					mPageNumberView.setVisibility(View.VISIBLE);
-					mInfoButton.setVisibility(View.VISIBLE);
+					Bundle bundle = getIntent().getExtras();
+					if (bundle != null && bundle.containsKey(Consts.OPEN_LIBRARY_FILE)
+							&& bundle.getBoolean(Consts.OPEN_LIBRARY_FILE, false)) {
+						mInfoButton.setVisibility(View.VISIBLE);
+					}
 				}
 			});
 			mPageSlider.startAnimation(anim);
@@ -893,7 +908,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		if (mButtonsVisible) {
 			mButtonsVisible = false;
 			hideKeyboard();
-			
+
 			// TODO
 			mBrightnessButton.setSelected(false);
 			mInfoButton.setSelected(false);
@@ -901,6 +916,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mBrightnessSlide.setVisibility(View.GONE);
 			mLvInfoFiles.setVisibility(View.GONE);
 			mLvTableContents.setVisibility(View.GONE);
+			mRlTableContents.setVisibility(View.GONE);
+			mRlInfoFiles.setVisibility(View.GONE);
 
 			Animation anim = new TranslateAnimation(0, 0, 0, -mTopBarSwitcher.getHeight());
 			anim.setDuration(200);
@@ -1022,6 +1039,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mEmailButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_emailButton);
 		mInfoButton = (ImageButton) mButtonsView.findViewById(R.id.mupdf_infoButton);
 
+		mRlTableContents = (RelativeLayout) mButtonsView.findViewById(R.id.rlTableContents);
 		mLvTableContents = (ListView) mButtonsView.findViewById(R.id.lvTableContents);
 		int paddingMedium = getResources().getDimensionPixelSize(R.dimen.margin_medium);
 		TextView tvTableContents = new TextView(this);
@@ -1032,6 +1050,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		tvTableContents.setBackgroundResource(R.color.white);
 		mLvTableContents.addHeaderView(tvTableContents);
 
+		mRlInfoFiles = (RelativeLayout) mButtonsView.findViewById(R.id.rlInfoFiles);
 		mLvInfoFiles = (ListView) mButtonsView.findViewById(R.id.lvInfoFiles);
 
 		mOutlineButton.setSelected(false);
@@ -1041,7 +1060,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mPageNumberView.setVisibility(View.INVISIBLE);
 		mInfoView.setVisibility(View.INVISIBLE);
 		mPageSlider.setVisibility(View.INVISIBLE);
+		mRlTableContents.setVisibility(View.GONE);
 		mLvTableContents.setVisibility(View.GONE);
+		mRlInfoFiles.setVisibility(View.GONE);
 		mLvInfoFiles.setVisibility(View.GONE);
 		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
 			mInfoButton.setImageResource(R.drawable.btn_techdata_en_state);
@@ -1070,7 +1091,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			int height = displaymetrics.heightPixels;
 			int width = displaymetrics.widthPixels;
 			RelativeLayout.LayoutParams layoutParamInfo = (LayoutParams) mLvInfoFiles.getLayoutParams();
-			RelativeLayout.LayoutParams layoutParamContents = (LayoutParams) mLvTableContents.getLayoutParams(); 
+			RelativeLayout.LayoutParams layoutParamContents = (LayoutParams) mLvTableContents.getLayoutParams();
 			layoutParamInfo.width = width / 2;
 			layoutParamInfo.height = height / 2;
 			layoutParamInfo.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -1108,6 +1129,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		}
 		tableContentsAdapter = new TableContentsAdapter(this, listTableOfContents);
 		mLvTableContents.setAdapter(tableContentsAdapter);
+		mRlTableContents.setVisibility(View.VISIBLE);
 		mLvTableContents.setVisibility(View.VISIBLE);
 	}
 
