@@ -97,3 +97,69 @@ o phien ban cu minh co 1 nut i tren toolbar de hien cac file dinh kem voi tung t
 bay gio ho muon thay nut i do = cai Tech Data Sheet
 tinh nang thi tuong tu, em cung hien list cac file dinh kem, nhan cai nao thi mo file do len
 
+======================
+version 3:
+thu 1 la bay gio se khong co man hinh ngang nua, tat ca la doc het
+tablet va phone
+day la link tai demo va screenshot nhe em
+https://www.dropbox.com/sh/5wa6yl6o28zxbck/AAB4R6M7_yAyWTrY8ZroXr3Na?dl=0
+
+can thay doi cach sap xep lai menu chinh va trong phan hien thi pdf nua
+https://www.parse.com
+minh can den Parse de lam 2 chuc nang sau
+1. Push: gui tin nhan tren server den tat ca cac thiet bi
+2. Log: gui file log moi khi co 1 nguoi su dung app lan dau tien va moi khi nguoi do share app voi 1 nguoi khac
+
+Phan them thu 2 la muc 'About'
+khi an vao tieu de Cendrex o Menu, thi hien thong tin cua cong ty
+Phan thu 3 la thay doi cach hien thi phan 'Winning advantage' o menu chinh
+ko fai mo file pdf nua, ma la hien thi chi tiet luon tung cai
+day la link image: https://www.dropbox.com/sh/8yvtcrv6bh5oc8j/AAC_iRgarNmZbEC59KG7xlEDa?dl=0
+link video English tren ipad: https://www.dropbox.com/s/h6fylvm2cud0brp/intro_video_EN.m4v?dl=0
+link video French tren ipad: https://www.dropbox.com/s/r0v21bn6m5itx9t/intro_video_FR.m4v?dl=0
+link video English tren phone: https://www.dropbox.com/s/mourha8ls8ynudc/intro_iphone_EN_640x1136.m4v?dl=0
+va French: https://www.dropbox.com/s/1vhh9iydsuzevc3/intro_iphone_FR_640x1136.m4v?dl=0
+con ve chi phi thi lan truoc anh bao la 1m3 + 1m cho phan Parse nua nhe
+day la thong tin dang nhap vao Cendrex tren Parse nhe
+email: adaveluy@cendrex.com
+pass: Cendrex01
+em dang nhap, chon app la 'Cendrex'
+o menu o tren dau, chu y cac muc 'Core' va 'Push'
+ben trong 'Core', chon 'Data' ben tay trai, roi 'Log'
+se la danh sach cac file log ma cac thiet bi gui len
+o tab 'log_file' se co 2 loai: 1 la 'user.txt' duoc phat sinh moi khi co nguoi su dung app lan dau tien
+2 la 'share.txt' moi khi nguoi dung click nut 'Share' va nhap dia chi email can gui den
+chi tiet cac file nhu sau: user.txt la
+	New user registered at 2014-11-04 18:09:10 +0000
+	First Name:  Cote
+	Last Name:   Claude4
+	Company:     I-nomade
+	City:        Blainville
+	State:       QuÃ©bec
+	Email:       claudecote@i-nomade.com
+
+va 'share.txt' la
+	New app sharing at 2014-11-05 02:47:28 +0000
+From:
+	First Name:  Hoang Anh
+	Last Name:   Nguyen
+	Company:     I-nomade
+	City:        Montreal
+	State:       Cote sainte catherine
+	Email:       anh8151442@gmail.com
+To:
+	Email:       aaa@g.com
+
+em su dung Parse de tao cac file tuong ung nhe
+con voi 'Push' thi chi can goi code de register thoi
+em dang nhap roi vao link nay de xem huong dan:
+https://www.parse.com/apps/quickstart?app_id=cendrex#parse_data/mobile/android/native/existing
+o tren la 'Core', con day la vi du cho 'Push'
+https://www.parse.com/apps/quickstart?app_id=cendrex#parse_push/android/existing
+
+
+
+
+
+
+
