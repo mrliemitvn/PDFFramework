@@ -119,7 +119,6 @@ link video English tren ipad: https://www.dropbox.com/s/h6fylvm2cud0brp/intro_vi
 link video French tren ipad: https://www.dropbox.com/s/r0v21bn6m5itx9t/intro_video_FR.m4v?dl=0
 link video English tren phone: https://www.dropbox.com/s/mourha8ls8ynudc/intro_iphone_EN_640x1136.m4v?dl=0
 va French: https://www.dropbox.com/s/1vhh9iydsuzevc3/intro_iphone_FR_640x1136.m4v?dl=0
-con ve chi phi thi lan truoc anh bao la 1m3 + 1m cho phan Parse nua nhe
 day la thong tin dang nhap vao Cendrex tren Parse nhe
 email: adaveluy@cendrex.com
 pass: Cendrex01

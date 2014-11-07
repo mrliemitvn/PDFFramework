@@ -9,6 +9,13 @@ public class SharePrefs {
 	public static final String FILES_LANGUAGE = "files_language";
 	public static final String EN_LANGUAGE = "en";
 	public static final String FR_LANGUAGE = "fr";
+	public static final String REGISTERED_USER = "registered_user";
+	public static final String PARSE_USER_FIRST_NAME = "First Name";
+	public static final String PARSE_USER_LAST_NAME = "Last Name";
+	public static final String PARSE_USER_COMPANY = "Company";
+	public static final String PARSE_USER_CITY = "City";
+	public static final String PARSE_USER_STATE = "State";
+	public static final String PARSE_USER_EMAIL = "Email";
 
 	private static SharePrefs instance = new SharePrefs();
 	private SharedPreferences sharedPreferences;
@@ -122,5 +129,21 @@ public class SharePrefs {
 	 */
 	public String getFilesLanguageSetting() {
 		return get(FILES_LANGUAGE, EN_LANGUAGE);
+	}
+
+	/**
+	 * Set user is registered.
+	 */
+	public void setUserRegistered() {
+		save(REGISTERED_USER, true);
+	}
+
+	/**
+	 * Check user is registered or not.
+	 * 
+	 * @return true if user is registered.
+	 */
+	public boolean isUserRegistered() {
+		return get(REGISTERED_USER, false);
 	}
 }

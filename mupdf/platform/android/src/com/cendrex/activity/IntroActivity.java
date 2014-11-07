@@ -29,6 +29,23 @@ public class IntroActivity extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Play video intro.
+	 */
+	private void playVideo() {
+		mVvPlayVideo.requestFocus();
+		mVvPlayVideo.start();
+	}
+
+	/**
+	 * Show register view.
+	 * 
+	 * @param visible
+	 */
+	private void showRegisterView(int visible) {
+		// TODO
+	}
+
+	/**
 	 * Initialize view.
 	 */
 	private void init() {
@@ -76,8 +93,12 @@ public class IntroActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mVvPlayVideo.requestFocus();
-		mVvPlayVideo.start();
+		if (SharePrefs.getInstance().isUserRegistered()) {
+			showRegisterView(View.GONE);
+			playVideo();
+		} else {
+			showRegisterView(View.VISIBLE);
+		}
 	}
 
 	@Override
