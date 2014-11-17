@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,20 +17,31 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cendrex.R;
+import com.cendrex.adapter.AdvantagesAdapter;
 import com.cendrex.mupdf.MuPDFActivity;
+import com.cendrex.resource.AdvantagesResource;
 import com.cendrex.utils.Consts;
 import com.cendrex.utils.SharePrefs;
 import com.cendrex.utils.Utils;
@@ -48,6 +62,17 @@ public class MainActivity extends Activity implements OnClickListener {
 	private TextView mTvLibrary;
 	private TextView mTvNew;
 	private TextView mTvContact;
+	private LinearLayout mLlShare;
+	private TextView mTvShare;
+	private EditText mEtEmailShare;
+	private View mViewOverlap;
+	private RelativeLayout mRlAdvantagesInfo;
+	private ImageView mImgClose;
+	private ListView mLvAdvantagesInfo;
+	private AdvantagesAdapter mAdvantagesAdapter;
+	private ArrayList<AdvantagesResource> listAdvantagesResources;
+	private ScrollView mSvInfo;
+	private ImageView mImgTitle;
 
 	/* Variables will be used. */
 	private CharSequence[] mItemsFilesLanguage;
@@ -64,6 +89,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
 		mTvNew = (TextView) findViewById(R.id.tvNew);
 		mTvContact = (TextView) findViewById(R.id.tvContact);
+		mLlShare = (LinearLayout) findViewById(R.id.llShare);
+		mTvShare = (TextView) findViewById(R.id.tvShare);
+		mEtEmailShare = (EditText) findViewById(R.id.etEmailShare);
+		mViewOverlap = (View) findViewById(R.id.viewOverlap);
+		mRlAdvantagesInfo = (RelativeLayout) findViewById(R.id.rlAdvantagesInfo);
+		mImgClose = (ImageView) findViewById(R.id.imgClose);
+		mLvAdvantagesInfo = (ListView) findViewById(R.id.lvAdvantagesInfo);
+		mSvInfo = (ScrollView) findViewById(R.id.svInfo);
+		mImgTitle = (ImageView) findViewById(R.id.imgTitle);
 
 		mImgShare.setOnClickListener(this);
 		mImgSetting.setOnClickListener(this);
@@ -71,6 +105,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvLibrary.setOnClickListener(this);
 		mTvNew.setOnClickListener(this);
 		mTvContact.setOnClickListener(this);
+		mLlShare.setOnClickListener(this);
+		mTvShare.setOnClickListener(this);
+		mViewOverlap.setOnClickListener(this);
+		mImgClose.setOnClickListener(this);
+		mImgTitle.setOnClickListener(this);
 
 		if (Utils.isTablet(this)) {
 			mImgBackground.setImageResource(R.drawable.bg_tablet);
@@ -83,6 +122,62 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvLibrary.setTypeface(orbitron);
 		mTvNew.setTypeface(orbitron);
 		mTvContact.setTypeface(orbitron);
+
+		loadAdvantages();
+	}
+
+	/**
+	 * Load list advantages info and add to list.
+	 */
+	private void loadAdvantages() {
+		listAdvantagesResources = new ArrayList<AdvantagesResource>();
+		XmlResourceParser xmlParser = null;
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			xmlParser = getResources().getXml(R.xml.advantages_data_en);
+		} else {
+			xmlParser = getResources().getXml(R.xml.advantages_data_fr);
+		}
+		try {
+			int eventType = xmlParser.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				if (eventType == XmlPullParser.START_TAG && "item".equals(xmlParser.getName())) {
+					AdvantagesResource advantagesResource = new AdvantagesResource();
+					advantagesResource.message = xmlParser.getAttributeValue(0);
+					advantagesResource.title = xmlParser.getAttributeValue(1);
+					listAdvantagesResources.add(advantagesResource);
+				}
+				eventType = xmlParser.next();
+			}
+			// indicate app done reading the resource.
+			xmlParser.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mAdvantagesAdapter = new AdvantagesAdapter(this, listAdvantagesResources);
+		mLvAdvantagesInfo.setAdapter(mAdvantagesAdapter);
+		mLvAdvantagesInfo.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				AdvantagesResource advantagesResource = (AdvantagesResource) parent.getItemAtPosition(position);
+				if (advantagesResource != null) {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+					// set title
+					alertDialogBuilder.setTitle(R.string.advantage_title);
+					// set dialog message
+					alertDialogBuilder.setMessage(advantagesResource.message);
+					alertDialogBuilder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					});
+					// create alert dialog
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					// show it
+					alertDialog.show();
+				}
+			}
+		});
 	}
 
 	/**
@@ -340,13 +435,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.imgShare:
-			sendEmail(new String[] { "email@example.com" });
+			mLlShare.setVisibility(View.VISIBLE);
 			break;
 		case R.id.imgSetting:
 			showFilesLanguageSetting();
 			break;
 		case R.id.tvAdvantages:
-			showFilesToOpen(ADVANTAGES_TYPE);
+			mViewOverlap.setVisibility(View.VISIBLE);
+			mRlAdvantagesInfo.setVisibility(View.VISIBLE);
 			break;
 		case R.id.tvLibrary:
 			// Open Doc file.
@@ -357,6 +453,38 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.tvContact:
 			handlerContact();
+			break;
+		case R.id.llShare:
+			if (getCurrentFocus() != null) {
+				Utils.hideKeyboard(this, getCurrentFocus());
+			}
+			mLlShare.setVisibility(View.GONE);
+			break;
+		case R.id.tvShare:
+			if (TextUtils.isEmpty(mEtEmailShare.getText())) {
+				Toast.makeText(this, "Please enter recipient", Toast.LENGTH_SHORT).show();
+			} else {
+				if (getCurrentFocus() != null) {
+					Utils.hideKeyboard(this, getCurrentFocus());
+				}
+				mLlShare.setVisibility(View.GONE);
+				Utils.shareEmail(mEtEmailShare.getText().toString());
+				sendEmail(new String[] { mEtEmailShare.getText().toString() });
+			}
+			break;
+		case R.id.imgClose:
+			mViewOverlap.setVisibility(View.GONE);
+			mRlAdvantagesInfo.setVisibility(View.GONE);
+			break;
+		case R.id.imgTitle:
+			mSvInfo.setVisibility(View.VISIBLE);
+			mViewOverlap.setVisibility(View.VISIBLE);
+			break;
+		case R.id.viewOverlap:
+			if (mSvInfo.getVisibility() == View.VISIBLE) {
+				mViewOverlap.setVisibility(View.GONE);
+				mSvInfo.setVisibility(View.GONE);
+			}
 			break;
 		default:
 			break;

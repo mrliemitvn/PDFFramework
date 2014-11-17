@@ -23,5 +23,7 @@
     <!-- Project color -->
     <color name="first_screen_menu_selected">#dddddd</color>
     <color name="bg_list_info_and_contents">#CD000000</color>
+    <color name="register_text_off">#1584d8</color>
+    <color name="register_text_on">#035390</color>
 
 </resources>

@@ -3,7 +3,7 @@ package com.cendrex.adapter;
 import java.util.ArrayList;
 
 import com.cendrex.R;
-import com.cendrex.resource.TableOfContents;
+import com.cendrex.resource.AdvantagesResource;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class TableContentsAdapter extends ArrayAdapter<TableOfContents> {
+public class AdvantagesAdapter extends ArrayAdapter<AdvantagesResource> {
 
 	private LayoutInflater layoutInflater;
-	private ArrayList<TableOfContents> listTableOfContents;
+	private ArrayList<AdvantagesResource> listAdvantages;
 
-	public TableContentsAdapter(Context context, ArrayList<TableOfContents> listTableOfContents) {
-		super(context, 0, listTableOfContents);
-		this.listTableOfContents = listTableOfContents;
+	public AdvantagesAdapter(Context context, ArrayList<AdvantagesResource> listAdvantages) {
+		super(context, 0, listAdvantages);
+		this.listAdvantages = listAdvantages;
 		this.layoutInflater = LayoutInflater.from(context);
 	}
 
@@ -27,28 +27,25 @@ public class TableContentsAdapter extends ArrayAdapter<TableOfContents> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			ViewHolder holder = new ViewHolder();
-			convertView = layoutInflater.inflate(R.layout.item_list_table_contents, null);
-			holder.tvPage = (TextView) convertView.findViewById(R.id.tvPage);
+			convertView = layoutInflater.inflate(R.layout.item_list_advantages, null);
 			holder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
 
 			convertView.setTag(holder);
 		}
 
 		ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-		TableOfContents tableOfContents = listTableOfContents.get(position);
-		viewHolder.tvPage.setText(tableOfContents.page);
-		viewHolder.tvTitle.setText(tableOfContents.title);
+		AdvantagesResource advantages = listAdvantages.get(position);
+		viewHolder.tvTitle.setText(advantages.title);
 
 		return convertView;
 	}
-	
+
 	@Override
 	public int getCount() {
-		return listTableOfContents.size();
+		return listAdvantages.size();
 	}
 
 	class ViewHolder {
-		TextView tvPage;
 		TextView tvTitle;
 	}
 }
