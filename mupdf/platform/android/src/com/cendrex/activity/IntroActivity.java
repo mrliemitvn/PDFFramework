@@ -106,17 +106,18 @@ public class IntroActivity extends Activity implements OnClickListener {
 		Uri uriVideo = null;
 		if (Utils.isTablet(this)) {
 			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				// Choose tablet English file.
+				// TODO Choose tablet English file.
 				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_en);
 			} else {
-				// Choose tablet French file.
+				// TODO Choose tablet French file.
 				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_fr);
 			}
 		} else {
 			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				// TODO Choose English file.
 				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
 			} else {
-				// Choose French file.
+				// TODO Choose French file.
 				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_fr);
 			}
 		}
