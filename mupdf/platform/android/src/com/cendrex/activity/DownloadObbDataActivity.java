@@ -56,13 +56,28 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 			String packageName = getPackageName();
 			String[] fileList = Utils.getAPKExpansionFiles(this,
 					getPackageManager().getPackageInfo(packageName, 0).versionCode, 0);
-			if (fileList == null || fileList.length <= 0) {
+			if (fileList != null && fileList.length > 0) {
+				Utils.mountObbFile(this, fileList[0], onObbMountedListener);
+			} else {
 				// Start download obb file
 				// Build an Intent to start this activity from the Notification
-				Intent notifierIntent = new Intent(this, DownloadObbDataActivity.class);
-				notifierIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifierIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT);
+				Intent launchIntent = DownloadObbDataActivity.this.getIntent();
+				Intent intentToLaunchThisActivityFromNotification = new Intent(DownloadObbDataActivity.this,
+						DownloadObbDataActivity.this.getClass());
+				intentToLaunchThisActivityFromNotification.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intentToLaunchThisActivityFromNotification.setAction(launchIntent.getAction());
+
+				if (launchIntent.getCategories() != null) {
+					for (String category : launchIntent.getCategories()) {
+						intentToLaunchThisActivityFromNotification.addCategory(category);
+					}
+				}
+
+				// Build PendingIntent used to open this activity from
+				// Notification
+				PendingIntent pendingIntent = PendingIntent.getActivity(DownloadObbDataActivity.this, 0,
+						intentToLaunchThisActivityFromNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
 				// Start the download service (if required)
 				int startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(this, pendingIntent,
@@ -74,7 +89,7 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 					return;
 				} // If the download wasn't necessary, fall through to start the app
 			}
-			Utils.mountObbFile(this, fileList[0], onObbMountedListener);
+
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -104,10 +119,9 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 	}
 
 	/**
-	 * Critical implementation detail. In onServiceConnected we create the
-	 * remote service and marshaler. This is how we pass the client information
-	 * back to the service so the client can be properly notified of changes. We
-	 * must do this every time we reconnect to the service.
+	 * Critical implementation detail. In onServiceConnected we create the remote service and marshaler. This is how we
+	 * pass the client information back to the service so the client can be properly notified of changes. We must do
+	 * this every time we reconnect to the service.
 	 */
 	@Override
 	public void onServiceConnected(Messenger m) {
