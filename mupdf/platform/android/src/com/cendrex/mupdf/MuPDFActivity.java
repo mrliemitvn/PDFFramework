@@ -34,7 +34,6 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -718,8 +717,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					mInfoButton.setSelected(false);
 					mLvInfoFiles.setVisibility(View.GONE);
 					mRlInfoFiles.setVisibility(View.GONE);
-					Uri uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + fileName + ".pdf")
-							.getAbsolutePath()));
+					String resourcePath = Utils.getMountedObbFile(MuPDFActivity.this);
+					Uri uri = Uri.parse(resourcePath + File.separator + fileName + ".pdf");
 					Intent intentOpenFile = new Intent(MuPDFActivity.this, MuPDFActivity.class);
 					intentOpenFile.setAction(Intent.ACTION_VIEW);
 					intentOpenFile.setData(uri);

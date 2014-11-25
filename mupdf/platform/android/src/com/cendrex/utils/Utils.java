@@ -7,13 +7,19 @@ import java.util.Locale;
 import java.util.Vector;
 
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.storage.OnObbStateChangeListener;
+import android.os.storage.StorageManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.cendrex.listener.OnObbMountedListener;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -23,16 +29,13 @@ public class Utils {
 	private static String strDateTimeFormat = "yyyy-MM-dd HH:mm:ss Z";
 	private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat(strDateTimeFormat);
 
-	// The shared path to all app expansion files
-	private final static String EXP_PATH = "/Android/obb/";
-
 	public static String[] getAPKExpansionFiles(Context ctx, int mainVersion, int patchVersion) {
 		String packageName = ctx.getPackageName();
 		Vector<String> ret = new Vector<String>();
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			// Build the full path to the app's expansion files
 			File root = Environment.getExternalStorageDirectory();
-			File expPath = new File(root.toString() + EXP_PATH + packageName);
+			File expPath = new File(root.toString() + Consts.EXP_PATH + packageName);
 
 			// Check that expansion file path exists
 			if (expPath.exists()) {
@@ -56,6 +59,56 @@ public class Utils {
 		String[] retArray = new String[ret.size()];
 		ret.toArray(retArray);
 		return retArray;
+	}
+
+	/**
+	 * Mount obb file.
+	 * 
+	 * @param path
+	 *            obb file path.
+	 */
+	public static void mountObbFile(Context context, String path, final OnObbMountedListener onObbMountedListener) {
+		StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+		if (!TextUtils.isEmpty(path)) {
+			if (!storageManager.isObbMounted(path)) {
+				storageManager.mountObb(path, null, new OnObbStateChangeListener() {
+					@Override
+					public void onObbStateChange(String path, int state) {
+						super.onObbStateChange(path, state);
+						boolean isMounted = false;
+						if (state == OnObbStateChangeListener.MOUNTED) {
+							Log.d("Cendrex", "obb mounted");
+							isMounted = true;
+						} else {
+							Log.d("Cendrex", "obb not mounted");
+						}
+						if (onObbMountedListener != null) onObbMountedListener.onObbMounted(isMounted);
+					}
+				});
+			} else {
+				Log.d("Cendrex", "obb already mounted");
+				if (onObbMountedListener != null) onObbMountedListener.onObbMounted(true);
+			}
+		}
+	}
+
+	/**
+	 * Get mounted obb file path.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getMountedObbFile(Context context) {
+		String resourcePath = null;
+		try {
+			String[] fileList = getAPKExpansionFiles(context,
+					context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode, 0);
+			StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+			if (fileList != null && fileList.length > 0) resourcePath = storageManager.getMountedObbPath(fileList[0]);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return resourcePath;
 	}
 
 	/**

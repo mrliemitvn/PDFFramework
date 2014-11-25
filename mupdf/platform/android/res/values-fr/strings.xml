@@ -57,7 +57,7 @@
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
     <string name="version">1.0</string>
-    <string name="access_doors">ACCESS DOORS</string>
+    <string name="access_doors">PORTES D’ACCÈS</string>
     <string name="advantages_menu">ADVANTAGES CONCURRENTIELS</string>
     <string name="library_menu">DOCCUMENTATION</string>
     <string name="new_menu">NOUVEAU PRODUIT</string>

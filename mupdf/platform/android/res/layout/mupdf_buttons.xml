@@ -521,7 +521,6 @@
         android:id="@+id/mupdf_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mupdf_pageSlider"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@drawable/mupdf_page_num"

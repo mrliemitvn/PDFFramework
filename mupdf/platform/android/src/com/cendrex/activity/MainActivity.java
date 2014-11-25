@@ -271,38 +271,32 @@ public class MainActivity extends Activity implements OnClickListener {
 		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
 		Intent intentOpenFile = new Intent(this, MuPDFActivity.class);
 		Uri uri = null;
+		String resourcePath = Utils.getMountedObbFile(this);
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && LIBRARY_TYPE == type) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
-					+ "CENDREX_Access_Doors_Catalog_2014_HR_Doc_en.pdf").getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_Access_Doors_Catalog_2014_HR_Doc_en.pdf");
 			intentOpenFile.putExtra(Consts.OPEN_LIBRARY_FILE, true);
 		}
 		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && LIBRARY_TYPE == type) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator
-					+ "CENDREX_Porte_Acces_Catalogue_2014_HR_Doc_fr.pdf").getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_Porte_Acces_Catalogue_2014_HR_Doc_fr.pdf");
 			intentOpenFile.putExtra(Consts.OPEN_LIBRARY_FILE, true);
 		}
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && FIRST == order) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Advantage_2013_Pitch_en_1.pdf")
-					.getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_Advantage_2013_Pitch_en_1.pdf");
 		}
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && SECOND == order) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_en_2.pdf")
-					.getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_CTA_flyer_Pitch_en_2.pdf");
 		}
 		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && FIRST == order) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_Avantage_2013_Pitch_fr_1.pdf")
-					.getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_Avantage_2013_Pitch_fr_1.pdf");
 		}
 		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && ADVANTAGES_TYPE == type && SECOND == order) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "CENDREX_CTA_flyer_Pitch_fr_2.pdf")
-					.getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "CENDREX_CTA_flyer_Pitch_fr_2.pdf");
 		}
 		if (SharePrefs.EN_LANGUAGE.equals(languageFile) && type == NEW_TYPE) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "New_Products_en.pdf").getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "New_Products_en.pdf");
 		}
 		if (SharePrefs.FR_LANGUAGE.equals(languageFile) && type == NEW_TYPE) {
-			uri = Uri.parse((new File(Consts.APP_FOLDER + File.separator + "Nouveaux_Produits_fr.pdf")
-					.getAbsolutePath()));
+			uri = Uri.parse(resourcePath + File.separator + "Nouveaux_Produits_fr.pdf");
 		}
 
 		intentOpenFile.setAction(Intent.ACTION_VIEW);
@@ -416,7 +410,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		init();
 
 		// Copy assets to internal storage.
-		copyAssets();
+		// Current version use obb file to store resources. So we didn't need this action.
+		// copyAssets();
 	}
 
 	@Override
@@ -470,6 +465,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				mLlShare.setVisibility(View.GONE);
 				Utils.shareEmail(mEtEmailShare.getText().toString());
 				sendEmail(new String[] { mEtEmailShare.getText().toString() });
+				mEtEmailShare.setText("");
 			}
 			break;
 		case R.id.imgClose:

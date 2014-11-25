@@ -1,5 +1,7 @@
 package com.cendrex.activity;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -103,22 +105,28 @@ public class IntroActivity extends Activity implements OnClickListener {
 		mIgnoreView.setOnClickListener(this);
 		mTvRegister.setOnClickListener(this);
 
+		String resourcePath = Utils.getMountedObbFile(this);
 		Uri uriVideo = null;
-		if (Utils.isTablet(this)) {
-			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				// TODO Choose tablet English file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_en);
-			} else {
-				// TODO Choose tablet French file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_video_fr);
-			}
+		if (TextUtils.isEmpty(resourcePath)) {
+			resourcePath = "android.resource://com.cendrex/";
+			Uri.parse(resourcePath + R.raw.intro_phone_en);
 		} else {
-			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				// TODO Choose English file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_en);
+			if (Utils.isTablet(this)) {
+				if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+					// Choose tablet English file.
+					uriVideo = Uri.parse(resourcePath + File.separator + "intro_video_en.mp4");
+				} else {
+					// Choose tablet French file.
+					uriVideo = Uri.parse(resourcePath + File.separator + "intro_video_fr.mp4");
+				}
 			} else {
-				// TODO Choose French file.
-				uriVideo = Uri.parse("android.resource://com.cendrex/" + R.raw.intro_phone_fr);
+				if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+					// Choose English file.
+					uriVideo = Uri.parse(resourcePath + File.separator + "intro_phone_en.mp4");
+				} else {
+					// Choose French file.
+					uriVideo = Uri.parse(resourcePath + File.separator + "intro_phone_fr.mp4");
+				}
 			}
 		}
 

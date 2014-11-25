@@ -1,7 +1,5 @@
 package com.cendrex;
 
-import java.io.File;
-
 import android.app.Application;
 
 import com.cendrex.utils.Consts;
@@ -20,10 +18,11 @@ public class CendrexApplication extends Application {
 		SharePrefs.getInstance().init(this);
 
 		// Create app folder.
-		File appFolder = new File(Consts.APP_FOLDER);
-		if (!appFolder.exists()) {
-			appFolder.mkdir();
-		}
+		// Current version use obb file to store resources. So we didn't need this action.
+		// File appFolder = new File(Consts.APP_FOLDER);
+		// if (!appFolder.exists()) {
+		// appFolder.mkdir();
+		// }
 
 		String language = "en";
 		if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
