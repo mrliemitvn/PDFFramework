@@ -29,11 +29,13 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 	private OnObbMountedListener onObbMountedListener;
 	private IDownloaderService mRemoteService;
 	private IStub mDownloaderClientStub;
+	private boolean isCallMountObbFile = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_download_obb_data);
+		isCallMountObbFile = false;
 
 		// Set background.
 		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
@@ -58,6 +60,7 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 					getPackageManager().getPackageInfo(packageName, 0).versionCode, 0);
 			if (fileList != null && fileList.length > 0) {
 				Utils.mountObbFile(this, fileList[0], onObbMountedListener);
+				isCallMountObbFile = true;
 			} else {
 				// Start download obb file
 				// Build an Intent to start this activity from the Notification
@@ -131,20 +134,22 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 
 	@Override
 	public void onDownloadStateChanged(int newState) {
-	}
-
-	@Override
-	public void onDownloadProgress(DownloadProgressInfo progress) {
-		Log.d("Cendrex", "progress " + progress.mOverallProgress);
-		if (progress.mOverallProgress == progress.mOverallTotal) {
+		if (IDownloaderClient.STATE_COMPLETED == newState && !isCallMountObbFile) {
+			Log.d("Cendrex", "finish download ");
 			String[] fileList;
 			try {
 				fileList = Utils.getAPKExpansionFiles(this,
 						getPackageManager().getPackageInfo(getPackageName(), 0).versionCode, 0);
 				Utils.mountObbFile(this, fileList[0], onObbMountedListener);
+				isCallMountObbFile = true;
 			} catch (NameNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void onDownloadProgress(DownloadProgressInfo progress) {
+		Log.d("Cendrex", "progress " + progress.mOverallProgress);
 	}
 }
