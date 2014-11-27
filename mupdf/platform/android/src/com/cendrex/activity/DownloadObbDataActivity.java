@@ -8,7 +8,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Messenger;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.cendrex.R;
 import com.cendrex.SampleDownloaderService;
@@ -24,7 +23,6 @@ import com.google.android.vending.expansion.downloader.IStub;
 public class DownloadObbDataActivity extends Activity implements IDownloaderClient {
 
 	/* View elements. */
-	private ImageView mImgBackground;
 	private ProgressDialog mDialog;
 	private OnObbMountedListener onObbMountedListener;
 	private IDownloaderService mRemoteService;
@@ -37,13 +35,6 @@ public class DownloadObbDataActivity extends Activity implements IDownloaderClie
 		setContentView(R.layout.activity_download_obb_data);
 		isCallMountObbFile = false;
 
-		// Set background.
-		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
-		if (Utils.isTablet(this)) {
-			mImgBackground.setImageResource(R.drawable.bg_tablet);
-		} else {
-			mImgBackground.setImageResource(R.drawable.bg_phone);
-		}
 		mDialog = ProgressDialog.show(this, null, getResources().getString(R.string.loading), true, false);
 		onObbMountedListener = new OnObbMountedListener() {
 			@Override

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cendrex"
     android:installLocation="auto"
-    android:versionCode="4"
+    android:versionCode="5"
     android:versionName="1.1" >
 
     <uses-sdk
@@ -42,7 +42,8 @@
 
         <activity
             android:name="com.cendrex.activity.DownloadObbDataActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,11 +52,13 @@
         </activity>
         <activity
             android:name="com.cendrex.activity.IntroActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.cendrex.mupdf.ChoosePDFActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light" >
         </activity>
         <activity
@@ -120,16 +123,22 @@
         <activity
             android:name="com.cendrex.mupdf.OutlineActivity"
             android:label="@string/mupdf_outline_title"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name="com.cendrex.mupdf.PrintDialogActivity"
             android:label="@string/print"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
-        <activity android:name="com.cendrex.activity.PlayVideoActivity" >
+        <activity
+            android:name="com.cendrex.activity.PlayVideoActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.cendrex.activity.MainActivity" >
+        <activity
+            android:name="com.cendrex.activity.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <service android:name="com.parse.PushService" />

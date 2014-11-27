@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
+    <ImageView
+        android:id="@+id/imgBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/empty"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_phone_en" />
+
     <RelativeLayout
         android:id="@+id/rlTitle"
         android:layout_width="match_parent"
@@ -35,26 +44,18 @@
 
     <TextView
         android:id="@+id/tvAccessDoors"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/access_doors_margin"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingBottom="@dimen/margin_medium"
+        android:paddingTop="@dimen/access_doors_margin"
         android:text="@string/access_doors"
         android:textColor="@color/black"
         android:textSize="@dimen/first_screen_access_doors"
         android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/imgBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tvAccessDoors"
-        android:layout_below="@id/rlTitle"
-        android:contentDescription="@string/empty"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_phone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,14 +74,14 @@
             <TextView
                 android:id="@+id/tvAdvantages"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="0.1"
-                android:text="@string/advantages_menu"
+                android:text=""
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
                 android:textStyle="bold" />
@@ -88,14 +89,14 @@
             <TextView
                 android:id="@+id/tvLibrary"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="0.1"
-                android:text="@string/library_menu"
+                android:text=""
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
                 android:textStyle="bold" />
@@ -111,14 +112,14 @@
             <TextView
                 android:id="@+id/tvNew"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="0.1"
-                android:text="@string/new_menu"
+                android:text=""
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
                 android:textStyle="bold" />
@@ -126,14 +127,14 @@
             <TextView
                 android:id="@+id/tvContact"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="0.1"
-                android:text="@string/contact_us_menu"
+                android:text=""
                 android:textColor="@drawable/first_screen_menu_color_state"
                 android:textSize="@dimen/first_screen_menu"
                 android:textStyle="bold" />

@@ -4,11 +4,12 @@
     android:layout_height="match_parent" >
 
     <ImageView
-        android:id="@+id/imgBackground"
+        android:id="@+id/imgTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
         android:contentDescription="@string/empty"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_phone" />
+        android:src="@drawable/img_title" />
 
 </RelativeLayout>

@@ -112,9 +112,17 @@ public class MainActivity extends Activity implements OnClickListener {
 		mImgTitle.setOnClickListener(this);
 
 		if (Utils.isTablet(this)) {
-			mImgBackground.setImageResource(R.drawable.bg_tablet);
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				mImgBackground.setImageResource(R.drawable.bg_tablet_en);
+			} else {
+				mImgBackground.setImageResource(R.drawable.bg_tablet_fr);
+			}
 		} else {
-			mImgBackground.setImageResource(R.drawable.bg_phone);
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				mImgBackground.setImageResource(R.drawable.bg_phone_en);
+			} else {
+				mImgBackground.setImageResource(R.drawable.bg_phone_fr);
+			}
 		}
 
 		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
@@ -184,10 +192,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * Handler event after change language.
 	 */
 	private void handlerAfterChangeLanguage() {
-		mTvAdvantages.setText(R.string.advantages_menu);
-		mTvLibrary.setText(R.string.library_menu);
-		mTvNew.setText(R.string.new_menu);
-		mTvContact.setText(R.string.contact_us_menu);
 		startActivity(new Intent(this, IntroActivity.class));
 		finish();
 	}
@@ -233,7 +237,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
 		intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
-		intent.putExtra(Intent.EXTRA_TEXT, "body text");
+		intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.email_message));
 		startActivity(Intent.createChooser(intent, "Send email..."));
 	}
 
