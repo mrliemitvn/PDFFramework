@@ -156,7 +156,29 @@ https://www.parse.com/apps/quickstart?app_id=cendrex#parse_data/mobile/android/n
 o tren la 'Core', con day la vi du cho 'Push'
 https://www.parse.com/apps/quickstart?app_id=cendrex#parse_push/android/existing
 
-
+=========================
+version 4
+=========================
+1. sua lai anh background 1 chut, e chi viec thay doi vi tri button cho phu hop thoi
+2. Them 1 dong text chay ngang o phia duoi man hinh
+animation cu lap di lap lai
+noi dung la:
+english: - SPECIFICATION TOOLS - - - BIM OBJECTS - - - AIA C.E. ONLINE COURSE - - - LEED DOCUMENTATION - -
+french: - OUTILS DE SPÉCIFICATIONS - - - OBJETS BIM - - -COURS AIA E.C. - - - DOCUMENTATION LEED - -
+khi an vao dong text nay thi giao dien menu se thay doi
+4 nut icon se thay doi sau:
+'Winning Advantages' -> 'Specs Bim Objects'
+khi an vao se hien danh sach 4 logo
+moi logo se co 1 link, an vo logo do se mo trang web voi link tuong ung
+'Documentation' van nhu the, chi khac la an vo se hien 2 tuy chon
+- Catalog --> mo file catalog nhu cu
+- LEED --> chua 1 link de mo trang web
+'New product' se thang 'AIA C.E.COURSE'
+an vao do se hien ra 1 logo khac, cung chua 1 link de mo trang web
+'Contact us' van hien mail va telephone
+mail thi thay doi lai dia chi SPECTOOLS@CENDREX.COM, tel nhu cu
+Dong text chay se doi thanh 'Back'
+3. Khi an 'Back' thi tro lai menu ban dau, moi chuc nang nhu cu
 
 
 
