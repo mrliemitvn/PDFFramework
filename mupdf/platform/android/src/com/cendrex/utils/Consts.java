@@ -6,6 +6,17 @@ public class Consts {
 	// Current version use obb file to store resources. So we didn't need creating app folder.
 	// public static final String APP_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath()
 	// + File.separator + "cendrex";
+	public static final String EMAIL_CONTACT = "SPECTOOLS@CENDREX.COM";
+
+	// String constants to pass url.
+	public static final String URL = "url";
+	public static final String AIA_URL = "http://www.aecdaily.com/sc.php?node_id=1778730&tabidx=corporate&company=Cendrex,+Inc";
+	public static final String SPECLINK_URL = "http://www.bsdsoftlink.com/main.bsdsoftlink.com/";
+	public static final String MASTER_URL = "http://www.arcomnet.com/";
+	public static final String AGENT_URL = "http://www.specagent.com/default.aspx?tabid=39&RequestId=12de5cfa";
+	public static final String AUTO_DESK_URL = "http://seek.autodesk.com/";
+	public static final String LEED_LINK_EN_URL = "http://www.cendrex.com/index.php/en/leed";
+	public static final String LEED_LINK_FR_URL = "http://www.cendrex.com/index.php/fr/leed";
 
 	// The shared path to all app expansion files
 	public final static String EXP_PATH = "/Android/obb/";

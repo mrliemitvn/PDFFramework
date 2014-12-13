@@ -53,6 +53,8 @@
     <string name="delete">Effacer</string>
     <string name="print">Imprimer</string>
     <string name="accept">Accepter</string>
+    <string name="back">Reculer</string>
+    <string name="done">Fini</string>
 
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
@@ -68,6 +70,9 @@
     <string name="setting_language_fr">French</string>
     <string name="loading">Chargement &#8230;</string>
     <string name="title_table_of_contents">TABLE DES MATIÈRES</string>
+    <string name="catalog_and_data_sheet">Catalog and Data Sheet</string>
+    <string name="leed_link">LEED Link</string>
+    <string name="home_text_tool">- OUTILS DE SPÉCIFICATIONS - - - OBJETS BIM - - -COURS AIA E.C. - - - DOCUMENTATION LEED - -</string>
 
     <!-- Files name -->
     <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>

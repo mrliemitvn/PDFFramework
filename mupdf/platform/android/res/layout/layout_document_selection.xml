@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <TextView
+        android:id="@+id/tvCatalog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_alert_item"
+        android:padding="@dimen/margin_medium"
+        android:text="@string/catalog_and_data_sheet"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_medium" />
+
+    <TextView
+        android:id="@+id/tvLeedLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCatalog"
+        android:background="@drawable/bg_alert_item"
+        android:padding="@dimen/margin_medium"
+        android:text="@string/leed_link"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_medium" />
+
+</RelativeLayout>

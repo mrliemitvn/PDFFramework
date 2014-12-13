@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white"
-        android:paddingBottom="@dimen/margin_medium"
         android:paddingTop="@dimen/margin_medium" >
 
         <ImageView
@@ -40,28 +39,74 @@
             android:contentDescription="@string/empty"
             android:padding="@dimen/margin_tiny"
             android:src="@drawable/first_screen_share_state" />
+
+        <ImageView
+            android:id="@+id/imgSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_tiny"
+            android:layout_toLeftOf="@id/imgShare"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/first_screen_setting_state" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tvAccessDoors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/rlTitle"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
         android:gravity="center"
-        android:paddingBottom="@dimen/margin_medium"
-        android:paddingTop="@dimen/access_doors_margin"
         android:text="@string/access_doors"
         android:textColor="@color/black"
         android:textSize="@dimen/first_screen_access_doors"
         android:textStyle="bold" />
 
+    <RelativeLayout
+        android:id="@+id/rlBottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <TextView
+            android:id="@+id/tvTool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingBottom="@dimen/margin_medium"
+            android:paddingTop="@dimen/access_doors_margin"
+            android:singleLine="true"
+            android:text="@string/home_text_tool"
+            android:textColor="@color/black"
+            android:textSize="@dimen/first_screen_access_doors" />
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_medium"
+            android:paddingTop="@dimen/access_doors_margin"
+            android:text="@string/back"
+            android:textColor="@color/black"
+            android:textSize="@dimen/first_screen_access_doors"
+            android:visibility="gone" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tvAccessDoors"
-        android:layout_below="@id/rlTitle"
+        android:layout_above="@id/rlBottomMenu"
+        android:layout_below="@id/tvAccessDoors"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -141,17 +186,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/rlTitle"
-        android:layout_marginRight="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:contentDescription="@string/empty"
-        android:src="@drawable/first_screen_setting_state" />
-
     <LinearLayout
         android:id="@+id/llShare"
         android:layout_width="match_parent"
@@ -211,8 +245,8 @@
         android:id="@+id/svInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tvAccessDoors"
-        android:layout_below="@id/rlTitle"
+        android:layout_above="@id/rlBottomMenu"
+        android:layout_below="@id/tvAccessDoors"
         android:layout_margin="@dimen/margin_medium"
         android:background="@color/white"
         android:padding="@dimen/margin_medium"
@@ -235,8 +269,8 @@
         android:id="@+id/rlAdvantagesInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tvAccessDoors"
-        android:layout_below="@id/rlTitle"
+        android:layout_above="@id/rlBottomMenu"
+        android:layout_below="@id/tvAccessDoors"
         android:visibility="gone" >
 
         <ListView

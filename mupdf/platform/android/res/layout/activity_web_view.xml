@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/rlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_tiny" >
+
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_alert_item"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/done"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium" />
+
+        <ImageView
+            android:id="@+id/imgRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_right_arrow_state" />
+
+        <ImageView
+            android:id="@+id/imgLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_tiny"
+            android:layout_toLeftOf="@id/imgRight"
+            android:src="@drawable/btn_left_arrow_state" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_tiny"
+            android:layout_marginRight="@dimen/margin_tiny"
+            android:layout_toLeftOf="@id/imgLeft"
+            android:layout_toRightOf="@id/btnDone"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rlTopBar" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/rlTopBar" />
+
+</RelativeLayout>

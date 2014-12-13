@@ -156,6 +156,10 @@ https://www.parse.com/apps/quickstart?app_id=cendrex#parse_data/mobile/android/n
 o tren la 'Core', con day la vi du cho 'Push'
 https://www.parse.com/apps/quickstart?app_id=cendrex#parse_push/android/existing
 
+-- Account Google --
+claudecote@i-nomade.com
+pass: Inomade3872
+
 =========================
 version 4
 =========================
@@ -179,7 +183,13 @@ an vao do se hien ra 1 logo khac, cung chua 1 link de mo trang web
 mail thi thay doi lai dia chi SPECTOOLS@CENDREX.COM, tel nhu cu
 Dong text chay se doi thanh 'Back'
 3. Khi an 'Back' thi tro lai menu ban dau, moi chuc nang nhu cu
-
+link cho LEED (en): http://www.cendrex.com/index.php/en/leed
+LEED (fr): http://www.cendrex.com/index.php/fr/leed
+spec: http://www.bsdsoftlink.com/main.bsdsoftlink.com/
+master: http://www.arcomnet.com/
+agent: http://www.specagent.com/default.aspx?tabid=39&RequestId=12de5cfa
+autodesk: http://seek.autodesk.com/
+aec: http://www.aecdaily.com/sc.php?node_id=1778730&tabidx=corporate&company=Cendrex,+Inc
 
 
 

@@ -53,6 +53,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final int NEW_TYPE = 2;
 	private static final int FIRST = 1;
 	private static final int SECOND = 2;
+	private static final int NORMAL_BACKGROUND_TYPE = 0;
+	private static final int TOOL_BACKGROUND_TYPE = 1;
+
+	private int mBackgroundType = 0;
 
 	/* View elements. */
 	private ImageView mImgBackground;
@@ -62,6 +66,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private TextView mTvLibrary;
 	private TextView mTvNew;
 	private TextView mTvContact;
+	private TextView mTvTool;
+	private TextView mTvBack;
 	private LinearLayout mLlShare;
 	private TextView mTvShare;
 	private EditText mEtEmailShare;
@@ -98,6 +104,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		mLvAdvantagesInfo = (ListView) findViewById(R.id.lvAdvantagesInfo);
 		mSvInfo = (ScrollView) findViewById(R.id.svInfo);
 		mImgTitle = (ImageView) findViewById(R.id.imgTitle);
+		mTvTool = (TextView) findViewById(R.id.tvTool);
+		mTvBack = (TextView) findViewById(R.id.tvBack);
 
 		mImgShare.setOnClickListener(this);
 		mImgSetting.setOnClickListener(this);
@@ -110,20 +118,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		mViewOverlap.setOnClickListener(this);
 		mImgClose.setOnClickListener(this);
 		mImgTitle.setOnClickListener(this);
+		mTvTool.setOnClickListener(this);
+		mTvBack.setOnClickListener(this);
 
-		if (Utils.isTablet(this)) {
-			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				mImgBackground.setImageResource(R.drawable.bg_tablet_en);
-			} else {
-				mImgBackground.setImageResource(R.drawable.bg_tablet_fr);
-			}
-		} else {
-			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-				mImgBackground.setImageResource(R.drawable.bg_phone_en);
-			} else {
-				mImgBackground.setImageResource(R.drawable.bg_phone_fr);
-			}
-		}
+		changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
 
 		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
 		mTvAdvantages.setTypeface(orbitron);
@@ -132,6 +130,44 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvContact.setTypeface(orbitron);
 
 		loadAdvantages();
+	}
+
+	/**
+	 * Change image background.
+	 * 
+	 * @param backgroundType
+	 *            background type
+	 */
+	private void changeBackgroundImage(int backgroundType) {
+		if (Utils.isTablet(this)) {
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				if (NORMAL_BACKGROUND_TYPE == backgroundType) {
+					mImgBackground.setImageResource(R.drawable.bg_tablet_en);
+				} else {
+					mImgBackground.setImageResource(R.drawable.bg_tablet_tool_en);
+				}
+			} else {
+				if (NORMAL_BACKGROUND_TYPE == backgroundType) {
+					mImgBackground.setImageResource(R.drawable.bg_tablet_fr);
+				} else {
+					mImgBackground.setImageResource(R.drawable.bg_tablet_tool_fr);
+				}
+			}
+		} else {
+			if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+				if (NORMAL_BACKGROUND_TYPE == backgroundType) {
+					mImgBackground.setImageResource(R.drawable.bg_phone_en);
+				} else {
+					mImgBackground.setImageResource(R.drawable.bg_phone_tool_en);
+				}
+			} else {
+				if (NORMAL_BACKGROUND_TYPE == backgroundType) {
+					mImgBackground.setImageResource(R.drawable.bg_phone_fr);
+				} else {
+					mImgBackground.setImageResource(R.drawable.bg_phone_tool_fr);
+				}
+			}
+		}
 	}
 
 	/**
@@ -246,7 +282,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void handlerContact() {
 		final Intent intentCall = new Intent(Intent.ACTION_DIAL);
-		final String[] emailsContact = new String[] { "adaveluy@cendrex.com", "bdesjardins@cendrex.com" };
+		final String[] emailsContact = new String[] { Consts.EMAIL_CONTACT };
 		if (Utils.isTablet(this)) {
 			sendEmail(emailsContact);
 		} else {
@@ -306,6 +342,124 @@ public class MainActivity extends Activity implements OnClickListener {
 		intentOpenFile.setAction(Intent.ACTION_VIEW);
 		intentOpenFile.setData(uri);
 		startActivity(intentOpenFile);
+	}
+
+	/**
+	 * Show Bim objects logo.
+	 */
+	private void showBimObjectsLogo() {
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.layout_advantages_logo);
+
+		// Set dialog content.
+		ImageView imgSpecLogo = (ImageView) dialog.findViewById(R.id.imgSpecLogo);
+		ImageView imgMasterLogo = (ImageView) dialog.findViewById(R.id.imgMasterLogo);
+		ImageView imgAgentLogo = (ImageView) dialog.findViewById(R.id.imgAgentLogo);
+		ImageView imgAutoDeskLogo = (ImageView) dialog.findViewById(R.id.imgAutoDeskLogo);
+
+		imgSpecLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open spec link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				intent.putExtra(Consts.URL, Consts.SPECLINK_URL);
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+		imgMasterLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open master link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				intent.putExtra(Consts.URL, Consts.MASTER_URL);
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+		imgAgentLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open agent link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				intent.putExtra(Consts.URL, Consts.AGENT_URL);
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+		imgAutoDeskLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open auto desk link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				intent.putExtra(Consts.URL, Consts.AUTO_DESK_URL);
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
+	}
+
+	/**
+	 * Show catalog and LEED link selection.
+	 */
+	private void showCatalogAndLeedLinkSelection() {
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.layout_document_selection);
+
+		// Set dialog content.
+		TextView tvCatalog = (TextView) dialog.findViewById(R.id.tvCatalog);
+		TextView tvLeedLink = (TextView) dialog.findViewById(R.id.tvLeedLink);
+
+		tvCatalog.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open catalog file.
+				openFile(LIBRARY_TYPE, 0);
+				dialog.dismiss();
+			}
+		});
+		tvLeedLink.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open LEED link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+					intent.putExtra(Consts.URL, Consts.LEED_LINK_EN_URL);
+				} else {
+					intent.putExtra(Consts.URL, Consts.LEED_LINK_FR_URL);
+				}
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
+	}
+
+	/**
+	 * Show AIA logo.
+	 */
+	private void showAIALogo() {
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.view_aia_logo);
+
+		// Set dialog content.
+		RelativeLayout rlAIALogo = (RelativeLayout) dialog.findViewById(R.id.rlAIALogo);
+
+		rlAIALogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open AIA link.
+				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+				intent.putExtra(Consts.URL, Consts.AIA_URL);
+				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
 	}
 
 	/**
@@ -440,15 +594,30 @@ public class MainActivity extends Activity implements OnClickListener {
 			showFilesLanguageSetting();
 			break;
 		case R.id.tvAdvantages:
-			mViewOverlap.setVisibility(View.VISIBLE);
-			mRlAdvantagesInfo.setVisibility(View.VISIBLE);
+			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+				mViewOverlap.setVisibility(View.VISIBLE);
+				mRlAdvantagesInfo.setVisibility(View.VISIBLE);
+			} else {
+				// Show Bim objects logo.
+				showBimObjectsLogo();
+			}
 			break;
 		case R.id.tvLibrary:
-			// Open Doc file.
-			openFile(LIBRARY_TYPE, 0);
+			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+				// Open Doc file.
+				openFile(LIBRARY_TYPE, 0);
+			} else {
+				// Show a selection: open catalog file or open LEED link.
+				showCatalogAndLeedLinkSelection();
+			}
 			break;
 		case R.id.tvNew:
-			showFilesToOpen(NEW_TYPE);
+			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+				showFilesToOpen(NEW_TYPE);
+			} else {
+				// Show AIA logo.
+				showAIALogo();
+			}
 			break;
 		case R.id.tvContact:
 			handlerContact();
@@ -485,6 +654,22 @@ public class MainActivity extends Activity implements OnClickListener {
 				mViewOverlap.setVisibility(View.GONE);
 				mSvInfo.setVisibility(View.GONE);
 			}
+			break;
+		case R.id.tvTool:
+			// Hide mTvTool, show mTvBack.
+			// Change background image to tool image, change mBackgroundType to TOOL_BACKGROUND_TYPE.
+			mTvTool.setVisibility(View.GONE);
+			mTvBack.setVisibility(View.VISIBLE);
+			changeBackgroundImage(TOOL_BACKGROUND_TYPE);
+			mBackgroundType = TOOL_BACKGROUND_TYPE;
+			break;
+		case R.id.tvBack:
+			// Show mTvTool, hide mTvBack.
+			// Change background image to normal image, change mBackgroundType to NORMAL_BACKGROUND_TYPE.
+			mTvTool.setVisibility(View.VISIBLE);
+			mTvBack.setVisibility(View.GONE);
+			changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
+			mBackgroundType = NORMAL_BACKGROUND_TYPE;
 			break;
 		default:
 			break;
