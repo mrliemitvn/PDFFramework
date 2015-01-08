@@ -53,7 +53,6 @@
     <string name="delete">Delete</string>
     <string name="print">Print</string>
     <string name="accept">Accept</string>
-    <string name="back">Back</string>
     <string name="done">Done</string>
 
     <!-- Project string -->
@@ -66,13 +65,14 @@
     <string name="contact_us_menu">CONTACT US</string>
     <string name="title_choose_file_language">Choose language of files</string>
     <string name="title_choose_file_to_open">Choose file to open</string>
-    <string name="setting_language_en">English</string>
-    <string name="setting_language_fr">French</string>
+    <string name="setting_language_en">ANGLAIS</string>
+    <string name="setting_language_fr">FRANÇAIS</string>
     <string name="loading">Loading &#8230;</string>
     <string name="title_table_of_contents">TABLE OF CONTENTS</string>
     <string name="catalog_and_data_sheet">Catalog and Data Sheet</string>
     <string name="leed_link">LEED Link</string>
-    <string name="home_text_tool">- SPECIFICATION TOOLS - - - BIM OBJECTS - - - AIA C.E. ONLINE COURSE - - - LEED DOCUMENTATION - -</string>
+    <string name="home_text_architects">ARCHITECTS (CLICK HERE)</string>
+    <string name="home_text_distributors">DISTRIBUTORS (CLICK HERE)</string>
 
     <!-- Files name -->
     <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>

@@ -895,7 +895,19 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					Bundle bundle = getIntent().getExtras();
 					if (bundle != null && bundle.containsKey(Consts.OPEN_LIBRARY_FILE)
 							&& bundle.getBoolean(Consts.OPEN_LIBRARY_FILE, false)) {
-						mInfoButton.setVisibility(View.VISIBLE);
+						// Show or hide info button.
+						if (mInfoButton != null && listInfoResources != null && listInfoResources.size() > 0) {
+							int visible = View.GONE;
+							for (InfoResource infoResource : listInfoResources) {
+								int pageHasInfoFiles = Integer.parseInt(infoResource.page) - 1;
+								int currentPage = mDocView.getDisplayedViewIndex();
+								if (pageHasInfoFiles == currentPage) {
+									visible = View.VISIBLE;
+									break;
+								}
+							}
+							mInfoButton.setVisibility(visible);
+						}
 					}
 				}
 			});
@@ -1074,7 +1086,6 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				&& bundle.getBoolean(Consts.OPEN_LIBRARY_FILE, false)) {
 			mOutlineButton.setVisibility(View.VISIBLE);
 			mOutlineButton.setSelected(true);
-			mInfoButton.setVisibility(View.VISIBLE);
 			// Setup table of contents list view.
 			setUpTableContentsListView();
 			// Setup list info files.
@@ -1142,6 +1153,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			xmlParser = getResources().getXml(R.xml.info_data_fr);
 		}
 		try {
+			int infoButtonVisible = View.GONE;
 			int eventType = xmlParser.getEventType();
 			InfoResource infoResource = null;
 			while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -1149,11 +1161,17 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					infoResource = new InfoResource();
 					infoResource.page = xmlParser.getAttributeValue(0);
 					listInfoResources.add(infoResource);
+					
+					// Show or hide info button.
+					int pageHasInfoFiles = Integer.parseInt(infoResource.page) - 1;
+					int currentPage = mDocView.getDisplayedViewIndex();
+					if (infoButtonVisible != View.VISIBLE && pageHasInfoFiles == currentPage) infoButtonVisible = View.VISIBLE;
 				} else if (eventType == XmlPullParser.TEXT) {
 					if (infoResource != null) infoResource.listFileName.add(xmlParser.getText());
 				}
 				eventType = xmlParser.next();
 			}
+			mInfoButton.setVisibility(infoButtonVisible);
 			// indicate app done reading the resource.
 			xmlParser.close();
 		} catch (Exception e) {

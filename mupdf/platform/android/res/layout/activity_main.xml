@@ -40,15 +40,17 @@
             android:padding="@dimen/margin_tiny"
             android:src="@drawable/first_screen_share_state" />
 
-        <ImageView
-            android:id="@+id/imgSetting"
+        <TextView
+            android:id="@+id/tvSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_tiny"
-            android:layout_toLeftOf="@id/imgShare"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/first_screen_setting_state" />
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:text="@string/setting_language_en"
+            android:textColor="@drawable/language_setting_color_state"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
@@ -70,25 +72,21 @@
         android:layout_alignParentBottom="true" >
 
         <TextView
-            android:id="@+id/tvTool"
+            android:id="@+id/tvArchitects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@color/white"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
             android:paddingBottom="@dimen/margin_medium"
             android:paddingTop="@dimen/access_doors_margin"
             android:singleLine="true"
-            android:text="@string/home_text_tool"
-            android:textColor="@color/black"
+            android:text="@string/home_text_architects"
+            android:textColor="@drawable/language_setting_color_state"
             android:textSize="@dimen/first_screen_access_doors" />
 
         <TextView
-            android:id="@+id/tvBack"
+            android:id="@+id/tvDistributors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -96,8 +94,8 @@
             android:gravity="center"
             android:paddingBottom="@dimen/margin_medium"
             android:paddingTop="@dimen/access_doors_margin"
-            android:text="@string/back"
-            android:textColor="@color/black"
+            android:text="@string/home_text_distributors"
+            android:textColor="@drawable/language_setting_color_state"
             android:textSize="@dimen/first_screen_access_doors"
             android:visibility="gone" />
     </RelativeLayout>

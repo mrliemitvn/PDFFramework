@@ -61,13 +61,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	/* View elements. */
 	private ImageView mImgBackground;
 	private ImageView mImgShare;
-	private ImageView mImgSetting;
+	private TextView mTvSetting;
 	private TextView mTvAdvantages;
 	private TextView mTvLibrary;
 	private TextView mTvNew;
 	private TextView mTvContact;
-	private TextView mTvTool;
-	private TextView mTvBack;
+	private TextView mTvArchitects;
+	private TextView mTvDistributors;
 	private LinearLayout mLlShare;
 	private TextView mTvShare;
 	private EditText mEtEmailShare;
@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void init() {
 		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
 		mImgShare = (ImageView) findViewById(R.id.imgShare);
-		mImgSetting = (ImageView) findViewById(R.id.imgSetting);
+		mTvSetting = (TextView) findViewById(R.id.tvSetting);
 		mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
 		mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
 		mTvNew = (TextView) findViewById(R.id.tvNew);
@@ -104,11 +104,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		mLvAdvantagesInfo = (ListView) findViewById(R.id.lvAdvantagesInfo);
 		mSvInfo = (ScrollView) findViewById(R.id.svInfo);
 		mImgTitle = (ImageView) findViewById(R.id.imgTitle);
-		mTvTool = (TextView) findViewById(R.id.tvTool);
-		mTvBack = (TextView) findViewById(R.id.tvBack);
+		mTvArchitects = (TextView) findViewById(R.id.tvArchitects);
+		mTvDistributors = (TextView) findViewById(R.id.tvDistributors);
 
 		mImgShare.setOnClickListener(this);
-		mImgSetting.setOnClickListener(this);
+		mTvSetting.setOnClickListener(this);
 		mTvAdvantages.setOnClickListener(this);
 		mTvLibrary.setOnClickListener(this);
 		mTvNew.setOnClickListener(this);
@@ -118,8 +118,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		mViewOverlap.setOnClickListener(this);
 		mImgClose.setOnClickListener(this);
 		mImgTitle.setOnClickListener(this);
-		mTvTool.setOnClickListener(this);
-		mTvBack.setOnClickListener(this);
+		mTvArchitects.setOnClickListener(this);
+		mTvDistributors.setOnClickListener(this);
+
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			// Current setting is English, set text setting is French.
+			mTvSetting.setText(R.string.setting_language_fr);
+		} else {
+			// Current setting is French, set text setting is English.
+			mTvSetting.setText(R.string.setting_language_en);
+		}
 
 		changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
 
@@ -236,33 +244,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * Show alert dialog for setting files language.
 	 */
 	private void showFilesLanguageSetting() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.title_choose_file_language);
-		int itemChecked = 0;
-		if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
-			itemChecked = 1;
+		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
+			// Current is English, change to French.
+			SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
+			Utils.changeLanguage(MainActivity.this, "fr");
+		} else {
+			// Current is French, change to English.
+			SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
+			Utils.changeLanguage(MainActivity.this, "en");
 		}
-		builder.setSingleChoiceItems(mItemsFilesLanguage, itemChecked, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-
-				switch (item) {
-				case 0:
-					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
-					Utils.changeLanguage(MainActivity.this, "en");
-					handlerAfterChangeLanguage();
-					break;
-				case 1:
-					SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
-					Utils.changeLanguage(MainActivity.this, "fr");
-					handlerAfterChangeLanguage();
-					break;
-
-				}
-				dialog.dismiss();
-			}
-		});
-		AlertDialog filesLanguageDialog = builder.create();
-		filesLanguageDialog.show();
+		handlerAfterChangeLanguage();
 	}
 
 	/**
@@ -590,7 +581,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.imgShare:
 			mLlShare.setVisibility(View.VISIBLE);
 			break;
-		case R.id.imgSetting:
+		case R.id.tvSetting:
 			showFilesLanguageSetting();
 			break;
 		case R.id.tvAdvantages:
@@ -655,19 +646,19 @@ public class MainActivity extends Activity implements OnClickListener {
 				mSvInfo.setVisibility(View.GONE);
 			}
 			break;
-		case R.id.tvTool:
+		case R.id.tvArchitects:
 			// Hide mTvTool, show mTvBack.
 			// Change background image to tool image, change mBackgroundType to TOOL_BACKGROUND_TYPE.
-			mTvTool.setVisibility(View.GONE);
-			mTvBack.setVisibility(View.VISIBLE);
+			mTvArchitects.setVisibility(View.GONE);
+			mTvDistributors.setVisibility(View.VISIBLE);
 			changeBackgroundImage(TOOL_BACKGROUND_TYPE);
 			mBackgroundType = TOOL_BACKGROUND_TYPE;
 			break;
-		case R.id.tvBack:
+		case R.id.tvDistributors:
 			// Show mTvTool, hide mTvBack.
 			// Change background image to normal image, change mBackgroundType to NORMAL_BACKGROUND_TYPE.
-			mTvTool.setVisibility(View.VISIBLE);
-			mTvBack.setVisibility(View.GONE);
+			mTvArchitects.setVisibility(View.VISIBLE);
+			mTvDistributors.setVisibility(View.GONE);
 			changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
 			mBackgroundType = NORMAL_BACKGROUND_TYPE;
 			break;
