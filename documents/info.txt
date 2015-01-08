@@ -191,6 +191,38 @@ agent: http://www.specagent.com/default.aspx?tabid=39&RequestId=12de5cfa
 autodesk: http://seek.autodesk.com/
 aec: http://www.aecdaily.com/sc.php?node_id=1778730&tabidx=corporate&company=Cendrex,+Inc
 
+===============
+version 5
+===============
+1. la a moi edit lai video, e down ve roi dung nhe
+https://www.dropbox.com/s/rab9kkxdk70ehqu/intro_iphone_EN_640x960.m4v?dl=0
+https://www.dropbox.com/s/h51plz33ewicw64/intro_iphone_FR_640x960.m4v?dl=0
+https://www.dropbox.com/s/r0v21bn6m5itx9t/intro_video_FR.m4v?dl=0
+https://www.dropbox.com/s/h6fylvm2cud0brp/intro_video_EN.m4v?dl=0
+https://www.dropbox.com/s/mourha8ls8ynudc/intro_iphone_EN_640x1136.m4v?dl=0
+https://www.dropbox.com/s/1vhh9iydsuzevc3/intro_iphone_FR_640x1136.m4v?dl=0
+
+2. Ngoai menu chinh, ko con nut setting de mo cua so chon EN/FR nua
+em hien truc tiep English/French luon. Vi du hien tai dang la english, button se la French. Click vao do se chuyen sang giao dien French, button doi thanh English
+
+3. Khong con doan text animation o duoi man hinh nua
+Luc moi dau mo app, hien 'ARCHITECTS (CLICK HERE)'
+nhan vao do se doi sang menu (specs, aia c.e. course, ...)
+Text se doi lai thanh 'DISTRIBUTORS (CLICK HERE)'
+nhan vao do quay lai menu cu (winning advantages, new product, ...)
+text lai chuyen ve 'ARCHITECTS (CLICK HERE)'
+
+4. co 7 icon tren ban do, moi cai click se hien 1 dia chi 
+bg thay doi cach thu hien thi lai
+a se gui e hinh minh hoa (email)
+
+5. tat ca cac popup trong app cua minh fai cung loai nhu nhau: background den, text trang
+a vua gui e 2 email, lat a se gui 1 email nua ve giao dien cua tat ca cac loai popup nay
+nhu hien gio thi no chua dong nhat
+em cu lam het cac yeu cau o tren roi nhan anh, minh se ban tiep ve cai giao dien nay
+
+6. minh se chi hien button 'Tech data sheet' cho page nao co thoi, trang nao ko co link pdf thi minh ko hien button do
+
 
 
 
