@@ -246,7 +246,7 @@
         android:layout_above="@id/rlBottomMenu"
         android:layout_below="@id/tvAccessDoors"
         android:layout_margin="@dimen/margin_medium"
-        android:background="@color/white"
+        android:background="@color/bg_list_info_and_contents"
         android:padding="@dimen/margin_medium"
         android:visibility="gone" >
 
@@ -258,7 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/cendrex_info"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size_medium" />
         </RelativeLayout>
     </ScrollView>
@@ -276,8 +276,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
-            android:background="@color/white"
-            android:dividerHeight="@dimen/divider_height"
+            android:background="@color/bg_list_info_and_contents"
+            android:divider="@null"
             android:listSelector="@color/transparent" >
         </ListView>
 

@@ -69,10 +69,13 @@
     <string name="setting_language_fr">FRANÇAIS</string>
     <string name="loading">Loading &#8230;</string>
     <string name="title_table_of_contents">TABLE OF CONTENTS</string>
-    <string name="catalog_and_data_sheet">Catalog and Data Sheet</string>
-    <string name="leed_link">LEED Link</string>
+    <string name="catalog_and_data_sheet">Catalog and Technical Data Sheets</string>
+    <string name="leed_link">LEED Documentation</string>
     <string name="home_text_architects">ARCHITECTS (CLICK HERE)</string>
     <string name="home_text_distributors">DISTRIBUTORS (CLICK HERE)</string>
+    <string name="title_dialog_hyperlink">Click logo for hyperlink</string>
+    <string name="mail">Mail</string>
+    <string name="tel">Tel</string>
 
     <!-- Files name -->
     <string name="first_screen_pitch_file_1_en">CENDREX Advantage 2013</string>
@@ -81,8 +84,7 @@
     <string name="first_screen_pitch_file_2_fr">CENDREX CTA flyer</string>
     <string name="first_screen_doc_file_en">CENDREX Access Doors Catalog 2014 HR</string>
     <string name="first_screen_doc_file_fr">CENDREX Porte Accès Catalogue 2014 HR</string>
-    <string name="first_screen_new_file_en">New Products</string>
-    <string name="first_screen_new_file_fr">Nouveaux Produits</string>
+    <string name="first_screen_new_file">New Products</string>
     <string name="first_screen_new_video_file">CENDREX CTA Adjustable Access Door</string>
 
     <!-- Register user -->
@@ -100,5 +102,23 @@
     <string name="advantage_title">Advantage</string>
     <string name="cendrex_info">Founded in 1985 and servicing a multitude of distributors located mainly in North America, Cendrex designs and manufactures a full range of quality <b>Access Doors, Roof Hatches, and Floor Hatches.</b>\nIts KAIZEN philosophy of continuous improvement has enabled Cendrex to become the most flexible and accommodating company in its field. As a result, the company offers unparalleled products and services to better fulfill the needs of its clients within the construction industry.\nHere is a quick view of what CENDREX has to offer: \n\t1 800 479-1489\n<u>CTA:Revolutionary, adjustable, general purpose access door</u>\nREDUCE installation time by 90% - ADJUSTABLE in size – AESTHETIC APPEARANCE\n<u>CTR: Contour Hidden Flange Access Door</u>\nCENDREX has engineered the unique and exclusive CTR Contour Hidden Flange Door. Easy installation, no mudding, taping or apparent flange make the CTR the most aesthetically pleasing access door available on the market.\n<u>WHITE DOORS</u>\nTo provide a more aesthetic finish. CENDREX Access Doors are manufactured in ‘WHITE POWDER COAT’ primer. No need to repaint.\n<u>ODD SIZE DOORS in 5 days</u>\nGet your odd size access doors manufactured in 5 business days. CENDREX is the industry’s leader in the fabrication of odd sizes.\n<u>CUSTOM DOORS in 10 days</u>\nGet your custom access doors manufactured in 10 business days. Shop drawings are provided for all custom doors.\n<u>LOCAL representatives</u>\nCENDREX has local representatives throughout North America and beyond.\n<u>EXTENSIVE distribution network</u>\n<b>LOCAL DISTRIBUTORS/PARTNERS</b> CENDREX sells exclusively through its distribution network.\n<b>REGIONAL WAREHOUSES</b> Located in California, Colorado, Florida, Illinois, Pennsylvania, Texas and Canada.\n<u>LEED ready</u>\nCENDREX access products contribute directly to obtaining points for LEAD® certification. All LEED® documents are developed in association with the foremost LEED® certification specialists, YRG in the U.S.A. and Vertima in Canada, to provide you with information you can trust.\n<u>GREEN beyond LEED®</u>\nCENDREX is incorporating sustainability strategies at all levels through an on-going commitment to reduce waste and increase efficiency.\n\nPlease visit us at www.cendrex.com</string>
     <string name="email_message">\n\nAccess Doors by I-Nomade\nhttps://play.google.com/store/apps/details?id=com.cendrex</string>
+    
+    <!-- Offices address -->
+    <string name="california_north_title">California (North) (Warehouse)</string>
+    <string name="california_north_address">2192 W.Winton Ave. Hayward CA 94545</string>
+    <string name="california_south_title">California (South) (Warehouse)</string>
+    <string name="california_south_address">15521 Blackburn Avenue Norwalk, CA 90650</string>
+    <string name="colorado_title">Colorado (Warehouse)</string>
+    <string name="colorado_address">14704 E.33rd PL.#33, Aurora, CO 80011</string>
+    <string name="texas_title">Texas (Warehouse)</string>
+    <string name="texas_address">1419 Mariposa Drive, Mesquite, TX 75150</string>
+    <string name="illinois_title">Illinois (Warehouse)</string>
+    <string name="illinois_address">921 Ardmore Ave, Itasca, IL 60143</string>
+    <string name="florida_title">Florida (Warehouse)</string>
+    <string name="florida_address">2915 Bush Drive, Melbourne FL 32935</string>
+    <string name="philadelphia_title">Philadelphia (Warehouse)</string>
+    <string name="philadelphia_address">2411 N.American Street, Philadelphia, PA 19133</string>
+    <string name="montreal_title">Montréal (Head Office)</string>
+    <string name="montreal_address">11303 26e Avenue, Montréal, Québec H1E 6N6</string>
 
 </resources>

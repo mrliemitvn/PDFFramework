@@ -5,29 +5,26 @@
     android:background="@color/bg_list_info_and_contents" >
 
     <TextView
-        android:id="@+id/tvCatalog"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_document_selection"
-        android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/ic_pdf_file"
         android:gravity="center"
         android:padding="@dimen/margin_medium"
-        android:text="@string/catalog_and_data_sheet"
+        android:text="@string/montreal_title"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_medium" />
 
     <TextView
-        android:id="@+id/tvLeedLink"
+        android:id="@+id/tvAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvCatalog"
-        android:background="@drawable/bg_document_selection"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="@dimen/margin_medium"
         android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/ic_web"
+        android:drawableTop="@drawable/img_storage_icon"
         android:gravity="center"
         android:padding="@dimen/margin_medium"
-        android:text="@string/leed_link"
+        android:text="@string/montreal_address"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_medium" />
 

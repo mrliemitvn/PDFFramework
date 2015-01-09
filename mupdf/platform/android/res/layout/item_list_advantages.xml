@@ -3,7 +3,7 @@
     android:id="@+id/rlItemTableContents"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_alert_item"
+    android:background="@drawable/bg_document_selection"
     android:padding="@dimen/margin_medium" >
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:padding="@dimen/margin_tiny"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_medium" />
 
 </RelativeLayout>

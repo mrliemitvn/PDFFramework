@@ -18,15 +18,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
-import android.graphics.Typeface;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -55,6 +58,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final int SECOND = 2;
 	private static final int NORMAL_BACKGROUND_TYPE = 0;
 	private static final int TOOL_BACKGROUND_TYPE = 1;
+	private static final int CALIFORNIA_NORTH = 1;
+	private static final int CALIFORNIA_SOUTH = 2;
+	private static final int COLORADO = 3;
+	private static final int TEXAS = 4;
+	private static final int ILLINOIS = 5;
+	private static final int FLORIDA = 6;
+	private static final int PHILADELPHIA = 7;
+	private static final int MONTREAL = 8;
 
 	private int mBackgroundType = 0;
 
@@ -62,10 +73,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageView mImgBackground;
 	private ImageView mImgShare;
 	private TextView mTvSetting;
-	private TextView mTvAdvantages;
-	private TextView mTvLibrary;
-	private TextView mTvNew;
-	private TextView mTvContact;
 	private TextView mTvArchitects;
 	private TextView mTvDistributors;
 	private LinearLayout mLlShare;
@@ -82,7 +89,58 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	/* Variables will be used. */
 	private CharSequence[] mItemsFilesLanguage;
-	CharSequence[] mItemsContact = { "Phone call", "Send email" };
+	private int mScreenWidth;
+	private int mScreenHeight;
+	private int mStatusBarHeight;
+	private int mImageWidth;
+	private int mXminCaliforniaNorth;
+	private int mXmaxCaliforniaNorth;
+	private int mYminCaliforniaNorth;
+	private int mYmaxCaliforniaNorth;
+	private int mXminCaliforniaSouth;
+	private int mXmaxCaliforniaSouth;
+	private int mYminCaliforniaSouth;
+	private int mYmaxCaliforniaSouth;
+	private int mXminColorado;
+	private int mXmaxColorado;
+	private int mYminColorado;
+	private int mYmaxColorado;
+	private int mXminTexas;
+	private int mXmaxTexas;
+	private int mYminTexas;
+	private int mYmaxTexas;
+	private int mXminIllinois;
+	private int mXmaxIllinois;
+	private int mYminIllinois;
+	private int mYmaxIllinois;
+	private int mXminFlorida;
+	private int mXmaxFlorida;
+	private int mYminFlorida;
+	private int mYmaxFlorida;
+	private int mXminPhiladelphia;
+	private int mXmaxPhiladelphia;
+	private int mYminPhiladelphia;
+	private int mYmaxPhiladelphia;
+	private int mXminMontreal;
+	private int mXmaxMontreal;
+	private int mYminMontreal;
+	private int mYmaxMontreal;
+	private int mXminAdvantages;
+	private int mXmaxAdvantages;
+	private int mYminAdvantages;
+	private int mYmaxAdvantages;
+	private int mXminLibrary;
+	private int mXmaxLibrary;
+	private int mYminLibrary;
+	private int mYmaxLibrary;
+	private int mXminNew;
+	private int mXmaxNew;
+	private int mYminNew;
+	private int mYmaxNew;
+	private int mXminContact;
+	private int mXmaxContact;
+	private int mYminContact;
+	private int mYmaxContact;
 
 	/**
 	 * Initialize view.
@@ -91,10 +149,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
 		mImgShare = (ImageView) findViewById(R.id.imgShare);
 		mTvSetting = (TextView) findViewById(R.id.tvSetting);
-		mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
-		mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
-		mTvNew = (TextView) findViewById(R.id.tvNew);
-		mTvContact = (TextView) findViewById(R.id.tvContact);
+		// mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
+		// mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
+		// mTvNew = (TextView) findViewById(R.id.tvNew);
+		// mTvContact = (TextView) findViewById(R.id.tvContact);
 		mLlShare = (LinearLayout) findViewById(R.id.llShare);
 		mTvShare = (TextView) findViewById(R.id.tvShare);
 		mEtEmailShare = (EditText) findViewById(R.id.etEmailShare);
@@ -109,10 +167,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		mImgShare.setOnClickListener(this);
 		mTvSetting.setOnClickListener(this);
-		mTvAdvantages.setOnClickListener(this);
-		mTvLibrary.setOnClickListener(this);
-		mTvNew.setOnClickListener(this);
-		mTvContact.setOnClickListener(this);
 		mLlShare.setOnClickListener(this);
 		mTvShare.setOnClickListener(this);
 		mViewOverlap.setOnClickListener(this);
@@ -130,12 +184,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 
 		changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
-
-		Typeface orbitron = Typeface.createFromAsset(getAssets(), "orbitron-bold.otf");
-		mTvAdvantages.setTypeface(orbitron);
-		mTvLibrary.setTypeface(orbitron);
-		mTvNew.setTypeface(orbitron);
-		mTvContact.setTypeface(orbitron);
 
 		loadAdvantages();
 	}
@@ -277,19 +325,32 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (Utils.isTablet(this)) {
 			sendEmail(emailsContact);
 		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Make your selection");
-			builder.setItems(mItemsContact, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					if (item == 0) {
-						startActivity(intentCall);
-					} else {
-						sendEmail(emailsContact);
-					}
+			final Dialog dialog = new Dialog(this);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.layout_contact_selection);
+
+			// Set dialog content.
+			TextView tvMail = (TextView) dialog.findViewById(R.id.tvMail);
+			TextView tvTel = (TextView) dialog.findViewById(R.id.tvTel);
+
+			tvMail.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Send email.
+					sendEmail(emailsContact);
+					dialog.dismiss();
 				}
 			});
-			AlertDialog alert = builder.create();
-			alert.show();
+			tvTel.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Phone call.
+					startActivity(intentCall);
+					dialog.dismiss();
+				}
+			});
+
+			dialog.show();
 		}
 	}
 
@@ -336,10 +397,63 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * Show office address.
+	 * 
+	 * @param officeNumber
+	 */
+	private void showOfficeAddress(int officeNumber) {
+		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.layout_office_address);
+
+		// Set dialog content.
+		TextView tvTitle = (TextView) dialog.findViewById(R.id.tvTitle);
+		TextView tvAddress = (TextView) dialog.findViewById(R.id.tvAddress);
+
+		switch (officeNumber) {
+		case CALIFORNIA_NORTH:
+			tvTitle.setText(R.string.california_north_title);
+			tvAddress.setText(R.string.california_north_address);
+			break;
+		case CALIFORNIA_SOUTH:
+			tvTitle.setText(R.string.california_south_title);
+			tvAddress.setText(R.string.california_south_address);
+			break;
+		case COLORADO:
+			tvTitle.setText(R.string.colorado_title);
+			tvAddress.setText(R.string.colorado_address);
+			break;
+		case TEXAS:
+			tvTitle.setText(R.string.texas_title);
+			tvAddress.setText(R.string.texas_address);
+			break;
+		case ILLINOIS:
+			tvTitle.setText(R.string.illinois_title);
+			tvAddress.setText(R.string.illinois_address);
+			break;
+		case FLORIDA:
+			tvTitle.setText(R.string.florida_title);
+			tvAddress.setText(R.string.florida_address);
+			break;
+		case PHILADELPHIA:
+			tvTitle.setText(R.string.philadelphia_title);
+			tvAddress.setText(R.string.philadelphia_address);
+			break;
+		default:
+			tvTitle.setText(R.string.montreal_title);
+			tvAddress.setText(R.string.montreal_address);
+			break;
+		}
+
+		dialog.show();
+	}
+
+	/**
 	 * Show Bim objects logo.
 	 */
 	private void showBimObjectsLogo() {
 		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.layout_advantages_logo);
 
 		// Set dialog content.
@@ -397,6 +511,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void showCatalogAndLeedLinkSelection() {
 		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.layout_document_selection);
 
 		// Set dialog content.
@@ -434,12 +549,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void showAIALogo() {
 		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.view_aia_logo);
 
 		// Set dialog content.
-		RelativeLayout rlAIALogo = (RelativeLayout) dialog.findViewById(R.id.rlAIALogo);
+		ImageView imgAIALogo = (ImageView) dialog.findViewById(R.id.imgAIALogo);
 
-		rlAIALogo.setOnClickListener(new OnClickListener() {
+		imgAIALogo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// Open AIA link.
@@ -460,70 +576,30 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void showFilesToOpen(int type) {
 		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.first_screen_alert_layout);
-		dialog.setTitle(R.string.title_choose_file_to_open);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.layout_new_product);
 
 		// Set dialog content.
-		RelativeLayout rlFile1 = (RelativeLayout) dialog.findViewById(R.id.rlFile1);
-		RelativeLayout rlFile2 = (RelativeLayout) dialog.findViewById(R.id.rlFile2);
-		TextView tvFileName1 = (TextView) dialog.findViewById(R.id.tvFileName1);
-		TextView tvFileName2 = (TextView) dialog.findViewById(R.id.tvFileName2);
-		ImageView imgIcon1 = (ImageView) dialog.findViewById(R.id.imgIcon1);
+		TextView tvPlayVideo = (TextView) dialog.findViewById(R.id.tvPlayVideo);
+		TextView tvNewProduct = (TextView) dialog.findViewById(R.id.tvNewProduct);
 
-		String languageFile = SharePrefs.getInstance().getFilesLanguageSetting();
-		switch (type) {
-		case ADVANTAGES_TYPE:
-			if (SharePrefs.EN_LANGUAGE.equals(languageFile)) {
-				tvFileName1.setText(R.string.first_screen_pitch_file_1_en);
-				tvFileName2.setText(R.string.first_screen_pitch_file_2_en);
-			} else {
-				tvFileName1.setText(R.string.first_screen_pitch_file_1_fr);
-				tvFileName2.setText(R.string.first_screen_pitch_file_2_fr);
+		tvPlayVideo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open Video file.
+				Intent intent = new Intent(MainActivity.this, PlayVideoActivity.class);
+				startActivity(intent);
+				dialog.dismiss();
 			}
-			rlFile1.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// Open PITCH file 1 in English or French.
-					openFile(ADVANTAGES_TYPE, FIRST);
-					dialog.dismiss();
-				}
-			});
-			rlFile2.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// Open PITCH file 2 in English or French.
-					openFile(ADVANTAGES_TYPE, SECOND);
-					dialog.dismiss();
-				}
-			});
-			break;
-		default:
-			imgIcon1.setImageResource(R.drawable.ic_play_video);
-			tvFileName1.setText(R.string.first_screen_new_video_file);
-			if (SharePrefs.EN_LANGUAGE.equals(languageFile)) {
-				tvFileName2.setText(R.string.first_screen_new_file_en);
-			} else {
-				tvFileName2.setText(R.string.first_screen_new_file_fr);
+		});
+		tvNewProduct.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Open NEW file in English or French.
+				openFile(NEW_TYPE, 0);
+				dialog.dismiss();
 			}
-			rlFile1.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// Open Video file.
-					Intent intent = new Intent(MainActivity.this, PlayVideoActivity.class);
-					startActivity(intent);
-					dialog.dismiss();
-				}
-			});
-			rlFile2.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// Open NEW file in English or French.
-					openFile(NEW_TYPE, 0);
-					dialog.dismiss();
-				}
-			});
-			break;
-		}
+		});
 
 		dialog.show();
 	}
@@ -561,6 +637,118 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Copy assets to internal storage.
 		// Current version use obb file to store resources. So we didn't need this action.
 		// copyAssets();
+
+		mStatusBarHeight = 0;
+		int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			mStatusBarHeight = getResources().getDimensionPixelSize(resourceId);
+		}
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		mScreenWidth = size.x;
+		mScreenHeight = size.y;
+		if (Utils.isTablet(this)) {
+			mImageWidth = Consts.IMAGE_WIDTH_TABLET;
+			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_TABLET;
+			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_TABLET;
+			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_TABLET;
+			mYmaxCaliforniaNorth = Consts.YMAX_CALIFORNIA_NORTH_TABLET;
+			mXminCaliforniaSouth = Consts.XMIN_CALIFORNIA_SOUTH_TABLET;
+			mXmaxCaliforniaSouth = Consts.XMAX_CALIFORNIA_SOUTH_TABLET;
+			mYminCaliforniaSouth = Consts.YMIN_CALIFORNIA_SOUTH_TABLET;
+			mYmaxCaliforniaSouth = Consts.YMAX_CALIFORNIA_SOUTH_TABLET;
+			mXminColorado = Consts.XMIN_COLORADO_TABLET;
+			mXmaxColorado = Consts.XMAX_COLORADO_TABLET;
+			mYminColorado = Consts.YMIN_COLORADO_TABLET;
+			mYmaxColorado = Consts.YMAX_COLORADO_TABLET;
+			mXminTexas = Consts.XMIN_TEXAS_TABLET;
+			mXmaxTexas = Consts.XMAX_TEXAS_TABLET;
+			mYminTexas = Consts.YMIN_TEXAS_TABLET;
+			mYmaxTexas = Consts.YMAX_TEXAS_TABLET;
+			mXminIllinois = Consts.XMIN_ILLINOIS_TABLET;
+			mXmaxIllinois = Consts.XMAX_ILLINOIS_TABLET;
+			mYminIllinois = Consts.YMIN_ILLINOIS_TABLET;
+			mYmaxIllinois = Consts.YMAX_ILLINOIS_TABLET;
+			mXminFlorida = Consts.XMIN_FLORIDA_TABLET;
+			mXmaxFlorida = Consts.XMAX_FLORIDA_TABLET;
+			mYminFlorida = Consts.YMIN_FLORIDA_TABLET;
+			mYmaxFlorida = Consts.YMAX_FLORIDA_TABLET;
+			mXminPhiladelphia = Consts.XMIN_PHILADELPHIA_TABLET;
+			mXmaxPhiladelphia = Consts.XMAX_PHILADELPHIA_TABLET;
+			mYminPhiladelphia = Consts.YMIN_PHILADELPHIA_TABLET;
+			mYmaxPhiladelphia = Consts.YMAX_PHILADELPHIA_TABLET;
+			mXminMontreal = Consts.XMIN_MONTREAL_TABLET;
+			mXmaxMontreal = Consts.XMAX_MONTREAL_TABLET;
+			mYminMontreal = Consts.YMIN_MONTREAL_TABLET;
+			mYmaxMontreal = Consts.YMAX_MONTREAL_TABLET;
+			mXminAdvantages = Consts.XMIN_ADVANTAGES_TABLET;
+			mXmaxAdvantages = Consts.XMAX_ADVANTAGES_TABLET;
+			mYminAdvantages = Consts.YMIN_ADVANTAGES_TABLET;
+			mYmaxAdvantages = Consts.YMAX_ADVANTAGES_TABLET;
+			mXminLibrary = Consts.XMIN_LIBRARY_TABLET;
+			mXmaxLibrary = Consts.XMAX_LIBRARY_TABLET;
+			mYminLibrary = Consts.YMIN_LIBRARY_TABLET;
+			mYmaxLibrary = Consts.YMAX_LIBRARY_TABLET;
+			mXminNew = Consts.XMIN_NEW_TABLET;
+			mXmaxNew = Consts.XMAX_NEW_TABLET;
+			mYminNew = Consts.YMIN_NEW_TABLET;
+			mYmaxNew = Consts.YMAX_NEW_TABLET;
+			mXminContact = Consts.XMIN_CONTACT_TABLET;
+			mXmaxContact = Consts.XMAX_CONTACT_TABLET;
+			mYminContact = Consts.YMIN_CONTACT_TABLET;
+			mYmaxContact = Consts.YMAX_CONTACT_TABLET;
+		} else {
+			mImageWidth = Consts.IMAGE_WIDTH_PHONE;
+			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_PHONE;
+			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_PHONE;
+			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_PHONE;
+			mYmaxCaliforniaNorth = Consts.YMAX_CALIFORNIA_NORTH_PHONE;
+			mXminCaliforniaSouth = Consts.XMIN_CALIFORNIA_SOUTH_PHONE;
+			mXmaxCaliforniaSouth = Consts.XMAX_CALIFORNIA_SOUTH_PHONE;
+			mYminCaliforniaSouth = Consts.YMIN_CALIFORNIA_SOUTH_PHONE;
+			mYmaxCaliforniaSouth = Consts.YMAX_CALIFORNIA_SOUTH_PHONE;
+			mXminColorado = Consts.XMIN_COLORADO_PHONE;
+			mXmaxColorado = Consts.XMAX_COLORADO_PHONE;
+			mYminColorado = Consts.YMIN_COLORADO_PHONE;
+			mYmaxColorado = Consts.YMAX_COLORADO_PHONE;
+			mXminTexas = Consts.XMIN_TEXAS_PHONE;
+			mXmaxTexas = Consts.XMAX_TEXAS_PHONE;
+			mYminTexas = Consts.YMIN_TEXAS_PHONE;
+			mYmaxTexas = Consts.YMAX_TEXAS_PHONE;
+			mXminIllinois = Consts.XMIN_ILLINOIS_PHONE;
+			mXmaxIllinois = Consts.XMAX_ILLINOIS_PHONE;
+			mYminIllinois = Consts.YMIN_ILLINOIS_PHONE;
+			mYmaxIllinois = Consts.YMAX_ILLINOIS_PHONE;
+			mXminFlorida = Consts.XMIN_FLORIDA_PHONE;
+			mXmaxFlorida = Consts.XMAX_FLORIDA_PHONE;
+			mYminFlorida = Consts.YMIN_FLORIDA_PHONE;
+			mYmaxFlorida = Consts.YMAX_FLORIDA_PHONE;
+			mXminPhiladelphia = Consts.XMIN_PHILADELPHIA_PHONE;
+			mXmaxPhiladelphia = Consts.XMAX_PHILADELPHIA_PHONE;
+			mYminPhiladelphia = Consts.YMIN_PHILADELPHIA_PHONE;
+			mYmaxPhiladelphia = Consts.YMAX_PHILADELPHIA_PHONE;
+			mXminMontreal = Consts.XMIN_MONTREAL_PHONE;
+			mXmaxMontreal = Consts.XMAX_MONTREAL_PHONE;
+			mYminMontreal = Consts.YMIN_MONTREAL_PHONE;
+			mYmaxMontreal = Consts.YMAX_MONTREAL_PHONE;
+			mXminAdvantages = Consts.XMIN_ADVANTAGES_PHONE;
+			mXmaxAdvantages = Consts.XMAX_ADVANTAGES_PHONE;
+			mYminAdvantages = Consts.YMIN_ADVANTAGES_PHONE;
+			mYmaxAdvantages = Consts.YMAX_ADVANTAGES_PHONE;
+			mXminLibrary = Consts.XMIN_LIBRARY_PHONE;
+			mXmaxLibrary = Consts.XMAX_LIBRARY_PHONE;
+			mYminLibrary = Consts.YMIN_LIBRARY_PHONE;
+			mYmaxLibrary = Consts.YMAX_LIBRARY_PHONE;
+			mXminNew = Consts.XMIN_NEW_PHONE;
+			mXmaxNew = Consts.XMAX_NEW_PHONE;
+			mYminNew = Consts.YMIN_NEW_PHONE;
+			mYmaxNew = Consts.YMAX_NEW_PHONE;
+			mXminContact = Consts.XMIN_CONTACT_PHONE;
+			mXmaxContact = Consts.XMAX_CONTACT_PHONE;
+			mYminContact = Consts.YMIN_CONTACT_PHONE;
+			mYmaxContact = Consts.YMAX_CONTACT_PHONE;
+		}
 	}
 
 	@Override
@@ -583,35 +771,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.tvSetting:
 			showFilesLanguageSetting();
-			break;
-		case R.id.tvAdvantages:
-			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
-				mViewOverlap.setVisibility(View.VISIBLE);
-				mRlAdvantagesInfo.setVisibility(View.VISIBLE);
-			} else {
-				// Show Bim objects logo.
-				showBimObjectsLogo();
-			}
-			break;
-		case R.id.tvLibrary:
-			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
-				// Open Doc file.
-				openFile(LIBRARY_TYPE, 0);
-			} else {
-				// Show a selection: open catalog file or open LEED link.
-				showCatalogAndLeedLinkSelection();
-			}
-			break;
-		case R.id.tvNew:
-			if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
-				showFilesToOpen(NEW_TYPE);
-			} else {
-				// Show AIA logo.
-				showAIALogo();
-			}
-			break;
-		case R.id.tvContact:
-			handlerContact();
 			break;
 		case R.id.llShare:
 			if (getCurrentFocus() != null) {
@@ -665,6 +824,103 @@ public class MainActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		Log.e("Test", "x = " + x + " y = " + y);
+		y = y - mStatusBarHeight;
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			break;
+		case MotionEvent.ACTION_MOVE:
+			break;
+		case MotionEvent.ACTION_UP:
+			if (x > (mScreenWidth / 2 + mXminAdvantages * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxAdvantages * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminAdvantages * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxAdvantages * mScreenWidth / mImageWidth)) {
+				if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+					mViewOverlap.setVisibility(View.VISIBLE);
+					mRlAdvantagesInfo.setVisibility(View.VISIBLE);
+				} else {
+					// Show Bim objects logo.
+					showBimObjectsLogo();
+				}
+			} else if (x > (mScreenWidth / 2 + mXminLibrary * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxLibrary * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminLibrary * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxLibrary * mScreenWidth / mImageWidth)) {
+				if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+					// Open Doc file.
+					openFile(LIBRARY_TYPE, 0);
+				} else {
+					// Show a selection: open catalog file or open LEED link.
+					showCatalogAndLeedLinkSelection();
+				}
+			} else if (x > (mScreenWidth / 2 + mXminNew * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxNew * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminNew * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxNew * mScreenWidth / mImageWidth)) {
+				if (NORMAL_BACKGROUND_TYPE == mBackgroundType) {
+					showFilesToOpen(NEW_TYPE);
+				} else {
+					// Show AIA logo.
+					showAIALogo();
+				}
+			} else if (x > (mScreenWidth / 2 + mXminContact * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxContact * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminContact * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxContact * mScreenWidth / mImageWidth)) {
+				handlerContact();
+			} else if (x > (mScreenWidth / 2 + mXminCaliforniaNorth * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxCaliforniaNorth * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminCaliforniaNorth * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxCaliforniaNorth * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(CALIFORNIA_NORTH);
+			} else if (x > (mScreenWidth / 2 + mXminCaliforniaSouth * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxCaliforniaSouth * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminCaliforniaSouth * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxCaliforniaSouth * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(CALIFORNIA_SOUTH);
+			} else if (x > (mScreenWidth / 2 + mXminColorado * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxColorado * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminColorado * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxColorado * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(COLORADO);
+			} else if (x > (mScreenWidth / 2 + mXminTexas * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxTexas * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminTexas * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxTexas * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(TEXAS);
+			} else if (x > (mScreenWidth / 2 + mXminIllinois * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxIllinois * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminIllinois * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxIllinois * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(ILLINOIS);
+			} else if (x > (mScreenWidth / 2 + mXminFlorida * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxFlorida * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminFlorida * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxFlorida * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(FLORIDA);
+			} else if (x > (mScreenWidth / 2 + mXminPhiladelphia * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxPhiladelphia * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminPhiladelphia * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxPhiladelphia * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(PHILADELPHIA);
+			} else if (x > (mScreenWidth / 2 + mXminMontreal * mScreenWidth / mImageWidth)
+					&& x < (mScreenWidth / 2 + mXmaxMontreal * mScreenWidth / mImageWidth)
+					&& y > (mScreenHeight / 2 + mYminMontreal * mScreenWidth / mImageWidth)
+					&& y < (mScreenHeight / 2 + mYmaxMontreal * mScreenWidth / mImageWidth)) {
+				showOfficeAddress(MONTREAL);
+			}
+			break;
+		default:
+			break;
+		}
+		return super.onTouchEvent(event);
 	}
 
 	/**

@@ -2,60 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white" >
+    android:background="@color/bg_list_info_and_contents"
+    android:paddingBottom="@dimen/margin_medium" >
 
-    <LinearLayout
-        android:id="@+id/ll1"
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:gravity="center"
+        android:padding="@dimen/margin_medium"
+        android:text="@string/title_dialog_hyperlink"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium" />
 
-        <ImageView
-            android:id="@+id/imgSpecLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_alert_item"
-            android:contentDescription="@string/empty"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/img_spec_logo" />
-
-        <ImageView
-            android:id="@+id/imgMasterLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_alert_item"
-            android:contentDescription="@string/empty"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/img_master_logo" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imgSpecLogo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll1"
-        android:orientation="horizontal" >
+        android:layout_below="@id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_alert_item"
+        android:contentDescription="@string/empty"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/img_spec_logo" />
 
-        <ImageView
-            android:id="@+id/imgAgentLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_alert_item"
-            android:contentDescription="@string/empty"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/img_agent_logo" />
+    <ImageView
+        android:id="@+id/imgMasterLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgSpecLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_alert_item"
+        android:contentDescription="@string/empty"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/img_master_logo" />
 
-        <ImageView
-            android:id="@+id/imgAutoDeskLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_alert_item"
-            android:contentDescription="@string/empty"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/img_autodesk_logo" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imgAgentLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgMasterLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_alert_item"
+        android:contentDescription="@string/empty"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/img_agent_logo" />
+
+    <ImageView
+        android:id="@+id/imgAutoDeskLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgAgentLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_alert_item"
+        android:contentDescription="@string/empty"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/img_autodesk_logo" />
 
 </RelativeLayout>

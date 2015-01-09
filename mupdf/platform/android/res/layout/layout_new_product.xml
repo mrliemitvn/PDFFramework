@@ -5,29 +5,29 @@
     android:background="@color/bg_list_info_and_contents" >
 
     <TextView
-        android:id="@+id/tvCatalog"
+        android:id="@+id/tvPlayVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_document_selection"
+        android:drawablePadding="@dimen/margin_medium"
+        android:drawableTop="@drawable/ic_play_video"
+        android:gravity="center"
+        android:padding="@dimen/margin_medium"
+        android:text="@string/first_screen_new_video_file"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium" />
+
+    <TextView
+        android:id="@+id/tvNewProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPlayVideo"
         android:background="@drawable/bg_document_selection"
         android:drawablePadding="@dimen/margin_medium"
         android:drawableTop="@drawable/ic_pdf_file"
         android:gravity="center"
         android:padding="@dimen/margin_medium"
-        android:text="@string/catalog_and_data_sheet"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
-
-    <TextView
-        android:id="@+id/tvLeedLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvCatalog"
-        android:background="@drawable/bg_document_selection"
-        android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/ic_web"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/leed_link"
+        android:text="@string/first_screen_new_file"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_medium" />
 
