@@ -18,14 +18,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,6 +71,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	/* View elements. */
 	private ImageView mImgBackground;
 	private ImageView mImgShare;
+	private TextView mTvAccessDoors;
 	private TextView mTvSetting;
 	private TextView mTvArchitects;
 	private TextView mTvDistributors;
@@ -92,7 +92,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	private int mScreenWidth;
 	private int mScreenHeight;
 	private int mStatusBarHeight;
+	private int mMapMarginTopBottomDifference;
 	private int mImageWidth;
+	private int mMapHeight;
 	private int mXminCaliforniaNorth;
 	private int mXmaxCaliforniaNorth;
 	private int mYminCaliforniaNorth;
@@ -148,6 +150,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void init() {
 		mImgBackground = (ImageView) findViewById(R.id.imgBackground);
 		mImgShare = (ImageView) findViewById(R.id.imgShare);
+		mTvAccessDoors = (TextView) findViewById(R.id.tvAccessDoors);
 		mTvSetting = (TextView) findViewById(R.id.tvSetting);
 		// mTvAdvantages = (TextView) findViewById(R.id.tvAdvantages);
 		// mTvLibrary = (TextView) findViewById(R.id.tvLibrary);
@@ -643,13 +646,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (resourceId > 0) {
 			mStatusBarHeight = getResources().getDimensionPixelSize(resourceId);
 		}
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		mScreenWidth = size.x;
-		mScreenHeight = size.y;
+
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		mScreenWidth = displaymetrics.widthPixels;
+		mScreenHeight = displaymetrics.heightPixels;
+
 		if (Utils.isTablet(this)) {
 			mImageWidth = Consts.IMAGE_WIDTH_TABLET;
+			mMapMarginTopBottomDifference = Consts.MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_TABLET * mScreenWidth / mImageWidth;
+			mMapHeight = Consts.MAP_HEIGHT_TABLET;
 			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_TABLET;
 			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_TABLET;
 			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_TABLET;
@@ -700,6 +706,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			mYmaxContact = Consts.YMAX_CONTACT_TABLET;
 		} else {
 			mImageWidth = Consts.IMAGE_WIDTH_PHONE;
+			mMapMarginTopBottomDifference = Consts.MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_PHONE * mScreenWidth / mImageWidth;
+			mMapHeight = Consts.MAP_HEIGHT_PHONE;
 			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_PHONE;
 			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_PHONE;
 			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_PHONE;
@@ -761,6 +769,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			String fr = getString(R.string.setting_language_fr);
 			mItemsFilesLanguage = new CharSequence[] { en, fr };
 		}
+
+		int marginTopTvAccessDoor = 0;
+		int tvAccessDoorSize = getResources().getDimensionPixelSize(R.dimen.first_screen_access_doors);
+		int mapHeightOnScreen = mScreenWidth * mMapHeight / mImageWidth;
+		marginTopTvAccessDoor = mScreenHeight / 2 - mStatusBarHeight - mMapMarginTopBottomDifference
+				- mapHeightOnScreen / 2 - tvAccessDoorSize
+				- getResources().getDimensionPixelSize(R.dimen.margin_medium);
+		mTvAccessDoors.setPadding(0, marginTopTvAccessDoor, 0, 0);
 	}
 
 	@Override
@@ -831,7 +847,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		int x = (int) event.getX();
 		int y = (int) event.getY();
 		Log.e("Test", "x = " + x + " y = " + y);
-		y = y - mStatusBarHeight;
+		y = y - mStatusBarHeight - mMapMarginTopBottomDifference;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			break;
