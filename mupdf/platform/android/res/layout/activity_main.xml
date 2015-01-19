@@ -19,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white"
-        android:paddingTop="@dimen/margin_medium" >
+        android:padding="@dimen/margin_medium" >
 
         <ImageView
             android:id="@+id/imgTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:contentDescription="@string/empty"
             android:scaleType="centerCrop"
             android:src="@drawable/img_title" />
@@ -37,7 +37,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:padding="@dimen/margin_tiny"
             android:src="@drawable/first_screen_share_state" />
 
         <TextView
@@ -45,8 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
             android:text="@string/setting_language_en"
             android:textColor="@drawable/language_setting_color_state"
             android:textSize="@dimen/text_size_medium"

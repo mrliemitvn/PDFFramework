@@ -5,8 +5,9 @@
 
     <ImageView
         android:id="@+id/imgTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_medium"
         android:contentDescription="@string/empty"
         android:scaleType="centerCrop"

@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -312,9 +313,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void sendEmail(String[] emails) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.setType("text/plain");
+		intent.setType("text/html");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
-		intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_title));
 		intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.email_message));
 		startActivity(Intent.createChooser(intent, "Send email..."));
 	}
