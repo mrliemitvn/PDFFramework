@@ -22,10 +22,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -187,6 +187,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			mTvSetting.setText(R.string.setting_language_en);
 		}
 
+		if (Utils.isTablet(this)) {
+			mTvSetting.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // Text size large value in dimen file.
+			mImgTitle.setImageResource(R.drawable.img_title_tablet);
+			mImgShare.setImageResource(R.drawable.first_screen_share_tablet_state);
+		}
+
 		changeBackgroundImage(NORMAL_BACKGROUND_TYPE);
 
 		loadAdvantages();
@@ -311,12 +317,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	/**
 	 * Send email.
 	 */
-	private void sendEmail(String[] emails) {
+	private void sendEmail(String[] emails, boolean isShare) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/html");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
-		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_title));
-		intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.email_message));
+		if (isShare) {
+			intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_title));
+			intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.email_message));
+		}
 		startActivity(Intent.createChooser(intent, "Send email..."));
 	}
 
@@ -327,7 +335,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		final Intent intentCall = new Intent(Intent.ACTION_DIAL);
 		final String[] emailsContact = new String[] { Consts.EMAIL_CONTACT };
 		if (Utils.isTablet(this)) {
-			sendEmail(emailsContact);
+			sendEmail(emailsContact, false);
 		} else {
 			final Dialog dialog = new Dialog(this);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -341,7 +349,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					// Send email.
-					sendEmail(emailsContact);
+					sendEmail(emailsContact, false);
 					dialog.dismiss();
 				}
 			});
@@ -804,7 +812,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				}
 				mLlShare.setVisibility(View.GONE);
 				Utils.shareEmail(mEtEmailShare.getText().toString());
-				sendEmail(new String[] { mEtEmailShare.getText().toString() });
+				sendEmail(new String[] { mEtEmailShare.getText().toString() }, true);
 				mEtEmailShare.setText("");
 			}
 			break;

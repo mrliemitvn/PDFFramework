@@ -87,7 +87,7 @@ public class Consts {
 
 	// Toa do tren image tablet
 	public static final int IMAGE_WIDTH_TABLET = 1536;
-	public static final int MAP_HEIGHT_TABLET = 1918;
+	public static final int MAP_HEIGHT_TABLET = 1710;
 	public static final int MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_TABLET = 41;
 	public static final int XMIN_CALIFORNIA_NORTH_TABLET = -755;
 	public static final int XMAX_CALIFORNIA_NORTH_TABLET = -620;
