@@ -223,7 +223,19 @@ em cu lam het cac yeu cau o tren roi nhan anh, minh se ban tiep ve cai giao dien
 
 6. minh se chi hien button 'Tech data sheet' cho page nao co thoi, trang nao ko co link pdf thi minh ko hien button do
 
-// Finished: 6, 2, 3, 1
+// Finished: 6, 2, 3, 1, 4, 5
+
+===============
+Fix something like ios version
+===============
+1. de nut Back khi mo file pdf
+2. background blur qua toi, lam sang hon
+3. test tren hp slate 7, man hinh bi mat thong tin (background bi cat)
+4. phan 'New product' e sua lai thanh 'Cendrex CTA flyer' (EN) va 'Pamphlet CTA de Cendrex' (FR) nhe
+5. Them dau "X" cac popup
+6. phan LEED Documentation e sua lai thanh Documentation LEED khi dang o che do FR nhe,EN thi van nhu cu
+
+// Finished: 2, 4, 6
 
 
 

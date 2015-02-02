@@ -29,6 +29,7 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -80,6 +81,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private boolean mButtonsVisible;
 	private EditText mPasswordView;
 	private TextView mFilenameView;
+	private TextView mTvBackButton;
 	private SeekBar mPageSlider;
 	private int mPageSliderRes;
 	private TextView mPageNumberView;
@@ -463,6 +465,14 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		// Set the file-name text
 		mFilenameView.setText(mFileName);
+		
+		// Click back, finish this activity.
+		mTvBackButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 
 		// Activate the seekbar
 		mPageSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -1031,6 +1041,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private void makeButtonsView() {
 		mButtonsView = getLayoutInflater().inflate(R.layout.mupdf_buttons, null);
 		mFilenameView = (TextView) mButtonsView.findViewById(R.id.mupdf_docNameText);
+		mTvBackButton = (TextView) mButtonsView.findViewById(R.id.mupdf_backButton);
 		mPageSlider = (SeekBar) mButtonsView.findViewById(R.id.mupdf_pageSlider);
 		mPageNumberView = (TextView) mButtonsView.findViewById(R.id.mupdf_pageNumber);
 		mInfoView = (TextView) mButtonsView.findViewById(R.id.mupdf_info);

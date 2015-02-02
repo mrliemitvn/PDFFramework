@@ -54,6 +54,7 @@
     <string name="print">Imprimer</string>
     <string name="accept">Accepter</string>
     <string name="done">Fini</string>
+    <string name="back">Reculer</string>
 
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
@@ -70,7 +71,7 @@
     <string name="loading">Chargement &#8230;</string>
     <string name="title_table_of_contents">TABLE DES MATIÈRES</string>
     <string name="catalog_and_data_sheet">Catalogue et fiches techniques</string>
-    <string name="leed_link">LEED Documentation</string>
+    <string name="leed_link">Documentation LEED</string>
     <string name="home_text_architects">ARCHITECTES (CLIQUER ICI)</string>
     <string name="home_text_distributors">DISTRIBUTEURS (CLIQUER ICI)</string>
     <string name="title_dialog_hyperlink">Cliquez sur le logo pour lien hypertexte</string>
@@ -84,7 +85,7 @@
     <string name="first_screen_pitch_file_2_fr">CENDREX CTA flyer</string>
     <string name="first_screen_doc_file_en">CENDREX Access Doors Catalog 2014 HR</string>
     <string name="first_screen_doc_file_fr">CENDREX Porte Accès Catalogue 2014 HR</string>
-    <string name="first_screen_new_file">Nouveaux Produits</string>
+    <string name="first_screen_new_file">Pamphlet CTA de Cendrex</string>
     <string name="first_screen_new_video_file">CENDREX CTA Adjustable Access Door</string>
 
     <!-- Register user -->

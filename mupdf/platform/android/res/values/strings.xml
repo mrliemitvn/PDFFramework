@@ -54,6 +54,7 @@
     <string name="print">Print</string>
     <string name="accept">Accept</string>
     <string name="done">Done</string>
+    <string name="back">Back</string>
 
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
@@ -84,7 +85,7 @@
     <string name="first_screen_pitch_file_2_fr">CENDREX CTA flyer</string>
     <string name="first_screen_doc_file_en">CENDREX Access Doors Catalog 2014 HR</string>
     <string name="first_screen_doc_file_fr">CENDREX Porte Accès Catalogue 2014 HR</string>
-    <string name="first_screen_new_file">New Products</string>
+    <string name="first_screen_new_file">Cendrex CTA flyer</string>
     <string name="first_screen_new_video_file">CENDREX CTA Adjustable Access Door</string>
 
     <!-- Register user -->
