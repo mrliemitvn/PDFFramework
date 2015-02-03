@@ -235,7 +235,7 @@ Fix something like ios version
 5. Them dau "X" cac popup
 6. phan LEED Documentation e sua lai thanh Documentation LEED khi dang o che do FR nhe,EN thi van nhu cu
 
-// Finished: 1, 2, 3, 4, 6
+// Finished: 1, 2, 3, 4, 5, 6
 
 
 

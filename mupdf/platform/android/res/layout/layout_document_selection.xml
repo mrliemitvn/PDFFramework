@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
-        android:background="@color/bg_list_info_and_contents" >
+        android:background="@color/bg_list_info_and_contents"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/tvCatalog"
@@ -35,14 +37,14 @@
             android:text="@string/leed_link"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_medium" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imgCloseLibrary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
         android:contentDescription="@string/empty"
         android:src="@drawable/btn_close_state" />
 
-</RelativeLayout>
+</FrameLayout>

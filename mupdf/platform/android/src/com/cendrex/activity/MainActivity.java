@@ -80,7 +80,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	private TextView mTvShare;
 	private EditText mEtEmailShare;
 	private View mViewOverlap;
-	private View mViewLayoutBimLogo;
 	private RelativeLayout mRlAdvantagesInfo;
 	private ImageView mImgClose;
 	private ListView mLvAdvantagesInfo;
@@ -161,7 +160,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvShare = (TextView) findViewById(R.id.tvShare);
 		mEtEmailShare = (EditText) findViewById(R.id.etEmailShare);
 		mViewOverlap = (View) findViewById(R.id.viewOverlap);
-		mViewLayoutBimLogo = (View) findViewById(R.id.layoutBimLogo);
 		mRlAdvantagesInfo = (RelativeLayout) findViewById(R.id.rlAdvantagesInfo);
 		mImgClose = (ImageView) findViewById(R.id.imgClose);
 		mLvAdvantagesInfo = (ListView) findViewById(R.id.lvAdvantagesInfo);
@@ -345,6 +343,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			// Set dialog content.
 			TextView tvMail = (TextView) dialog.findViewById(R.id.tvMail);
 			TextView tvTel = (TextView) dialog.findViewById(R.id.tvTel);
+			ImageView imgCloseContact = (ImageView) dialog.findViewById(R.id.imgCloseContact);
 
 			tvMail.setOnClickListener(new OnClickListener() {
 				@Override
@@ -359,6 +358,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				public void onClick(View v) {
 					// Phone call.
 					startActivity(intentCall);
+					dialog.dismiss();
+				}
+			});
+			imgCloseContact.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
 					dialog.dismiss();
 				}
 			});
@@ -422,6 +427,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Set dialog content.
 		TextView tvTitle = (TextView) dialog.findViewById(R.id.tvTitle);
 		TextView tvAddress = (TextView) dialog.findViewById(R.id.tvAddress);
+		ImageView imgCloseOffice = (ImageView) dialog.findViewById(R.id.imgCloseOffice);
+
+		imgCloseOffice.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
 
 		switch (officeNumber) {
 		case CALIFORNIA_NORTH:
@@ -465,12 +478,15 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * Show Bim objects logo.
 	 */
 	private void showBimObjectsLogo() {
+		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.layout_advantages_logo);
 		// Set dialog content.
-		ImageView imgSpecLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgSpecLogo);
-		ImageView imgMasterLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgMasterLogo);
-		ImageView imgAgentLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgAgentLogo);
-		ImageView imgAutoDeskLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgAutoDeskLogo);
-		ImageView imgCloseBimLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgCloseBimLogo);
+		ImageView imgSpecLogo = (ImageView) dialog.findViewById(R.id.imgSpecLogo);
+		ImageView imgMasterLogo = (ImageView) dialog.findViewById(R.id.imgMasterLogo);
+		ImageView imgAgentLogo = (ImageView) dialog.findViewById(R.id.imgAgentLogo);
+		ImageView imgAutoDeskLogo = (ImageView) dialog.findViewById(R.id.imgAutoDeskLogo);
+		ImageView imgCloseBimLogo = (ImageView) dialog.findViewById(R.id.imgCloseBimLogo);
 
 		imgSpecLogo.setOnClickListener(new OnClickListener() {
 			@Override
@@ -479,8 +495,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.SPECLINK_URL);
 				startActivity(intent);
-				mViewLayoutBimLogo.setVisibility(View.GONE);
-				mViewOverlap.setVisibility(View.GONE);
+				dialog.dismiss();
 			}
 		});
 		imgMasterLogo.setOnClickListener(new OnClickListener() {
@@ -490,8 +505,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.MASTER_URL);
 				startActivity(intent);
-				mViewLayoutBimLogo.setVisibility(View.GONE);
-				mViewOverlap.setVisibility(View.GONE);
+				dialog.dismiss();
 			}
 		});
 		imgAgentLogo.setOnClickListener(new OnClickListener() {
@@ -501,8 +515,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.AGENT_URL);
 				startActivity(intent);
-				mViewLayoutBimLogo.setVisibility(View.GONE);
-				mViewOverlap.setVisibility(View.GONE);
+				dialog.dismiss();
 			}
 		});
 		imgAutoDeskLogo.setOnClickListener(new OnClickListener() {
@@ -512,20 +525,17 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.AUTO_DESK_URL);
 				startActivity(intent);
-				mViewLayoutBimLogo.setVisibility(View.GONE);
-				mViewOverlap.setVisibility(View.GONE);
+				dialog.dismiss();
 			}
 		});
 		imgCloseBimLogo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mViewLayoutBimLogo.setVisibility(View.GONE);
-				mViewOverlap.setVisibility(View.GONE);
+				dialog.dismiss();
 			}
 		});
 
-		mViewOverlap.setVisibility(View.VISIBLE);
-		mViewLayoutBimLogo.setVisibility(View.VISIBLE);
+		dialog.show();
 	}
 
 	/**
@@ -539,6 +549,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Set dialog content.
 		TextView tvCatalog = (TextView) dialog.findViewById(R.id.tvCatalog);
 		TextView tvLeedLink = (TextView) dialog.findViewById(R.id.tvLeedLink);
+		ImageView imgCloseLibrary = (ImageView) dialog.findViewById(R.id.imgCloseLibrary);
 
 		tvCatalog.setOnClickListener(new OnClickListener() {
 			@Override
@@ -563,6 +574,13 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 		});
 
+		imgCloseLibrary.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
 		dialog.show();
 	}
 
@@ -576,6 +594,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// Set dialog content.
 		ImageView imgAIALogo = (ImageView) dialog.findViewById(R.id.imgAIALogo);
+		ImageView imgCloseAiaLogo = (ImageView) dialog.findViewById(R.id.imgCloseAiaLogo);
 
 		imgAIALogo.setOnClickListener(new OnClickListener() {
 			@Override
@@ -584,6 +603,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.AIA_URL);
 				startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+		imgCloseAiaLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				dialog.dismiss();
 			}
 		});
@@ -604,6 +629,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Set dialog content.
 		TextView tvPlayVideo = (TextView) dialog.findViewById(R.id.tvPlayVideo);
 		TextView tvNewProduct = (TextView) dialog.findViewById(R.id.tvNewProduct);
+		ImageView imgCloseNewProduct = (ImageView) dialog.findViewById(R.id.imgCloseNewProduct);
 
 		tvPlayVideo.setOnClickListener(new OnClickListener() {
 			@Override
@@ -619,6 +645,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			public void onClick(View v) {
 				// Open NEW file in English or French.
 				openFile(NEW_TYPE, 0);
+				dialog.dismiss();
+			}
+		});
+		imgCloseNewProduct.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				dialog.dismiss();
 			}
 		});

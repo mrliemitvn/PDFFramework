@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:paddingBottom="@dimen/margin_medium" >
 
     <LinearLayout
@@ -68,10 +69,8 @@
         android:id="@+id/imgCloseBimLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_margin_medium"
-        android:layout_marginTop="@dimen/_margin_medium"
-        android:layout_toRightOf="@id/llLogo"
+        android:layout_gravity="right"
         android:contentDescription="@string/empty"
         android:src="@drawable/btn_close_state" />
 
-</RelativeLayout>
+</FrameLayout>
