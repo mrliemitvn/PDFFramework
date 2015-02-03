@@ -34,8 +34,7 @@ public class Consts {
 
 	// Toa do tren image phone
 	public static final int IMAGE_WIDTH_PHONE = 640;
-	public static final int MAP_HEIGHT_PHONE = 780;
-	public static final int MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_PHONE = -17;
+	public static final int MAP_TOP_HEIGHT_PHONE = 407;
 	public static final int XMIN_CALIFORNIA_NORTH_PHONE = -315;
 	public static final int XMAX_CALIFORNIA_NORTH_PHONE = -260;
 	public static final int YMIN_CALIFORNIA_NORTH_PHONE = 44;
@@ -87,8 +86,7 @@ public class Consts {
 
 	// Toa do tren image tablet
 	public static final int IMAGE_WIDTH_TABLET = 1536;
-	public static final int MAP_HEIGHT_TABLET = 1710;
-	public static final int MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_TABLET = 41;
+	public static final int MAP_HEIGHT_TABLET = 813;
 	public static final int XMIN_CALIFORNIA_NORTH_TABLET = -755;
 	public static final int XMAX_CALIFORNIA_NORTH_TABLET = -620;
 	public static final int YMIN_CALIFORNIA_NORTH_TABLET = 106;

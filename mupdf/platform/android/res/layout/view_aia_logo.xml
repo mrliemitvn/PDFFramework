@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/bg_list_info_and_contents"
-    android:paddingBottom="@dimen/margin_medium" >
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/title_dialog_hyperlink"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@color/bg_list_info_and_contents"
+        android:paddingBottom="@dimen/margin_medium" >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/title_dialog_hyperlink"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <ImageView
+            android:id="@+id/imgAIALogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/bg_alert_item"
+            android:contentDescription="@string/empty"
+            android:padding="@dimen/margin_medium"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_aec_logo" />
+    </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imgAIALogo"
+        android:id="@+id/imgCloseAiaLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/margin_medium"
-        android:background="@drawable/bg_alert_item"
+        android:layout_alignParentRight="true"
         android:contentDescription="@string/empty"
-        android:padding="@dimen/margin_medium"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_aec_logo" />
+        android:src="@drawable/btn_close_state" />
 
 </RelativeLayout>

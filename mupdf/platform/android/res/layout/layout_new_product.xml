@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/bg_list_info_and_contents" >
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/tvPlayVideo"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_document_selection"
-        android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/ic_play_video"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/first_screen_new_video_file"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@color/bg_list_info_and_contents" >
 
-    <TextView
-        android:id="@+id/tvNewProduct"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvPlayVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_document_selection"
+            android:drawablePadding="@dimen/margin_medium"
+            android:drawableTop="@drawable/ic_play_video"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/first_screen_new_video_file"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/tvNewProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvPlayVideo"
+            android:background="@drawable/bg_document_selection"
+            android:drawablePadding="@dimen/margin_medium"
+            android:drawableTop="@drawable/ic_pdf_file"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/first_screen_new_file"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imgCloseNewProduct"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvPlayVideo"
-        android:background="@drawable/bg_document_selection"
-        android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/ic_pdf_file"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/first_screen_new_file"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/btn_close_state" />
 
 </RelativeLayout>

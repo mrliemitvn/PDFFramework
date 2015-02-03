@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_list_info_and_contents"
     android:paddingBottom="@dimen/margin_medium" >
 
     <LinearLayout
+        android:id="@+id/llLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@color/bg_list_info_and_contents"
         android:orientation="vertical" >
 
         <TextView
@@ -61,5 +63,15 @@
             android:padding="@dimen/margin_medium"
             android:src="@drawable/img_autodesk_logo" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgCloseBimLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_margin_medium"
+        android:layout_marginTop="@dimen/_margin_medium"
+        android:layout_toRightOf="@id/llLogo"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/btn_close_state" />
 
 </RelativeLayout>

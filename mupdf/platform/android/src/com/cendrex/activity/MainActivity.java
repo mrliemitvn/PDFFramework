@@ -80,6 +80,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private TextView mTvShare;
 	private EditText mEtEmailShare;
 	private View mViewOverlap;
+	private View mViewLayoutBimLogo;
 	private RelativeLayout mRlAdvantagesInfo;
 	private ImageView mImgClose;
 	private ListView mLvAdvantagesInfo;
@@ -93,9 +94,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private int mScreenWidth;
 	private int mScreenHeight;
 	private int mStatusBarHeight;
-	private int mMapMarginTopBottomDifference;
 	private int mImageWidth;
-	private int mMapHeight;
+	private int mMapTopHeight;
 	private int mXminCaliforniaNorth;
 	private int mXmaxCaliforniaNorth;
 	private int mYminCaliforniaNorth;
@@ -161,6 +161,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvShare = (TextView) findViewById(R.id.tvShare);
 		mEtEmailShare = (EditText) findViewById(R.id.etEmailShare);
 		mViewOverlap = (View) findViewById(R.id.viewOverlap);
+		mViewLayoutBimLogo = (View) findViewById(R.id.layoutBimLogo);
 		mRlAdvantagesInfo = (RelativeLayout) findViewById(R.id.rlAdvantagesInfo);
 		mImgClose = (ImageView) findViewById(R.id.imgClose);
 		mLvAdvantagesInfo = (ListView) findViewById(R.id.lvAdvantagesInfo);
@@ -464,15 +465,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * Show Bim objects logo.
 	 */
 	private void showBimObjectsLogo() {
-		final Dialog dialog = new Dialog(this);
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.layout_advantages_logo);
-
 		// Set dialog content.
-		ImageView imgSpecLogo = (ImageView) dialog.findViewById(R.id.imgSpecLogo);
-		ImageView imgMasterLogo = (ImageView) dialog.findViewById(R.id.imgMasterLogo);
-		ImageView imgAgentLogo = (ImageView) dialog.findViewById(R.id.imgAgentLogo);
-		ImageView imgAutoDeskLogo = (ImageView) dialog.findViewById(R.id.imgAutoDeskLogo);
+		ImageView imgSpecLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgSpecLogo);
+		ImageView imgMasterLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgMasterLogo);
+		ImageView imgAgentLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgAgentLogo);
+		ImageView imgAutoDeskLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgAutoDeskLogo);
+		ImageView imgCloseBimLogo = (ImageView) mViewLayoutBimLogo.findViewById(R.id.imgCloseBimLogo);
 
 		imgSpecLogo.setOnClickListener(new OnClickListener() {
 			@Override
@@ -481,7 +479,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.SPECLINK_URL);
 				startActivity(intent);
-				dialog.dismiss();
+				mViewLayoutBimLogo.setVisibility(View.GONE);
+				mViewOverlap.setVisibility(View.GONE);
 			}
 		});
 		imgMasterLogo.setOnClickListener(new OnClickListener() {
@@ -491,7 +490,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.MASTER_URL);
 				startActivity(intent);
-				dialog.dismiss();
+				mViewLayoutBimLogo.setVisibility(View.GONE);
+				mViewOverlap.setVisibility(View.GONE);
 			}
 		});
 		imgAgentLogo.setOnClickListener(new OnClickListener() {
@@ -501,7 +501,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.AGENT_URL);
 				startActivity(intent);
-				dialog.dismiss();
+				mViewLayoutBimLogo.setVisibility(View.GONE);
+				mViewOverlap.setVisibility(View.GONE);
 			}
 		});
 		imgAutoDeskLogo.setOnClickListener(new OnClickListener() {
@@ -511,11 +512,20 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
 				intent.putExtra(Consts.URL, Consts.AUTO_DESK_URL);
 				startActivity(intent);
-				dialog.dismiss();
+				mViewLayoutBimLogo.setVisibility(View.GONE);
+				mViewOverlap.setVisibility(View.GONE);
+			}
+		});
+		imgCloseBimLogo.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mViewLayoutBimLogo.setVisibility(View.GONE);
+				mViewOverlap.setVisibility(View.GONE);
 			}
 		});
 
-		dialog.show();
+		mViewOverlap.setVisibility(View.VISIBLE);
+		mViewLayoutBimLogo.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -663,8 +673,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		if (Utils.isTablet(this)) {
 			mImageWidth = Consts.IMAGE_WIDTH_TABLET;
-			mMapMarginTopBottomDifference = Consts.MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_TABLET * mScreenWidth / mImageWidth;
-			mMapHeight = Consts.MAP_HEIGHT_TABLET;
+			mMapTopHeight = Consts.MAP_HEIGHT_TABLET;
 			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_TABLET;
 			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_TABLET;
 			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_TABLET;
@@ -715,8 +724,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			mYmaxContact = Consts.YMAX_CONTACT_TABLET;
 		} else {
 			mImageWidth = Consts.IMAGE_WIDTH_PHONE;
-			mMapMarginTopBottomDifference = Consts.MAP_MARGIN_TOP_BOTTOM_DIFFERENCE_PHONE * mScreenWidth / mImageWidth;
-			mMapHeight = Consts.MAP_HEIGHT_PHONE;
+			mMapTopHeight = Consts.MAP_TOP_HEIGHT_PHONE;
 			mXminCaliforniaNorth = Consts.XMIN_CALIFORNIA_NORTH_PHONE;
 			mXmaxCaliforniaNorth = Consts.XMAX_CALIFORNIA_NORTH_PHONE;
 			mYminCaliforniaNorth = Consts.YMIN_CALIFORNIA_NORTH_PHONE;
@@ -781,10 +789,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		int marginTopTvAccessDoor = 0;
 		int tvAccessDoorSize = getResources().getDimensionPixelSize(R.dimen.first_screen_access_doors);
-		int mapHeightOnScreen = mScreenWidth * mMapHeight / mImageWidth;
-		marginTopTvAccessDoor = mScreenHeight / 2 - mStatusBarHeight - mMapMarginTopBottomDifference
-				- mapHeightOnScreen / 2 - tvAccessDoorSize
-				- getResources().getDimensionPixelSize(R.dimen.margin_medium);
+		int mapTopHeightOnScreen = mScreenWidth * mMapTopHeight / mImageWidth;
+		marginTopTvAccessDoor = mScreenHeight / 2 - mStatusBarHeight - mapTopHeightOnScreen - tvAccessDoorSize
+				- getResources().getDimensionPixelSize(R.dimen.margin_tiny);
 		mTvAccessDoors.setPadding(0, marginTopTvAccessDoor, 0, 0);
 	}
 
@@ -856,7 +863,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		int x = (int) event.getX();
 		int y = (int) event.getY();
 		Log.e("Test", "x = " + x + " y = " + y);
-		y = y - mStatusBarHeight - mMapMarginTopBottomDifference;
+		y = y - mStatusBarHeight;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			break;

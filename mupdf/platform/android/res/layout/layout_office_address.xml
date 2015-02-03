@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/bg_list_info_and_contents" >
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/montreal_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@color/bg_list_info_and_contents" >
 
-    <TextView
-        android:id="@+id/tvAddress"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/montreal_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:drawablePadding="@dimen/margin_medium"
+            android:drawableTop="@drawable/img_storage_icon"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/montreal_address"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imgCloseOffice"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitle"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:drawablePadding="@dimen/margin_medium"
-        android:drawableTop="@drawable/img_storage_icon"
-        android:gravity="center"
-        android:padding="@dimen/margin_medium"
-        android:text="@string/montreal_address"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/empty"
+        android:src="@drawable/btn_close_state" />
 
 </RelativeLayout>
