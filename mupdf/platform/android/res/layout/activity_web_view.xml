@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/bg_alert_item"
             android:padding="@dimen/margin_medium"
-            android:text="@string/done"
+            android:text="@string/back"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_medium" />
 

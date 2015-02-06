@@ -53,8 +53,7 @@
     <string name="delete">Effacer</string>
     <string name="print">Imprimer</string>
     <string name="accept">Accepter</string>
-    <string name="done">Fini</string>
-    <string name="back">Reculer</string>
+    <string name="back">Back</string>
 
     <!-- Project string -->
     <string name="app_name">Cendrex</string>
