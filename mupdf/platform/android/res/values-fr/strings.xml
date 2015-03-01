@@ -105,21 +105,21 @@
     <string name="email_message">Le nouvel APP Cendrex, disponible pour téléphones intelligents et tablettes électroniques:\nApple: https://appsto.re/ca/bcR03.i\nAndroid: https://play.google.com/store/apps/details?id=com.cendrex\nContenu:\n\t\t- Catalogue\n\t\t- Fiches Techniques\n\t\t- Nouveaux Produits\n\t\t- Avantages Concurrentiels\n\t\t- Contactez-Cendrex\n\t\t- Outils pour Architectes/Spécificateurs\nN’hésitez pas à partager l’APP avec vos partenaires d’affaires!\nUne autre nouveauté signée Cendrex !</string>
 
     <!-- Offices address -->
-    <string name="california_north_title">California (North) (Warehouse)</string>
+    <string name="california_north_title">California (Nord) (Entrepôt )</string>
     <string name="california_north_address">2192 W.Winton Ave. Hayward CA 94545</string>
-    <string name="california_south_title">California (South) (Warehouse)</string>
+    <string name="california_south_title">California (Sud) (Entrepôt)</string>
     <string name="california_south_address">15521 Blackburn Avenue Norwalk, CA 90650</string>
-    <string name="colorado_title">Colorado (Warehouse)</string>
+    <string name="colorado_title">Colorado (Entrepôt)</string>
     <string name="colorado_address">14704 E.33rd PL.#33, Aurora, CO 80011</string>
-    <string name="texas_title">Texas (Warehouse)</string>
+    <string name="texas_title">Texas (Entrepôt)</string>
     <string name="texas_address">1419 Mariposa Drive, Mesquite, TX 75150</string>
-    <string name="illinois_title">Illinois (Warehouse)</string>
+    <string name="illinois_title">Illinois (Entrepôt)</string>
     <string name="illinois_address">921 Ardmore Ave, Itasca, IL 60143</string>
-    <string name="florida_title">Florida (Warehouse)</string>
+    <string name="florida_title">Florida (Entrepôt)</string>
     <string name="florida_address">2915 Bush Drive, Melbourne FL 32935</string>
-    <string name="philadelphia_title">Philadelphia (Warehouse)</string>
+    <string name="philadelphia_title">Philadelphia (Entrepôt)</string>
     <string name="philadelphia_address">2411 N.American Street, Philadelphia, PA 19133</string>
-    <string name="montreal_title">Montréal (Head Office)</string>
+    <string name="montreal_title">Montréal (Maison Mère)</string>
     <string name="montreal_address">11303 26e Avenue, Montréal, Québec H1E 6N6</string>
 
 </resources>

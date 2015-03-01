@@ -6,7 +6,8 @@ public class Consts {
 	// Current version use obb file to store resources. So we didn't need creating app folder.
 	// public static final String APP_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath()
 	// + File.separator + "cendrex";
-	public static final String EMAIL_CONTACT = "SPECTOOLS@CENDREX.COM";
+	public static final String EMAIL_TOOL_CONTACT = "Spectools@cendrex.com";
+	public static final String EMAIL_INFO_CONTACT = "info@cendrex.com";
 
 	// String constants to pass url.
 	public static final String URL = "url";

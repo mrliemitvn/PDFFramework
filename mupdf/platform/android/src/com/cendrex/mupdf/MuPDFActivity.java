@@ -695,7 +695,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 				Intent intent = new Intent(Intent.ACTION_SEND);
 				intent.setType("text/plain");
 				intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "email@example.com" });
-				intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
+				intent.putExtra(Intent.EXTRA_SUBJECT, mFileName);
 				intent.putExtra(Intent.EXTRA_TEXT, "body text");
 				intent.putExtra(Intent.EXTRA_STREAM, uri);
 				startActivity(Intent.createChooser(intent, "Send email..."));

@@ -10,11 +10,9 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
@@ -67,6 +65,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final int PHILADELPHIA = 7;
 	private static final int MONTREAL = 8;
 
+	private String[] mEmailsContact;
 	private int mBackgroundType = 0;
 
 	/* View elements. */
@@ -270,20 +269,23 @@ public class MainActivity extends Activity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				AdvantagesResource advantagesResource = (AdvantagesResource) parent.getItemAtPosition(position);
 				if (advantagesResource != null) {
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-					// set title
-					alertDialogBuilder.setTitle(R.string.advantage_title);
-					// set dialog message
-					alertDialogBuilder.setMessage(advantagesResource.message);
-					alertDialogBuilder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+					final Dialog dialog = new Dialog(MainActivity.this);
+					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+					dialog.setContentView(R.layout.layout_advantage_alert);
+
+					// Set dialog content.
+					TextView tvMessage = (TextView) dialog.findViewById(R.id.tvMessage);
+					ImageView imgCloseAdvantageAlert = (ImageView) dialog.findViewById(R.id.imgCloseAdvantageAlert);
+
+					tvMessage.setText(advantagesResource.message);
+					imgCloseAdvantageAlert.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
 							dialog.dismiss();
 						}
 					});
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-					// show it
-					alertDialog.show();
+
+					dialog.show();
 				}
 			}
 		});
@@ -332,9 +334,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	 */
 	private void handlerContact() {
 		final Intent intentCall = new Intent(Intent.ACTION_DIAL);
-		final String[] emailsContact = new String[] { Consts.EMAIL_CONTACT };
+		if (mBackgroundType == NORMAL_BACKGROUND_TYPE) {
+			mEmailsContact = new String[] { Consts.EMAIL_INFO_CONTACT };
+		} else {
+			mEmailsContact = new String[] { Consts.EMAIL_TOOL_CONTACT };
+		}
 		if (Utils.isTablet(this)) {
-			sendEmail(emailsContact, false);
+			sendEmail(mEmailsContact, false);
 		} else {
 			final Dialog dialog = new Dialog(this);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -349,7 +355,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					// Send email.
-					sendEmail(emailsContact, false);
+					sendEmail(mEmailsContact, false);
 					dialog.dismiss();
 				}
 			});

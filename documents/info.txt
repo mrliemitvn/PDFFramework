@@ -237,5 +237,24 @@ Fix something like ios version
 
 // Finished: 1, 2, 3, 4, 5, 6
 
+===============
+Fix new bugs
+===============
+1. Cai 'Head office' va 'Warehouse' can chuyen sang ngon ngu tuong ung khi chuyen sang che do tieng phap
+2. Tat ca document mo ra deu la tieng Anh
+3. Khi gui email bat ki 1 document nao, phan subject cua email se la ten cua document do va trong email ko thay document duoc dinh kem
+4. Khi chon menu 'Avantages concurrentiels', ko hien dong chu 'Okay a la base pour revenir en arriere', chi don gian hien dau X o goc tren ben phai
+5. Trong 'Nouveau produit', mo document khong dung page
+6. Khi chon 'Contactez-nous', gui email den 'Spectools@cendrex.com' chu ko fai la 'info@cendrex.com'
+o cho nay can phan biet ro 2 cai: che do Architects va distributors
+architects gom Winning avantage, library,..., thi se gui mail den 'info@cendrex.com'
+disbutors gom Spec Bim Objects, AIA C.E.Course,... thi gui mail den 'Spectools@cendrex.com'
+7. Moi khi gui email xong, ho thay hien chu 'brouillon' phia duoi
+
+// Finished: 1, 4, 6
+// 2. Download BTA_BTV_CENDREX_fiche_technique
+// 3. Added subject, already attach file 
+// 5. Reconfirm
+// 7. Reconfirm
 
 
