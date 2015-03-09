@@ -1,6 +1,11 @@
 package com.cendrex.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -10,6 +15,7 @@ import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.storage.OnObbStateChangeListener;
 import android.os.storage.StorageManager;
@@ -109,6 +115,45 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return resourcePath;
+	}
+
+	/**
+	 * Copy file to APP_FOLDER.
+	 * 
+	 * @param inputFile
+	 * @return true if copy successfully.
+	 */
+	public static boolean copyFile(Uri inputFile, String fileName) {
+		InputStream in = null;
+		OutputStream out = null;
+		try {
+			File outputFile = new File(Consts.APP_FOLDER + File.separator + fileName);
+			if (outputFile.exists()) return true;
+
+			in = new FileInputStream(inputFile.getPath());
+			out = new FileOutputStream(Consts.APP_FOLDER + File.separator + fileName);
+
+			byte[] buffer = new byte[1024];
+			int read;
+			while ((read = in.read(buffer)) != -1) {
+				out.write(buffer, 0, read);
+			}
+			in.close();
+			in = null;
+
+			// write the output file (You have now copied the file)
+			out.flush();
+			out.close();
+			out = null;
+
+			return true;
+		} catch (FileNotFoundException fnfe1) {
+			Log.e("tag", fnfe1.getMessage());
+			return false;
+		} catch (Exception e) {
+			Log.e("tag", e.getMessage());
+			return false;
+		}
 	}
 
 	/**

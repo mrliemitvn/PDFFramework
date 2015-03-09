@@ -119,7 +119,7 @@
     <string name="florida_address">2915 Bush Drive, Melbourne FL 32935</string>
     <string name="philadelphia_title">Philadelphia (Warehouse)</string>
     <string name="philadelphia_address">2411 N.American Street, Philadelphia, PA 19133</string>
-    <string name="montreal_title">Montréal (Head Office)</string>
-    <string name="montreal_address">11303 26e Avenue, Montréal, Québec H1E 6N6</string>
+    <string name="montreal_title">Montreal (Head Office)</string>
+    <string name="montreal_address">11303 26e Avenue, Montreal, Quebec H1E 6N6</string>
 
 </resources>

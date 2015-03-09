@@ -1,11 +1,15 @@
 package com.cendrex.utils;
 
+import java.io.File;
+
+import android.os.Environment;
+
 public class Consts {
 
 	public static final String KEY_CHOOSE_PDF = "key_choose_pdf";
-	// Current version use obb file to store resources. So we didn't need creating app folder.
-	// public static final String APP_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath()
-	// + File.separator + "cendrex";
+	// App folder to save pdf file and use it to send email.
+	public static final String APP_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath()
+			+ File.separator + "cendrex";
 	public static final String EMAIL_TOOL_CONTACT = "Spectools@cendrex.com";
 	public static final String EMAIL_INFO_CONTACT = "info@cendrex.com";
 

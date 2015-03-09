@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -465,7 +466,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		// Set the file-name text
 		mFilenameView.setText(mFileName);
-		
+
 		// Click back, finish this activity.
 		mTvBackButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -691,14 +692,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mEmailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Uri uri = getIntent().getData();
-				Intent intent = new Intent(Intent.ACTION_SEND);
-				intent.setType("text/plain");
-				intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "email@example.com" });
-				intent.putExtra(Intent.EXTRA_SUBJECT, mFileName);
-				intent.putExtra(Intent.EXTRA_TEXT, "body text");
-				intent.putExtra(Intent.EXTRA_STREAM, uri);
-				startActivity(Intent.createChooser(intent, "Send email..."));
+				new CopyAsynAndCallSendEmail(MuPDFActivity.this, getIntent().getData(), mFileName).execute();
 			}
 		});
 
@@ -737,9 +731,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 		});
 
-		// Reenstate last state if it was recorded
-		SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-		mDocView.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
+		// TODO: Reenstate last state if it was recorded
+		// SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+		// mDocView.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
 		if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)) showButtons();
 
@@ -1172,11 +1166,12 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 					infoResource = new InfoResource();
 					infoResource.page = xmlParser.getAttributeValue(0);
 					listInfoResources.add(infoResource);
-					
+
 					// Show or hide info button.
 					int pageHasInfoFiles = Integer.parseInt(infoResource.page) - 1;
 					int currentPage = mDocView.getDisplayedViewIndex();
-					if (infoButtonVisible != View.VISIBLE && pageHasInfoFiles == currentPage) infoButtonVisible = View.VISIBLE;
+					if (infoButtonVisible != View.VISIBLE && pageHasInfoFiles == currentPage)
+						infoButtonVisible = View.VISIBLE;
 				} else if (eventType == XmlPullParser.TEXT) {
 					if (infoResource != null) infoResource.listFileName.add(xmlParser.getText());
 				}
@@ -1420,5 +1415,46 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mFilePicker = picker;
 		Intent intent = new Intent(this, ChoosePDFActivity.class);
 		startActivityForResult(intent, FILEPICK_REQUEST);
+	}
+
+	public class CopyAsynAndCallSendEmail extends AsyncTask<Void, Void, Boolean> {
+		private ProgressDialog dialog;
+		private Uri inputFile;
+		private String fileName;
+
+		public CopyAsynAndCallSendEmail(Context context, Uri inputFile, String fileName) {
+			this.dialog = new ProgressDialog(context);
+			dialog.setMessage(context.getResources().getString(R.string.loading));
+			this.inputFile = inputFile;
+			this.fileName = fileName;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			dialog.show();
+			super.onPreExecute();
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			return Utils.copyFile(inputFile, fileName);
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("application/pdf");
+			intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "email@example.com" });
+			intent.putExtra(Intent.EXTRA_SUBJECT, mFileName);
+			intent.putExtra(Intent.EXTRA_TEXT, "body text");
+			if (result) {
+				Uri uri = Uri.fromFile(new File(Consts.APP_FOLDER + File.separator + fileName));
+				intent.putExtra(Intent.EXTRA_STREAM, uri);
+			}
+			dialog.dismiss();
+			startActivity(Intent.createChooser(intent, "Send email..."));
+			super.onPostExecute(result);
+		}
+
 	}
 }
