@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -47,7 +46,7 @@ import com.cendrex.utils.Consts;
 import com.cendrex.utils.SharePrefs;
 import com.cendrex.utils.Utils;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private static final int ADVANTAGES_TYPE = 0;
 	private static final int LIBRARY_TYPE = 1;

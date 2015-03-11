@@ -1,6 +1,5 @@
 package com.cendrex.activity;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,7 +20,7 @@ import com.google.android.vending.expansion.downloader.IDownloaderClient;
 import com.google.android.vending.expansion.downloader.IDownloaderService;
 import com.google.android.vending.expansion.downloader.IStub;
 
-public class DownloadObbDataActivity extends Activity implements IDownloaderClient {
+public class DownloadObbDataActivity extends BaseActivity implements IDownloaderClient {
 
 	/* View elements. */
 	private ImageView mImgTitle;

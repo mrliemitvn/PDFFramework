@@ -1,6 +1,5 @@
 package com.cendrex.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import com.cendrex.R;
 import com.cendrex.utils.Consts;
 
-public class WebViewActivity extends Activity implements OnClickListener {
+public class WebViewActivity extends BaseActivity implements OnClickListener {
 
 	private WebView mWebView;
 	private ProgressBar mPbLoading;

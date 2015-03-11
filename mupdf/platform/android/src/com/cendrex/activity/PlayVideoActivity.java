@@ -2,7 +2,6 @@ package com.cendrex.activity;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +11,7 @@ import android.widget.VideoView;
 import com.cendrex.R;
 import com.cendrex.utils.Utils;
 
-public class PlayVideoActivity extends Activity {
+public class PlayVideoActivity extends BaseActivity {
 
 	/* View element. */
 	private VideoView mVvPlayVideo;

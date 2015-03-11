@@ -2,7 +2,6 @@ package com.cendrex.activity;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -21,7 +20,7 @@ import com.cendrex.R;
 import com.cendrex.utils.SharePrefs;
 import com.cendrex.utils.Utils;
 
-public class IntroActivity extends Activity implements OnClickListener {
+public class IntroActivity extends BaseActivity implements OnClickListener {
 
 	/* View element. */
 	private VideoView mVvPlayVideo;
