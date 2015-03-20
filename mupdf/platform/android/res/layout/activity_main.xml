@@ -14,21 +14,31 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_phone_en" />
 
-    <RelativeLayout
-        android:id="@+id/rlTitle"
+    <TextView
+        android:id="@+id/tvAccessDoors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white"
-        android:padding="@dimen/margin_medium" >
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/access_doors"
+        android:textColor="@color/black"
+        android:textSize="@dimen/first_screen_access_doors"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/imgTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/empty"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_title" />
+    <ImageView
+        android:id="@+id/imgTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvAccessDoors"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/empty"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_medium" >
 
         <ImageView
             android:id="@+id/imgShare"
@@ -49,17 +59,6 @@
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tvAccessDoors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/access_doors"
-        android:textColor="@color/black"
-        android:textSize="@dimen/first_screen_access_doors"
-        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/rlBottomMenu"

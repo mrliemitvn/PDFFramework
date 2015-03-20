@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -270,6 +272,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				if (advantagesResource != null) {
 					final Dialog dialog = new Dialog(MainActivity.this);
 					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+					dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 					dialog.setContentView(R.layout.layout_advantage_alert);
 
 					// Set dialog content.
@@ -285,6 +288,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 					});
 
 					dialog.show();
+					mViewOverlap.setVisibility(View.GONE);
+					mRlAdvantagesInfo.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -343,6 +348,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		} else {
 			final Dialog dialog = new Dialog(this);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 			dialog.setContentView(R.layout.layout_contact_selection);
 
 			// Set dialog content.
@@ -427,6 +433,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void showOfficeAddress(int officeNumber) {
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		dialog.setContentView(R.layout.layout_office_address);
 
 		// Set dialog content.
@@ -485,6 +492,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void showBimObjectsLogo() {
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		dialog.setContentView(R.layout.layout_advantages_logo);
 		// Set dialog content.
 		ImageView imgSpecLogo = (ImageView) dialog.findViewById(R.id.imgSpecLogo);
@@ -549,6 +557,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void showCatalogAndLeedLinkSelection() {
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		dialog.setContentView(R.layout.layout_document_selection);
 
 		// Set dialog content.
@@ -595,6 +604,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void showAIALogo() {
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		dialog.setContentView(R.layout.view_aia_logo);
 
 		// Set dialog content.
@@ -629,6 +639,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void showFilesToOpen(int type) {
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		dialog.setContentView(R.layout.layout_new_product);
 
 		// Set dialog content.
@@ -829,7 +840,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		int mapTopHeightOnScreen = mScreenWidth * mMapTopHeight / mImageWidth;
 		marginTopTvAccessDoor = mScreenHeight / 2 - mStatusBarHeight - mapTopHeightOnScreen - tvAccessDoorSize
 				- getResources().getDimensionPixelSize(R.dimen.margin_tiny);
+		RelativeLayout.LayoutParams imgTitleLayoutParams = (LayoutParams) mImgTitle.getLayoutParams();
+		imgTitleLayoutParams.setMargins(0, 0, 0, 0 - marginTopTvAccessDoor);
 		mTvAccessDoors.setPadding(0, marginTopTvAccessDoor, 0, 0);
+		mImgTitle.setLayoutParams(imgTitleLayoutParams);
 	}
 
 	@Override
