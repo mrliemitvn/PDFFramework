@@ -35,7 +35,7 @@
     <string name="mupdf_leaving_reflow_mode">Leaving reflow mode</string>
     <string name="mupdf_toggle_links">Highlight and enable links</string>
     <string name="mupdf_toggle_reflow_mode">Toggle reflow mode</string>
-    <string name="mupdf_outline_title">Table of Contents</string>
+    <string name="mupdf_outline_title">Table des matières</string>
     <string name="mupdf_search_document">Search document</string>
     <string name="mupdf_search_backwards">Search backwards</string>
     <string name="mupdf_search_forwards">Search forwards</string>
