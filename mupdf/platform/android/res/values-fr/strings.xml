@@ -73,7 +73,7 @@
     <string name="leed_link">Documentation LEED</string>
     <string name="home_text_architects">ARCHITECTES (CLIQUER ICI)</string>
     <string name="home_text_distributors">DISTRIBUTEURS (CLIQUER ICI)</string>
-    <string name="title_dialog_hyperlink">Cliquez sur le logo pour lien hypertexte</string>
+    <string name="title_dialog_hyperlink">Cliquer logo pour hyperlien</string>
     <string name="mail">Courrier</string>
     <string name="tel">Téléphone</string>
 

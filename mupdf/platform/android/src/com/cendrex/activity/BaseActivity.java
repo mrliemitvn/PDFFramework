@@ -15,6 +15,6 @@ public class BaseActivity extends Activity {
 		if (SharePrefs.FR_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
 			language = "fr";
 		}
-		Utils.changeLanguage(this, language);
+		Utils.changeLanguage(getApplicationContext(), language);
 	}
 }

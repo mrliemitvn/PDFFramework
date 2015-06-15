@@ -310,11 +310,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		if (SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
 			// Current is English, change to French.
 			SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.FR_LANGUAGE);
-			Utils.changeLanguage(MainActivity.this, "fr");
+			Utils.changeLanguage(getApplicationContext(), "fr");
 		} else {
 			// Current is French, change to English.
 			SharePrefs.getInstance().saveFilesLanguageSetting(SharePrefs.EN_LANGUAGE);
-			Utils.changeLanguage(MainActivity.this, "en");
+			Utils.changeLanguage(getApplicationContext(), "en");
 		}
 		handlerAfterChangeLanguage();
 	}

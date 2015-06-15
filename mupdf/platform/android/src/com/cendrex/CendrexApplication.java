@@ -29,7 +29,7 @@ public class CendrexApplication extends Application {
 		if (!SharePrefs.EN_LANGUAGE.equals(SharePrefs.getInstance().getFilesLanguageSetting())) {
 			language = "fr";
 		}
-		Utils.changeLanguage(this, language);
+		Utils.changeLanguage(getApplicationContext(), language);
 
 		// Initialize parse.
 		Parse.initialize(this, Consts.PARSE_APP_ID, Consts.PARSE_CLIENT_ID);
